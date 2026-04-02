@@ -59,14 +59,6 @@ body::before{content:'';position:fixed;inset:0;
 .tg-m{background:rgba(255,101,32,.12);color:var(--montana);}
 .tg-h{background:rgba(168,85,247,.14);color:var(--hibrido);}
 
-/* ── INFO BAR ── */
-.info-bar{background:var(--card);border:1px solid var(--border);border-radius:var(--rad);padding:14px 18px;
-  margin-bottom:14px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;}
-.ii{display:flex;flex-direction:column;gap:2px;}
-.iv2{font-family:'Bebas Neue',sans-serif;font-size:22px;line-height:1;}
-.ik{font-size:8px;font-family:'Space Mono',monospace;color:var(--muted);letter-spacing:2px;text-transform:uppercase;}
-.isep{color:var(--border);font-size:18px;}
-
 /* ── BUTTON ── */
 .btn-main{width:100%;background:var(--accent);color:#08080d;border:none;font-family:'Bebas Neue',sans-serif;font-size:26px;
   letter-spacing:3px;padding:16px;border-radius:var(--rad);cursor:pointer;transition:all .18s;text-transform:uppercase;}
@@ -186,54 +178,71 @@ body::before{content:'';position:fixed;inset:0;
 }
 
 /* timer header */
-.tmr-top{padding:20px 0 16px;display:flex;align-items:center;gap:12px;border-bottom:1px solid var(--border);margin-bottom:20px;}
+.tmr-top{padding:20px 0 16px;display:flex;align-items:center;gap:12px;border-bottom:1px solid var(--border);margin-bottom:15px;}
 .tmr-close{background:var(--card);border:1px solid var(--border);color:var(--muted);font-family:'Space Mono',monospace;
   font-size:11px;padding:7px 14px;border-radius:5px;cursor:pointer;transition:all .15s;white-space:nowrap;}
 .tmr-close:hover{color:var(--text);border-color:var(--muted);}
 .tmr-mode-lbl{font-family:'Space Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:3px;text-transform:uppercase;margin-left:auto;}
 
 /* progress bar */
-.tmr-progress-wrap{height:5px;background:var(--border);border-radius:3px;margin-bottom:20px;overflow:hidden;}
+.tmr-progress-wrap{height:5px;background:var(--border);border-radius:3px;margin-bottom:15px;overflow:hidden;}
 .tmr-progress{height:100%;background:var(--accent);border-radius:3px;transition:width .5s linear;width:0%;}
 
-/* block label */
-.tmr-block-label{font-family:'Space Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:3px;text-transform:uppercase;
-  text-align:center;margin-bottom:8px;}
+/* paneles de contexto */
+.tmr-block-context{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:15px;}
+.ctx-box{background:var(--card);border:1px solid var(--border);border-radius:6px;padding:10px 12px;}
+.ctx-lbl{font-family:'Space Mono',monospace;font-size:8px;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-bottom:4px;}
+.ctx-val{font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;color:var(--text);}
+.ctx-val span{font-family:'Space Mono',monospace;font-size:11px;color:var(--accent);}
 
 /* big timer */
-.tmr-circle-wrap{display:flex;flex-direction:column;align-items:center;margin-bottom:20px;}
+.tmr-circle-wrap{display:flex;flex-direction:column;align-items:center;margin-bottom:15px;}
 .tmr-circle{
-  position:relative;width:clamp(180px,45vw,240px);height:clamp(180px,45vw,240px);
+  position:relative;width:clamp(160px,40vw,200px);height:clamp(160px,40vw,200px);
   border-radius:50%;display:flex;align-items:center;justify-content:center;flex-direction:column;
 }
 .tmr-circle svg{position:absolute;inset:0;width:100%;height:100%;transform:rotate(-90deg);}
 .tmr-circle-bg{fill:none;stroke:var(--border);stroke-width:4;}
 .tmr-circle-prog{fill:none;stroke-width:5;stroke-linecap:round;transition:stroke-dashoffset .8s linear,stroke .3s;}
-.tmr-digits{font-family:'Bebas Neue',sans-serif;font-size:clamp(52px,12vw,72px);line-height:1;letter-spacing:2px;z-index:1;}
-.tmr-interval-num{font-family:'Space Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:2px;margin-top:4px;z-index:1;}
+.tmr-digits{font-family:'Bebas Neue',sans-serif;font-size:clamp(48px,11vw,64px);line-height:1;letter-spacing:2px;z-index:1;}
+
+/* SOLUCIÓN: El texto se va para abajo en múltiples líneas si no entra a lo ancho */
+.tmr-interval-num{
+  font-family:'Space Mono',monospace;
+  font-size:9px;
+  color:#ffffff;
+  letter-spacing:1px;
+  margin-top:4px;
+  z-index:1;
+  text-transform:uppercase;
+  max-width:70%; /* Margen de resguardo para que no roce el aro */
+  text-align:center;
+  line-height:1.3; /* Espaciado cómodo por si se generan dos líneas */
+}
 
 /* current interval card */
-.tmr-curr{background:var(--card);border:1px solid var(--border);border-radius:var(--rad);padding:16px 18px;margin-bottom:14px;position:relative;overflow:hidden;}
+.tmr-curr{background:var(--card);border:1px solid var(--border);border-radius:var(--rad);padding:14px 16px;margin-bottom:12px;position:relative;overflow:hidden;}
 .tmr-curr::before{content:'';position:absolute;top:0;left:0;bottom:0;width:4px;}
 .tmr-curr.tc-p::before{background:var(--plano);}
 .tmr-curr.tc-m::before{background:var(--montana);}
 .tmr-curr.tc-r::before{background:var(--green);}
-.tmr-curr-label{font-family:'Space Mono',monospace;font-size:8px;color:var(--muted);letter-spacing:3px;text-transform:uppercase;margin-bottom:8px;}
-.tmr-curr-pos{display:inline-block;font-size:9px;font-weight:700;font-family:'Space Mono',monospace;padding:3px 10px;border-radius:3px;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px;}
-.tmr-curr-desc{font-size:clamp(16px,3.5vw,20px);color:var(--text);font-weight:500;margin-bottom:6px;line-height:1.3;}
+.tmr-curr-label{font-family:'Space Mono',monospace;font-size:8px;color:var(--muted);letter-spacing:3px;text-transform:uppercase;margin-bottom:6px;}
+.tmr-curr-pos{display:inline-block;font-size:9px;font-weight:700;font-family:'Space Mono',monospace;padding:3px 10px;border-radius:3px;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px;}
+.tmr-curr-desc{font-size:clamp(15px,3.5vw,18px);color:var(--text);font-weight:500;margin-bottom:4px;line-height:1.3;}
 .tmr-curr-int{display:inline-block;font-size:9px;font-family:'Space Mono',monospace;padding:2px 8px;border-radius:3px;letter-spacing:.5px;}
 
 /* next interval */
 .tmr-next{background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:var(--rad);
-  padding:10px 14px;margin-bottom:18px;display:flex;align-items:center;gap:10px;}
-.tmr-next-lbl{font-family:'Space Mono',monospace;font-size:8px;color:var(--muted);letter-spacing:2px;text-transform:uppercase;white-space:nowrap;}
-.tmr-next-desc{font-size:12px;color:var(--muted);flex:1;}
-.tmr-next-time{font-family:'Space Mono',monospace;font-size:11px;color:var(--muted);white-space:nowrap;}
+  padding:12px 14px;margin-bottom:15px;display:flex;flex-direction:column;gap:4px;}
+.tmr-next-top{display:flex;justify-content:space-between;align-items:center;}
+.tmr-next-lbl{font-family:'Space Mono',monospace;font-size:8px;color:var(--accent3);letter-spacing:2px;text-transform:uppercase;}
+.tmr-next-time{font-family:'Space Mono',monospace;font-size:10px;color:var(--muted);}
+.tmr-next-desc{font-size:13px;color:var(--text);font-weight:500;}
 
 /* controls */
-.tmr-controls{display:flex;gap:10px;margin-bottom:20px;}
+.tmr-controls{display:flex;gap:8px;margin-bottom:15px;}
 .btn-ctrl{flex:1;background:var(--card);border:1px solid var(--border);color:var(--text);font-family:'Bebas Neue',sans-serif;
-  font-size:18px;letter-spacing:2px;padding:14px;border-radius:var(--rad);cursor:pointer;transition:all .15s;text-transform:uppercase;}
+  font-size:16px;letter-spacing:2px;padding:12px;border-radius:var(--rad);cursor:pointer;transition:all .15s;text-transform:uppercase;}
 .btn-ctrl:hover{border-color:var(--accent);}
 .btn-ctrl.primary{background:var(--accent);color:#08080d;border-color:var(--accent);}
 .btn-ctrl.primary:hover{opacity:.9;}
@@ -241,7 +250,7 @@ body::before{content:'';position:fixed;inset:0;
 /* mini schedule */
 .tmr-schedule{background:var(--surface);border:1px solid var(--border);border-radius:var(--rad);overflow:hidden;}
 .tmr-sched-hdr{padding:10px 14px;font-family:'Space Mono',monospace;font-size:9px;color:var(--muted);letter-spacing:3px;text-transform:uppercase;border-bottom:1px solid var(--border);}
-.tmr-sched-list{max-height:240px;overflow-y:auto;}
+.tmr-sched-list{max-height:180px;overflow-y:auto;}
 .sched-item{display:flex;align-items:center;gap:8px;padding:7px 14px;border-bottom:1px solid rgba(255,255,255,.03);}
 .sched-item:last-child{border-bottom:none;}
 .sched-item.done{opacity:.3;}
@@ -272,32 +281,31 @@ body::before{content:'';position:fixed;inset:0;
   <div class="mode-grid" id="modeGrid"></div>
 
   <div class="sec-lbl">02 · Arrancar</div>
-  <div class="info-bar">
-    <div class="ii"><div class="iv2" style="color:var(--hibrido)">10:15</div><div class="ik">Inicio</div></div>
-    <div class="isep">·</div>
-    <div class="ii"><div class="iv2" style="color:var(--hibrido)">10:20</div><div class="ik">Fin calentamiento</div></div>
-    <div class="isep">·</div>
-    <div class="ii"><div class="iv2" style="color:var(--accent)" id="iBlocks">—</div><div class="ik">Bloques</div></div>
-    <div class="isep">·</div>
-    <div class="ii"><div class="iv2" style="color:var(--accent)" id="iDur">—</div><div class="ik">Min / bloque</div></div>
-    <div class="isep">·</div>
-    <div class="ii"><div class="iv2" style="color:var(--accent2)" id="iCierre">—</div><div class="ik">Cierre</div></div>
-  </div>
   <button class="btn-main" id="btnStart" disabled>⚡ Iniciar Recorrido</button>
 
-  <div class="loader" id="loader"><div class="lspin"></div>GENERANDO CLASE...</div>
+  <div class="loader" id="loader"><div class="lspin"></div>GENERANDO CLASE DINÁMICA...</div>
   <div id="output"></div>
 </div>
 
-<!-- TIMER OVERLAY -->
 <div id="timerOverlay">
   <div class="timer-shell">
     <div class="tmr-top">
-      <button class="tmr-close" onclick="closeTimer()">✕ Cerrar</button>
+      <button class="tmr-close" onclick="closeTimer()">← Volver al armador</button>
       <div class="tmr-mode-lbl" id="tmrModeLabel">—</div>
     </div>
     <div class="tmr-progress-wrap"><div class="tmr-progress" id="tmrProgress"></div></div>
-    <div class="tmr-block-label" id="tmrBlockLabel">—</div>
+    
+    <div class="tmr-block-context">
+      <div class="ctx-box">
+        <div class="ctx-lbl">Bloque actual</div>
+        <div class="ctx-val" id="ctxBlockName">Entrada en calor</div>
+      </div>
+      <div class="ctx-box">
+        <div class="ctx-lbl">Duración y término del Bloque</div>
+        <div class="ctx-val" id="ctxBlockTime">⏱ 5' <span>→ 10:20</span></div>
+      </div>
+    </div>
+
     <div class="tmr-circle-wrap">
       <div class="tmr-circle">
         <svg viewBox="0 0 100 100">
@@ -306,27 +314,33 @@ body::before{content:'';position:fixed;inset:0;
             stroke-dasharray="276.46" stroke-dashoffset="0" stroke="var(--accent)"/>
         </svg>
         <div class="tmr-digits" id="tmrDigits">0:00</div>
-        <div class="tmr-interval-num" id="tmrIvNum">Intervalo 1 / 1</div>
+        <div class="tmr-interval-num" id="tmrIvNum">Intervalo 1</div>
       </div>
     </div>
+
     <div class="tmr-curr" id="tmrCurrCard">
       <div class="tmr-curr-label">AHORA</div>
       <div><span class="tmr-curr-pos" id="tmrCurrPos">Sentado</span></div>
       <div class="tmr-curr-desc" id="tmrCurrDesc">—</div>
       <span class="tmr-curr-int" id="tmrCurrInt">—</span>
     </div>
+
     <div class="tmr-next" id="tmrNextWrap">
-      <span class="tmr-next-lbl">SIGUIENTE</span>
-      <span class="tmr-next-desc" id="tmrNextDesc">—</span>
-      <span class="tmr-next-time" id="tmrNextTime">—</span>
+      <div class="tmr-next-top">
+        <span class="tmr-next-lbl">LO SIGUIENTE</span>
+        <span class="tmr-next-time" id="tmrNextTime">—</span>
+      </div>
+      <div class="tmr-next-desc" id="tmrNextDesc">—</div>
     </div>
+
     <div class="tmr-controls">
       <button class="btn-ctrl" onclick="skipInterval()">⏭ Saltar</button>
       <button class="btn-ctrl primary" id="btnPlayPause" onclick="togglePause()">⏸ Pausar</button>
       <button class="btn-ctrl" onclick="restartTimer()">↺ Reiniciar</button>
     </div>
+
     <div class="tmr-schedule">
-      <div class="tmr-sched-hdr">Todos los intervalos</div>
+      <div class="tmr-sched-hdr">Plan de clase completo</div>
       <div class="tmr-sched-list" id="tmrSchedList"></div>
     </div>
   </div>
@@ -337,17 +351,14 @@ body::before{content:'';position:fixed;inset:0;
 // MODES
 // ═══════════════════════════════════════════════════════
 const MODES=[
-  // ── PUROS ──
   {id:1, cat:'Puro',        desc:'3 Plano + 3 Montaña',   blocks:['P','P','P','M','M','M']},
   {id:2, cat:'Puro',        desc:'2 Plano + 2 Montaña',   blocks:['P','P','M','M']},
   {id:3, cat:'Puro',        desc:'3 Montaña + 3 Plano',   blocks:['M','M','M','P','P','P']},
   {id:4, cat:'Puro',        desc:'2 Montaña + 2 Plano',   blocks:['M','M','P','P']},
-  // ── INTERCALADOS ──
   {id:5, cat:'Intercalado', desc:'Plano/Montaña ×3',       blocks:['P','M','P','M','P','M']},
   {id:6, cat:'Intercalado', desc:'Plano/Montaña ×2',       blocks:['P','M','P','M']},
   {id:7, cat:'Intercalado', desc:'Montaña/Plano ×3',       blocks:['M','P','M','P','M','P']},
   {id:8, cat:'Intercalado', desc:'Montaña/Plano ×2',       blocks:['M','P','M','P']},
-  // ── HÍBRIDOS ──
   {id:9,  cat:'Híbrido', desc:'Plano→Montaña interno ×6', blocks:['HP','HP','HP','HP','HP','HP']},
   {id:10, cat:'Híbrido', desc:'Plano→Montaña interno ×4', blocks:['HP','HP','HP','HP']},
   {id:11, cat:'Híbrido', desc:'Montaña→Plano interno ×6', blocks:['HM','HM','HM','HM','HM','HM']},
@@ -356,11 +367,6 @@ const MODES=[
 
 const CLOSE=['10:52','10:53','10:54','10:55'];
 const DUR_POOL=[15,20,30,45,60];
-
-// Valid combos: blockCount × blockDurMin ∈ 32–35
-const ALL_COMBOS=[];
-for(let dur=5;dur<=9;dur++)
-  for(let cnt=4;cnt<=7;cnt++){const t=dur*cnt;if(t>=32&&t<=35)ALL_COMBOS.push({dur,cnt,total:t});}
 
 // ═══════════════════════════════════════════════════════
 // HELPERS
@@ -374,21 +380,20 @@ const BASE=10*60;
 // EXERCISES
 // ═══════════════════════════════════════════════════════
 const PLANO_EX=[
-  {desc:'90 RPM de pie',             pos:'Parado',  type:'90p',     maxInt:'Media Alta'},
-  {desc:'100 RPM de pie',            pos:'Parado',  type:'100p',    maxInt:'Alta'},
-  {desc:'100 RPM variante de pie',   pos:'Parado',  type:'100p2',   maxInt:'Alta'},
-  {desc:'110 RPM sentado',           pos:'Sentado', type:'110s',    maxInt:'Alta'},
-  {desc:'Sprint de plano',           pos:'Sentado', type:'sprint_p',maxInt:'Muy Alta'},
+  {desc:'90 RPM de pie',             pos:'Parado',  type:'90p', label:'90 RPM'},
+  {desc:'100 RPM de pie',            pos:'Parado',  type:'100p', label:'100 RPM'},
+  {desc:'100 RPM variante de pie',   pos:'Parado',  type:'100p2', label:'100 RPM'},
+  {desc:'110 RPM sentado',           pos:'Sentado', type:'110s', label:'110 RPM'},
+  {desc:'Sprint de plano',           pos:'Sentado', type:'sprint_p', label:'Sprint en plano'},
 ];
 const MONT_EX=[
-  {desc:'60 RPM fuerza base',        pos:null, type:'60b',      maxInt:'Media Alta'},
-  {desc:'Acelerado en montaña',      pos:null, type:'acel_m',   maxInt:'Alta'},
-  {desc:'Sprint de montaña',         pos:null, type:'sprint_m', maxInt:'Muy Alta'},
-  {desc:'Fuerza Máxima (FM)',        pos:null, type:'fm',       maxInt:'Muy Alta'},
-  {desc:'80 RPM viento en contra',   pos:null, type:'80vc',     maxInt:'Media Alta'},
+  {desc:'60 RPM fuerza base',        pos:null, type:'60b', label:'60 RPM'},
+  {desc:'Acelerado en montaña',      pos:null, type:'acel_m', label:'Acelerado montaña'},
+  {desc:'Sprint de montaña',         pos:null, type:'sprint_m', label:'Sprint montaña'},
+  {desc:'Fuerza Máxima (FM)',        pos:null, type:'fm', label:'Fuerza Máxima'},
+  {desc:'80 RPM viento en contra',   pos:null, type:'80vc', label:'80 RPM'},
 ];
 
-// Intensity matrix [tier0=≤30s, tier1=≤45s, tier2=>45s]
 const INT_MAP={
   '90p':     ['Media Baja','Media','Media Alta'],
   '100p':    ['Media Baja','Media Alta','Alta'],
@@ -401,6 +406,7 @@ const INT_MAP={
   'fm':      ['Media Alta','Alta','Muy Alta'],
   '80vc':    ['Media Baja','Media','Media Alta'],
 };
+
 function getInt(type,sec){
   const t=sec<=30?0:sec<=45?1:2;
   return(INT_MAP[type]&&INT_MAP[type][t])||'Media';
@@ -415,55 +421,92 @@ function safePos(ex,isP){
 }
 
 // ═══════════════════════════════════════════════════════
-// DURATION GENERATOR — anti-monotony, no consecutive 60"
+// DURACIONES DE BLOQUES
 // ═══════════════════════════════════════════════════════
+function distributeBlockDurations(totalWorkTime, blockCount){
+  let durations=[];
+  for(let i=0; i<blockCount; i++){ durations.push(5); }
+  let currentSum = durations.reduce((a,b)=>a+b, 0);
+  let attempts = 0;
+
+  while(currentSum !== totalWorkTime && attempts < 200){
+    attempts++;
+    let i = Math.floor(Math.random() * blockCount);
+    if(currentSum < totalWorkTime && durations[i] < 9){ durations[i]++; currentSum++; }
+    else if(currentSum > totalWorkTime && durations[i] > 5){ durations[i]--; currentSum--; }
+  }
+  return durations;
+}
+
 function genDurs(workSec){
-  const out=[];let e=0,prev=null,pp=null;
-  while(e<workSec-10){
-    const rem=workSec-e;
-    let pool=DUR_POOL.filter(d=>d<=rem+5);if(!pool.length)break;
-    // no consecutive 60"
-    if(prev===60)pool=pool.filter(d=>d!==60);if(!pool.length)pool=DUR_POOL.filter(d=>d<=rem+5);
-    const d=rnd(pool);out.push(d);e+=d;pp=prev;prev=d;
+  const out=[];
+  let remaining=workSec;
+  let prev=null;
+
+  while(remaining > 0){
+    if(remaining <= 15){ out.push(remaining); break; }
+    let pool=DUR_POOL.filter(d=>d <= remaining);
+    if(!pool.length) { out.push(remaining); break; }
+    if(prev===60) pool=pool.filter(d=>d!==60);
+    
+    const d=rnd(pool);
+    out.push(d);
+    remaining -= d;
+    prev=d;
+
+    if(remaining > 0 && remaining < 15){ out[out.length-1] += remaining; remaining = 0; }
+  }
+  for (let i = out.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [out[i], out[j]] = [out[j], out[i]];
   }
   return out;
 }
 
 // ═══════════════════════════════════════════════════════
-// BUILD INTERVALS for a terrain segment
-// blockNum used for "Very High" rule (block1 → force <30")
+// BUILD INTERVALS
 // ═══════════════════════════════════════════════════════
 function buildIntervals(terrain, durs, blockNum){
   const isP=terrain==='plano';
   const pool=[...(isP?PLANO_EX:MONT_EX)];
   const out=[];
-  let lastType=null;
+  
+  let lastLabel = null;
+  let lastPos = null;
 
   for(let i=0;i<durs.length;i++){
     let d=durs[i];
-    // pick exercise – no same type consecutively
-    let choices=pool.filter(e=>e.type!==lastType);
-    if(!choices.length)choices=pool;
-    const ex=choices[i%choices.length];
+    
+    let choices=pool.filter(e=>{
+      let futurePos = safePos(e, isP);
+      return !(e.label === lastLabel && futurePos === lastPos);
+    });
+    
+    if(!choices.length) choices=pool; 
+    const ex=choices[Math.floor(Math.random()*choices.length)];
+    
     let pos=safePos(ex,isP);
     let intensity=getInt(ex.type,d);
 
-    // Block 1 rule: Muy Alta must be <30"
-    if(blockNum===1&&intensity==='Muy Alta'&&d>=30) d=rnd([15,20]);
+    if(blockNum===1&&intensity==='Muy Alta'&&d>=30) { intensity='Alta'; }
 
     out.push({d,ex,pos,intensity,terrain});
-    lastType=ex.type;
+    
+    lastLabel=ex.label;
+    lastPos=pos;
 
-    // Compensación fisiológica: after Muy Alta → insert 30" recovery
-    if(intensity==='Muy Alta'){
+    if(intensity==='Muy Alta' && d >= 30){
       out.push({
-        d:30,
-        ex:{desc:'Recuperación activa — cadencia suave',pos:null,type:'rec'},
+        d:20,
+        ex:{desc:'Recuperación activa — cadencia suave',pos:null,type:'rec',label:'Recuperación'},
         pos:rnd(['Sentado','Parado']),
         intensity:'Media',
         terrain,
         isRecovery:true
       });
+      if(i+1 < durs.length && durs[i+1] > 20) durs[i+1] -= 20;
+      lastLabel = 'Recuperación';
+      lastPos = out[out.length-1].pos;
     }
   }
   return out;
@@ -473,8 +516,8 @@ function buildIntervals(terrain, durs, blockNum){
 // BUILD BLOCK
 // ═══════════════════════════════════════════════════════
 function buildBlock(bType, num, durMin){
-  const workSec=(durMin-1)*60; // last 60" = hydration (Muy Baja)
-  const hydration={d:60,ex:{desc:'Hidratación — cadencia muy suave',pos:null,type:'hyd'},pos:'Sentado',intensity:'Muy Baja',terrain:'hyd',isHydration:true};
+  const workSec=(durMin-1)*60;
+  const hydration={d:60,ex:{desc:'Hidratación — cadencia muy suave',pos:null,type:'hyd',label:'Hidratación'},pos:'Sentado',intensity:'Muy Baja',terrain:'hyd',isHydration:true};
 
   if(bType==='P'||bType==='M'){
     const terrain=bType==='P'?'plano':'montana';
@@ -483,7 +526,6 @@ function buildBlock(bType, num, durMin){
     return{bType,num,durMin,intervals,isHybrid:false,terrain};
   }
 
-  // HYBRID
   const firstT = bType==='HP'?'plano':'montana';
   const secondT= bType==='HP'?'montana':'plano';
   const half=Math.floor(workSec*0.5);
@@ -498,28 +540,24 @@ function buildBlock(bType, num, durMin){
 // ═══════════════════════════════════════════════════════
 // BUILD CLASS
 // ═══════════════════════════════════════════════════════
-function pickCombo(cnt){
-  const m=ALL_COMBOS.filter(c=>c.cnt===cnt);
-  return rnd(m.length?m:ALL_COMBOS);
-}
-
 let currentClass=null;
 
 function buildClass(mode){
   let bTypes=[...mode.blocks];
-  const combo=pickCombo(bTypes.length);
-  while(bTypes.length<combo.cnt)bTypes.push(rnd(['P','M']));
-  bTypes=bTypes.slice(0,combo.cnt);
-  const blocks=bTypes.map((t,i)=>buildBlock(t,i+1,combo.dur));
+  const blockCount=bTypes.length;
+  const totalWorkTime=32 + Math.floor(Math.random()*4);
+  const randomDurations = distributeBlockDurations(totalWorkTime, blockCount);
+  
+  const blocks=bTypes.map((t,i)=>buildBlock(t,i+1,randomDurations[i]));
   const closeTime=rnd(CLOSE);
-  return{blocks,combo,mode,closeTime};
+  return{blocks,totalWorkTime,mode,closeTime};
 }
 
 // ═══════════════════════════════════════════════════════
 // RENDER INTERVALS
 // ═══════════════════════════════════════════════════════
 function renderIv(iv){
-  if(iv.isHydration) return''; // rendered as separate bar
+  if(iv.isHydration) return'';
   const isP=iv.terrain==='plano';
   const bdrCls=iv.isRecovery?'iv-rec':isP?'iv-p':'iv-m';
   const tCls=iv.isRecovery?'cr':isP?'cp':'cm';
@@ -528,7 +566,7 @@ function renderIv(iv){
   return`<div class="iv-row ${bdrCls}">
   <span class="iv-time ${tCls}">${fmtSec(iv.d)}</span>
   <span class="iv-pos ${posCls}">${posIcon}</span>
-  <span class="iv-desc">${iv.ex.desc}</span>
+  <span class="iv-desc">${iv.ex.label} (${iv.ex.desc})</span>
   <span class="iv-int ${intCls(iv.intensity)}">${iv.intensity}</span>
 </div>`;
 }
@@ -537,7 +575,7 @@ function renderIv(iv){
 // RENDER CLASS
 // ═══════════════════════════════════════════════════════
 function renderClass(cls){
-  const{blocks,combo,mode,closeTime}=cls;
+  const{blocks,totalWorkTime,mode,closeTime}=cls;
   const nP=blocks.filter(b=>b.bType==='P').length;
   const nM=blocks.filter(b=>b.bType==='M').length;
   const nH=blocks.filter(b=>b.isHybrid).length;
@@ -551,13 +589,13 @@ function renderClass(cls){
 
   let times=`<div class="tl-times"><span>10:15</span><span>10:20</span>`;
   let cur=20;
-  blocks.forEach(()=>{cur+=combo.dur;times+=`<span>${addMin(BASE,cur)}</span>`;});
+  blocks.forEach((b)=>{cur+=b.durMin;times+=`<span>${addMin(BASE,cur)}</span>`;});
   times+=`</div>`;
 
   let html=`
 <div class="cls-hdr">
   <div><div class="cls-title">MODO ${String(mode.id).padStart(2,'0')} · ${mode.cat.toUpperCase()}</div><div class="cls-sub">${mode.desc}</div></div>
-  <div class="cls-meta"><strong>${blocks.length}</strong> bloques · <strong>${combo.dur}'</strong> c/u<br>Total: <strong>${combo.total} min</strong><br>Cierre: <strong style="color:var(--accent)">${closeTime}</strong></div>
+  <div class="cls-meta"><strong>${blocks.length}</strong> bloques · Tiempos variables<br>Total: <strong>${totalWorkTime} min</strong><br>Cierre: <strong style="color:var(--accent)">${closeTime}</strong></div>
 </div>
 <div class="tl-wrap"><div class="tl-lbl">Recorrido · 10:15 → ${closeTime}</div>${tl}${times}</div>
 <div class="blks">
@@ -567,9 +605,12 @@ function renderClass(cls){
     <span class="bar-t">10:15 → 10:20 · 5'</span>
   </div>`;
 
+  let accumulatedTime = 20;
   blocks.forEach((blk,bi)=>{
-    const tS=addMin(BASE,20+bi*combo.dur);
-    const tE=addMin(BASE,20+(bi+1)*combo.dur);
+    const tS=addMin(BASE,accumulatedTime);
+    accumulatedTime += blk.durMin;
+    const tE=addMin(BASE,accumulatedTime);
+    
     let bdgCls,bdgTxt;
     if(blk.isHybrid){
       bdgCls='bb-h';
@@ -582,7 +623,7 @@ function renderClass(cls){
     html+=`<div class="blk ${bi===0?'open':''}">
   <div class="blk-hdr" onclick="this.parentElement.classList.toggle('open')">
     <span class="blk-num">${String(bi+1).padStart(2,'0')}</span>
-    <span class="blk-badge ${bdgCls}">${bdgTxt}</span>
+    <span class="blk-badge ${bdgCls}">${bdgTxt} (${blk.durMin}')</span>
     <span class="blk-cnt">${ivCount} intervalos</span>
     <span class="blk-dur">${tS} → ${tE}</span>
     <span class="blk-arr">▾</span>
@@ -607,12 +648,12 @@ function renderClass(cls){
 
   html+=`<div class="cd-bar">
     <span class="bar-lbl">▸ Vuelta a la Calma</span>
-    <span class="bar-det">Posterior a ${closeTime} — pedaleo libre + estiramientos</span>
+    <span class="bar-det">Pedaleo libre y estiramiento muscular</span>
     <span class="bar-t" style="color:var(--hibrido)">${closeTime} →</span>
   </div></div>
   <div class="summary">
     <div class="sum-c"><div class="sum-v" style="color:var(--hibrido)">10:15</div><div class="sum-k">Inicio</div></div>
-    <div class="sum-c"><div class="sum-v" style="color:var(--accent)">${combo.total}'</div><div class="sum-k">Min bloques</div></div>
+    <div class="sum-c"><div class="sum-v" style="color:var(--accent)">${totalWorkTime}'</div><div class="sum-k">Min bloques</div></div>
     <div class="sum-c"><div class="sum-v" style="color:var(--accent)">${blocks.length}</div><div class="sum-k">Bloques</div></div>
     <div class="sum-c"><div class="sum-v" style="color:var(--plano)">${nP}</div><div class="sum-k">Plano</div></div>
     <div class="sum-c"><div class="sum-v" style="color:var(--montana)">${nM+nH}</div><div class="sum-k">Mont/Híb</div></div>
@@ -627,14 +668,11 @@ function renderClass(cls){
 let selectedMode=null;
 const grid=document.getElementById('modeGrid');
 const catColor={Puro:'#e8d840',Intercalado:'#00d4ff',Híbrido:'#c084fc'};
-const catGroups=['Puro','Intercalado','Híbrido'];
 
-// Insert group headers
 let lastCat='';
 MODES.forEach(m=>{
   if(m.cat!==lastCat){
     if(lastCat!==''){
-      // spacer label
       const lbl=document.createElement('div');
       lbl.style.cssText='grid-column:1/-1;font-family:"Space Mono",monospace;font-size:9px;color:var(--muted);letter-spacing:4px;text-transform:uppercase;padding:4px 0 0;border-top:1px solid var(--border);margin-top:4px;';
       lbl.textContent=m.cat+'S';
@@ -657,11 +695,6 @@ MODES.forEach(m=>{
   el.addEventListener('click',()=>{
     document.querySelectorAll('.mc').forEach(c=>c.classList.remove('sel'));
     el.classList.add('sel'); selectedMode=m;
-    const p=ALL_COMBOS.filter(c=>c.cnt===m.blocks.length);
-    const s=p.length?p[0]:ALL_COMBOS[0];
-    document.getElementById('iBlocks').textContent=s.cnt;
-    document.getElementById('iDur').textContent=s.dur+"'";
-    document.getElementById('iCierre').textContent=rnd(CLOSE);
     document.getElementById('btnStart').disabled=false;
   });
   grid.appendChild(el);
@@ -678,7 +711,6 @@ document.getElementById('btnStart').addEventListener('click',async()=>{
   await new Promise(r=>setTimeout(r,700));
   currentClass=buildClass(selectedMode);
   output.innerHTML=renderClass(currentClass);
-  // Add timer button
   output.insertAdjacentHTML('beforeend',`
     <div class="timer-btn-wrap">
       <button class="btn-timer" onclick="openTimer()">
@@ -693,7 +725,7 @@ document.getElementById('btnStart').addEventListener('click',async()=>{
 // TIMER ENGINE
 // ═══════════════════════════════════════════════════════
 let timerState={
-  flatList:[],   // all intervals in order
+  flatList:[],
   idx:0,
   remaining:0,
   totalSec:0,
@@ -702,22 +734,49 @@ let timerState={
   paused:false,
 };
 
-// Flatten class into a linear list of intervals
 function flattenClass(cls){
   const list=[];
-  // warmup
-  list.push({d:300,desc:'Entrada en Calor — pedaleo progresivo',pos:'Sentado',intensity:'Media Baja',terrain:'warmup',isWarmup:true});
+  let accumTime = 20;
+  
+  list.push({
+    d:300,
+    desc:'Pedaleo progresivo',
+    shortLabel:'Calentamiento',
+    pos:'Sentado',
+    intensity:'Media Baja',
+    terrain:'warmup',
+    isWarmup:true,
+    blockRef: { num: 0, name: 'Entrada en Calor', dur: 5, endHour: '10:20' }
+  });
+  
   cls.blocks.forEach((blk,bi)=>{
+    const bName = blk.isHybrid ? 'Híbrido' : blk.terrain==='plano' ? 'Plano' : 'Montaña';
+    accumTime += blk.durMin;
+    const endHourStr = addMin(BASE, accumTime);
+    
     blk.intervals.forEach(iv=>{
+      const posLabel = iv.pos === 'Sentado' ? 'sentado' : 'parado';
+      let exerciseLabel = iv.ex.label;
+
+      let fullActionLabel = `${exerciseLabel} ${posLabel}`;
+      if (iv.isHydration) fullActionLabel = "💧 Hidratación";
+      if (iv.isRecovery) fullActionLabel = "Recuperación activa";
+
       list.push({
         d:iv.d,
         desc:iv.ex.desc,
-        pos:iv.pos||(rnd(['Sentado','Parado'])),
+        shortLabel:fullActionLabel,
+        pos:iv.pos||'Sentado',
         intensity:iv.intensity,
         terrain:iv.terrain,
-        blockNum:bi+1,
         isHydration:iv.isHydration||false,
         isRecovery:iv.isRecovery||false,
+        blockRef: {
+          num: bi+1,
+          name: bName,
+          dur: blk.durMin,
+          endHour: endHourStr
+        }
       });
     });
   });
@@ -752,7 +811,7 @@ function buildSchedule(list){
     return`<div class="sched-item" id="sched_${i}">
   <div class="sched-dot" style="background:${dotColor}"></div>
   <span class="sched-t">${fmtSec(iv.d)}</span>
-  <span class="sched-d">${iv.desc}</span>
+  <span class="sched-d">${iv.shortLabel}</span>
   <span class="sched-pos">${iv.pos}</span>
 </div>`;
   }).join('');
@@ -791,29 +850,33 @@ function updateTimerUI(){
   const r=timerState.remaining;
   const m=Math.floor(r/60),s=r%60;
 
-  // Digits
   document.getElementById('tmrDigits').textContent=`${m}:${String(s).padStart(2,'0')}`;
-  document.getElementById('tmrIvNum').textContent=`Intervalo ${timerState.idx+1} / ${timerState.flatList.length}`;
+  
+  // Imprimimos el texto en el reloj (ahora acepta múltiples líneas por CSS)
+  const fullLabelText = `${timerState.idx+1} · ${iv.shortLabel}`;
+  document.getElementById('tmrIvNum').textContent = fullLabelText;
 
-  // Circle
   const circ=document.getElementById('tmrCircle');
   const total=timerState.flatList[timerState.idx].d;
   const prog=r/total;
   const circumference=276.46;
   circ.style.strokeDashoffset=circumference*(1-prog);
-  // Color by terrain
   const strokeColor=iv.terrain==='plano'?'var(--plano)':iv.terrain==='montana'?'var(--montana)':iv.isWarmup?'var(--hibrido)':'var(--green)';
   circ.style.stroke=strokeColor;
   document.getElementById('tmrDigits').style.color=strokeColor;
 
-  // Block label
-  document.getElementById('tmrBlockLabel').textContent=
-    iv.isWarmup?'ENTRADA EN CALOR':`BLOQUE ${iv.blockNum} · ${iv.terrain==='plano'?'PLANO':iv.terrain==='montana'?'MONTAÑA':iv.terrain==='hyd'?'HIDRATACIÓN':'—'}`;
+  const bRef = iv.blockRef;
+  if(bRef.num === 0){
+    document.getElementById('ctxBlockName').textContent = bRef.name;
+  } else {
+    document.getElementById('ctxBlockName').textContent = `Bloque ${bRef.num} · ${bRef.name}`;
+  }
+  document.getElementById('ctxBlockTime').innerHTML = `⏱ ${bRef.dur}' <span>→ ${bRef.endHour}</span>`;
 
-  // Current card
   const card=document.getElementById('tmrCurrCard');
   card.className=`tmr-curr ${iv.terrain==='plano'?'tc-p':iv.terrain==='montana'?'tc-m':'tc-r'}`;
-  document.getElementById('tmrCurrDesc').textContent=iv.desc;
+  document.getElementById('tmrCurrDesc').textContent=iv.shortLabel;
+  
   const posEl=document.getElementById('tmrCurrPos');
   posEl.textContent=iv.pos==='Sentado'?'🪑 Sentado':'🧍 Parado';
   posEl.className=`tmr-curr-pos ${iv.pos==='Sentado'?'pos-s':'pos-p'}`;
@@ -822,19 +885,18 @@ function updateTimerUI(){
   intEl.className=`tmr-curr-int ${intCls(iv.intensity)}`;
   intEl.style.color=intColor(iv.intensity);
 
-  // Next
   if(next){
     document.getElementById('tmrNextWrap').style.display='flex';
-    document.getElementById('tmrNextDesc').textContent=next.desc;
-    document.getElementById('tmrNextTime').textContent=fmtSec(next.d);
+    document.getElementById('tmrNextDesc').textContent=`${next.shortLabel} ${fmtSec(next.d)}`;
+    document.getElementById('tmrNextTime').textContent='En camino';
   }else{
-    document.getElementById('tmrNextWrap').style.display='none';
+    document.getElementById('tmrNextWrap').style.display='flex';
+    document.getElementById('tmrNextDesc').textContent='Fin de clase · Vuelta a la calma';
+    document.getElementById('tmrNextTime').textContent='—';
   }
 
-  // Overall progress
   document.getElementById('tmrProgress').style.width=`${(timerState.elapsedSec/timerState.totalSec*100).toFixed(1)}%`;
 
-  // Schedule highlight
   document.querySelectorAll('.sched-item').forEach((el,i)=>{
     el.classList.toggle('done',i<timerState.idx);
     el.classList.toggle('current',i===timerState.idx);
@@ -864,9 +926,6 @@ function restartTimer(){
   startInterval();
 }
 
-// ═══════════════════════════════════════════════════════
-// BELL — Web Audio API
-// ═══════════════════════════════════════════════════════
 let audioCtx=null;
 function getAudio(){if(!audioCtx)audioCtx=new(window.AudioContext||window.webkitAudioContext)();return audioCtx;}
 function playBell(){
