@@ -2,7 +2,13 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#e8d840">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="SPIN LAB">
+<link rel="manifest" id="pwa-manifest">
 <title>SPIN LAB · Ponete Fit Pro</title>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
@@ -317,6 +323,70 @@ body::before{content:'';position:fixed;inset:0;
 .sched-pos{font-size:11px;color:var(--muted);}
 
 ::-webkit-scrollbar{width:3px;height:3px;} ::-webkit-scrollbar-track{background:var(--bg);} ::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px;}
+
+/* ── BOTÓN PANTALLA COMPLETA ── */
+.btn-fs{
+  background:var(--card);border:1px solid var(--accent);color:var(--accent);
+  font-family:'Bebas Neue',sans-serif;font-size:clamp(13px,3.5vw,16px);
+  letter-spacing:2px;padding:8px 16px;border-radius:5px;cursor:pointer;
+  transition:all .15s;white-space:nowrap;flex-shrink:0;
+}
+.btn-fs:hover{background:rgba(232,216,64,.12);}
+
+/* ══════════════════════════════════════════
+   MODO FULLSCREEN — vista de pista
+   (clase: fs-mode en #timerOverlay)
+══════════════════════════════════════════ */
+#timerOverlay.fs-mode .tmr-block-context{display:none;}
+#timerOverlay.fs-mode .tmr-schedule{display:none;}
+#timerOverlay.fs-mode .timer-shell{max-width:100%;padding:0 22px 22px;}
+#timerOverlay.fs-mode .tmr-progress-wrap{height:8px;margin-bottom:10px;}
+
+/* reloj — mucho más grande */
+#timerOverlay.fs-mode .tmr-circle{
+  width:clamp(260px,62vw,380px);
+  height:clamp(260px,62vw,380px);
+}
+#timerOverlay.fs-mode .tmr-digits{
+  font-size:clamp(96px,24vw,150px);
+}
+#timerOverlay.fs-mode .tmr-interval-num{
+  font-size:clamp(12px,3vw,16px);
+}
+#timerOverlay.fs-mode .tmr-circle-wrap{margin-bottom:12px;}
+
+/* AHORA — nombre del ejercicio enorme */
+#timerOverlay.fs-mode .tmr-curr{padding:20px 20px 18px;}
+#timerOverlay.fs-mode .tmr-curr-desc{
+  font-size:clamp(32px,9vw,60px);
+  margin-bottom:14px;
+}
+#timerOverlay.fs-mode .tmr-curr-pos{
+  font-size:clamp(15px,4.5vw,24px);
+  padding:8px 18px;
+}
+#timerOverlay.fs-mode .tmr-curr-int{
+  font-size:clamp(14px,4vw,22px);
+  padding:8px 16px;
+}
+#timerOverlay.fs-mode .tmr-curr-dur{
+  font-size:clamp(13px,3.5vw,17px);margin-top:8px;
+}
+
+/* LO SIGUIENTE — grande y visible */
+#timerOverlay.fs-mode .tmr-next{padding:18px 20px;gap:10px;}
+#timerOverlay.fs-mode .tmr-next-time{
+  font-size:clamp(40px,10vw,60px);
+}
+#timerOverlay.fs-mode .tmr-next-desc{
+  font-size:clamp(24px,7vw,44px);
+}
+
+/* controles más grandes en fullscreen */
+#timerOverlay.fs-mode .btn-ctrl{
+  font-size:clamp(18px,5vw,26px);
+  padding:16px 8px;
+}
 </style>
 </head>
 <body>
@@ -346,7 +416,8 @@ body::before{content:'';position:fixed;inset:0;
 <div id="timerOverlay">
   <div class="timer-shell">
     <div class="tmr-top">
-      <button class="tmr-close" onclick="closeTimer()">← Volver al armador</button>
+      <button class="tmr-close" onclick="closeTimer()">← Volver</button>
+      <button class="btn-fs" id="btnFs" onclick="toggleFullscreen()">⛶ Pantalla completa</button>
       <div class="tmr-mode-lbl" id="tmrModeLabel">—</div>
     </div>
     <div class="tmr-progress-wrap"><div class="tmr-progress" id="tmrProgress"></div></div>
@@ -460,21 +531,25 @@ const PLANO_EX=[
 
 const MONT_EX=[
   // openers — arrancan el bloque (variados, no siempre el mismo)
-  {desc:'60 RPM fuerza base',        pos:'Parado',  type:'60b',     label:'60 RPM fuerza',    opener:true, intScore:1},
-  {desc:'Acelerado en montaña',      pos:'Parado',  type:'acel_m',  label:'Acelerado montaña',opener:true, intScore:2},
-  {desc:'80 RPM viento en contra',   pos:'Parado',  type:'80vc',    label:'80 RPM',           opener:true, intScore:1, rare:true},
+  {desc:'60 RPM fuerza base',              pos:'Parado',  type:'60b',     label:'60 RPM fuerza',      opener:true, intScore:1},
+  {desc:'Acelerado en montaña',            pos:'Parado',  type:'acel_m',  label:'Acelerado montaña',  opener:true, intScore:2},
+  {desc:'80 RPM viento en contra',         pos:'Parado',  type:'80vc',    label:'80 RPM',             opener:true, intScore:1, rare:true},
   // build — desarrollo
-  {desc:'60 RPM con más carga',      pos:'Parado',  type:'60b2',    label:'60 RPM cargado',   intScore:2},
-  {desc:'Acelerado en montaña',      pos:'Parado',  type:'acel_m2', label:'Acelerado fuerte',  intScore:3},
+  {desc:'60 RPM con más carga',            pos:'Parado',  type:'60b2',    label:'60 RPM cargado',     intScore:2},
+  {desc:'Acelerado en montaña',            pos:'Parado',  type:'acel_m2', label:'Acelerado fuerte',   intScore:3},
+  // sentado en montaña — permite descarga de manos sin salir del trabajo
+  {desc:'Escalada sentado — carga moderada', pos:'Sentado', type:'sent_m', label:'Escalada en silla', intScore:2},
   // peak — pico final
-  {desc:'Fuerza Máxima (FM)',        pos:'Parado',  type:'fm',      label:'Fuerza Máxima',    peak:true, intScore:4},
-  {desc:'Sprint de montaña',         pos:'Parado',  type:'sprint_m',label:'Sprint montaña',   peak:true, intScore:5},
+  {desc:'Fuerza Máxima (FM)',              pos:'Parado',  type:'fm',      label:'Fuerza Máxima',      peak:true, intScore:4},
+  {desc:'Sprint de montaña',               pos:'Parado',  type:'sprint_m',label:'Sprint montaña',     peak:true, intScore:5},
 ];
 
 const INT_MAP={
   '90p':     ['Media Baja','Media','Media Alta'],
   '100p':    ['Media','Media Alta','Alta'],
   '100p2':   ['Media','Media Alta','Alta'],
+  'sent_m':  ['Media Baja','Media','Media Alta'],
+  'rest_hands':['Media Baja','Media Baja','Media Baja'],
   '110s':    ['Media Alta','Alta','Alta'],
   'sprint_p':['Alta','Alta','Muy Alta'],
   '60b':     ['Media Baja','Media','Media Alta'],
@@ -572,12 +647,15 @@ function pickEx(pool, lastType, preferHigher, minScore, maxScore){
   return rnd(top);
 }
 
+const MAX_PARADO_SEC=180; // 3 minutos máximo de pie consecutivos
+
 function buildIntervals(terrain, durs, blockNum){
   const isP=terrain==='plano';
   const fullPool=[...(isP?PLANO_EX:MONT_EX)];
   const out=[];
   const n=durs.length;
   let lastType=null;
+  let consecutiveParadoSec=0; // acumulador de tiempo de pie seguido
 
   // Filtrar raros: solo aparecen si no se usaron ya
   function filterRare(pool){
@@ -589,7 +667,7 @@ function buildIntervals(terrain, durs, blockNum){
   }
 
   for(let i=0;i<n;i++){
-    const d=durs[i];
+    let d=durs[i];
     const isFirst = i===0;
     const isLast  = i===n-1;
 
@@ -631,6 +709,39 @@ function buildIntervals(terrain, durs, blockNum){
 
     if(ex.rare) usedRareThisClass[ex.type]=true;
 
+    // ── LÍMITE DE 3 MINUTOS DE PIE ──────────────────────
+    // Si el ejercicio elegido es Parado y sumaría más de 180s consecutivos:
+    //   1. Intentar cambiar a un ejercicio Sentado del pool
+    //   2. Si no hay ninguno (todo el pool es Parado), insertar
+    //      un corto descanso sentado antes de continuar de pie
+    if(ex.pos==='Parado' && consecutiveParadoSec+d > MAX_PARADO_SEC){
+      const sentPool=fullPool.filter(e=>e.pos==='Sentado' && e.type!==lastType && !e.peak);
+      if(sentPool.length){
+        // cambiar directamente al sentado disponible
+        ex=rnd(sentPool);
+      } else {
+        // no hay ejercicio sentado en este terreno — insertar descanso corto
+        const restSec=Math.min(20,d-10);
+        if(restSec>=10){
+          out.push({
+            d:restSec,
+            ex:{desc:'Pedaleo suave en silla — descanso de manos',pos:'Sentado',type:'rest_hands',label:'Descanso en silla'},
+            pos:'Sentado',
+            intensity:'Media Baja',
+            terrain,
+            isRecovery:true,
+            shortLabel:'Descanso en silla'
+          });
+          consecutiveParadoSec=0;
+          d-=restSec; // acortar el intervalo actual
+          if(d<=0){lastType='rest_hands';continue;}
+        }
+      }
+    }
+
+    // ── Actualizar contador de tiempo de pie consecutivo ──
+    consecutiveParadoSec = (ex.pos==='Parado') ? consecutiveParadoSec+d : 0;
+
     const pos=safePos(ex);
     let intensity=getInt(ex.type,d);
 
@@ -652,6 +763,7 @@ function buildIntervals(terrain, durs, blockNum){
         terrain,
         isRecovery:true
       });
+      consecutiveParadoSec=0; // reset: intervalo sentado interrumpe la racha
       if(i+1<n && durs[i+1]>20) durs[i+1]-=20;
       lastType='rec';
     }
@@ -909,6 +1021,7 @@ function flattenClass(cls){
       let fullActionLabel = `${exerciseLabel} ${posLabel}`;
       if (iv.isHydration) fullActionLabel = "💧 Hidratación";
       if (iv.isRecovery) fullActionLabel = "Recuperación activa";
+      if (iv.ex && iv.ex.type==='rest_hands') fullActionLabel = "💆 Descanso de manos — sentado";
 
       list.push({
         d:iv.d,
@@ -1126,6 +1239,126 @@ function playBell(){
     osc.stop(ctx.currentTime+0.6);
   }catch(e){}
 }
+
+/* ══════════════════════════════════════════
+   FULLSCREEN
+══════════════════════════════════════════ */
+let _isFs=false;
+
+function toggleFullscreen(){
+  const overlay=document.getElementById('timerOverlay');
+  if(!_isFs){
+    const el=document.documentElement;
+    const req=el.requestFullscreen||el.webkitRequestFullscreen||el.mozRequestFullScreen||el.msRequestFullscreen;
+    if(req) req.call(el).catch(()=>{});
+    overlay.classList.add('fs-mode');
+    document.getElementById('btnFs').textContent='✕ Salir de pantalla completa';
+    _isFs=true;
+  } else {
+    const ex=document.exitFullscreen||document.webkitExitFullscreen||document.mozCancelFullScreen||document.msExitFullscreen;
+    if(ex) ex.call(document).catch(()=>{});
+    overlay.classList.remove('fs-mode');
+    document.getElementById('btnFs').textContent='⛶ Pantalla completa';
+    _isFs=false;
+  }
+}
+
+// si el usuario sale con Escape, sincronizar estado
+['fullscreenchange','webkitfullscreenchange','mozfullscreenchange'].forEach(ev=>{
+  document.addEventListener(ev,()=>{
+    if(!document.fullscreenElement && !document.webkitFullscreenElement){
+      document.getElementById('timerOverlay').classList.remove('fs-mode');
+      document.getElementById('btnFs').textContent='⛶ Pantalla completa';
+      _isFs=false;
+    }
+  });
+});
+
+/* ══════════════════════════════════════════
+   PWA — manifest + service worker
+══════════════════════════════════════════ */
+(function setupPWA(){
+  // ── Genera íconos con canvas ──
+  function makeIcon(size){
+    const c=document.createElement('canvas');
+    c.width=c.height=size;
+    const ctx=c.getContext('2d');
+    // fondo
+    ctx.fillStyle='#08080d';
+    ctx.fillRect(0,0,size,size);
+    // círculo exterior accent
+    ctx.strokeStyle='#e8d840';
+    ctx.lineWidth=size*0.06;
+    ctx.beginPath();
+    ctx.arc(size/2,size/2,size*0.42,0,Math.PI*2);
+    ctx.stroke();
+    // texto "SL"
+    ctx.fillStyle='#e8d840';
+    ctx.font=`bold ${size*0.38}px Arial,sans-serif`;
+    ctx.textAlign='center';
+    ctx.textBaseline='middle';
+    ctx.fillText('SL',size/2,size/2+size*0.02);
+    return c.toDataURL('image/png');
+  }
+
+  const icon192=makeIcon(192);
+  const icon512=makeIcon(512);
+
+  // ── Manifest ──
+  const manifest={
+    name:'SPIN LAB · Ponete Fit Pro',
+    short_name:'SPIN LAB',
+    description:'Planeador y timer de clase de ciclismo indoor — Metodología Rafael',
+    start_url:'./',
+    scope:'./',
+    display:'standalone',
+    background_color:'#08080d',
+    theme_color:'#e8d840',
+    orientation:'portrait-primary',
+    icons:[
+      {src:icon192,sizes:'192x192',type:'image/png',purpose:'any maskable'},
+      {src:icon512,sizes:'512x512',type:'image/png',purpose:'any maskable'}
+    ]
+  };
+  const mBlob=new Blob([JSON.stringify(manifest)],{type:'application/json'});
+  document.getElementById('pwa-manifest').href=URL.createObjectURL(mBlob);
+
+  // ── Apple touch icon ──
+  const li=document.createElement('link');
+  li.rel='apple-touch-icon';li.href=icon192;
+  document.head.appendChild(li);
+
+  // ── Service Worker (cache offline) ──
+  if('serviceWorker' in navigator){
+    const swSrc=`
+const CACHE='spinlab-v1';
+const RES=[self.location.pathname||'/'];
+self.addEventListener('install',e=>{
+  e.waitUntil(caches.open(CACHE).then(c=>c.addAll(RES)));
+  self.skipWaiting();
+});
+self.addEventListener('activate',e=>{
+  e.waitUntil(caches.keys().then(ks=>Promise.all(
+    ks.filter(k=>k!==CACHE).map(k=>caches.delete(k))
+  )));
+  self.clients.claim();
+});
+self.addEventListener('fetch',e=>{
+  e.respondWith(
+    caches.match(e.request).then(r=>r||fetch(e.request).then(res=>{
+      if(res&&res.status===200&&e.request.method==='GET'){
+        const clone=res.clone();
+        caches.open(CACHE).then(c=>c.put(e.request,clone));
+      }
+      return res;
+    }))
+  );
+});
+`;
+    const swBlob=new Blob([swSrc],{type:'application/javascript'});
+    navigator.serviceWorker.register(URL.createObjectURL(swBlob),{scope:'./'}).catch(()=>{});
+  }
+})();
 </script>
 </body>
 </html>
