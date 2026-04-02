@@ -190,10 +190,10 @@ body::before{content:'';position:fixed;inset:0;
 
 /* paneles de contexto */
 .tmr-block-context{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:15px;}
-.ctx-box{background:var(--card);border:1px solid var(--border);border-radius:6px;padding:10px 12px;}
-.ctx-lbl{font-family:'Space Mono',monospace;font-size:8px;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-bottom:4px;}
-.ctx-val{font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;color:var(--text);}
-.ctx-val span{font-family:'Space Mono',monospace;font-size:11px;color:var(--accent);}
+.ctx-box{background:var(--card);border:1px solid var(--border);border-radius:6px;padding:12px 14px;}
+.ctx-lbl{font-family:'Space Mono',monospace;font-size:9px;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-bottom:6px;}
+.ctx-val{font-family:'DM Sans',sans-serif;font-size:clamp(13px,3.5vw,16px);font-weight:700;color:var(--text);line-height:1.3;}
+.ctx-val span{font-family:'Space Mono',monospace;font-size:clamp(12px,3vw,14px);color:var(--accent);}
 
 /* big timer */
 .tmr-circle-wrap{display:flex;flex-direction:column;align-items:center;margin-bottom:15px;}
@@ -206,38 +206,39 @@ body::before{content:'';position:fixed;inset:0;
 .tmr-circle-prog{fill:none;stroke-width:5;stroke-linecap:round;transition:stroke-dashoffset .8s linear,stroke .3s;}
 .tmr-digits{font-family:'Bebas Neue',sans-serif;font-size:clamp(48px,11vw,64px);line-height:1;letter-spacing:2px;z-index:1;}
 
-/* SOLUCIÓN: El texto se va para abajo en múltiples líneas si no entra a lo ancho */
+/* Intervalo num dentro del círculo */
 .tmr-interval-num{
   font-family:'Space Mono',monospace;
-  font-size:9px;
+  font-size:clamp(9px,2.2vw,11px);
   color:#ffffff;
   letter-spacing:1px;
   margin-top:4px;
   z-index:1;
   text-transform:uppercase;
-  max-width:70%; /* Margen de resguardo para que no roce el aro */
+  max-width:72%;
   text-align:center;
-  line-height:1.3; /* Espaciado cómodo por si se generan dos líneas */
+  line-height:1.35;
+  word-break:break-word;
 }
 
 /* current interval card */
-.tmr-curr{background:var(--card);border:1px solid var(--border);border-radius:var(--rad);padding:14px 16px;margin-bottom:12px;position:relative;overflow:hidden;}
-.tmr-curr::before{content:'';position:absolute;top:0;left:0;bottom:0;width:4px;}
+.tmr-curr{background:var(--card);border:1px solid var(--border);border-radius:var(--rad);padding:16px 16px;margin-bottom:12px;position:relative;overflow:hidden;}
+.tmr-curr::before{content:'';position:absolute;top:0;left:0;bottom:0;width:5px;}
 .tmr-curr.tc-p::before{background:var(--plano);}
 .tmr-curr.tc-m::before{background:var(--montana);}
 .tmr-curr.tc-r::before{background:var(--green);}
-.tmr-curr-label{font-family:'Space Mono',monospace;font-size:8px;color:var(--muted);letter-spacing:3px;text-transform:uppercase;margin-bottom:6px;}
-.tmr-curr-pos{display:inline-block;font-size:9px;font-weight:700;font-family:'Space Mono',monospace;padding:3px 10px;border-radius:3px;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px;}
-.tmr-curr-desc{font-size:clamp(15px,3.5vw,18px);color:var(--text);font-weight:500;margin-bottom:4px;line-height:1.3;}
-.tmr-curr-int{display:inline-block;font-size:9px;font-family:'Space Mono',monospace;padding:2px 8px;border-radius:3px;letter-spacing:.5px;}
+.tmr-curr-label{font-family:'Space Mono',monospace;font-size:9px;color:var(--muted);letter-spacing:3px;text-transform:uppercase;margin-bottom:8px;}
+.tmr-curr-pos{display:inline-block;font-size:11px;font-weight:700;font-family:'Space Mono',monospace;padding:5px 14px;border-radius:3px;text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px;}
+.tmr-curr-desc{font-size:clamp(20px,5vw,26px);color:var(--text);font-weight:700;margin-bottom:10px;line-height:1.25;}
+.tmr-curr-int{display:inline-block;font-size:12px;font-family:'Space Mono',monospace;padding:4px 12px;border-radius:3px;letter-spacing:.5px;}
 
 /* next interval */
-.tmr-next{background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:var(--rad);
-  padding:12px 14px;margin-bottom:15px;display:flex;flex-direction:column;gap:4px;}
+.tmr-next{background:rgba(0,212,255,.05);border:1px solid rgba(0,212,255,.2);border-left:4px solid var(--accent3);border-radius:var(--rad);
+  padding:14px 16px;margin-bottom:15px;display:flex;flex-direction:column;gap:6px;}
 .tmr-next-top{display:flex;justify-content:space-between;align-items:center;}
-.tmr-next-lbl{font-family:'Space Mono',monospace;font-size:8px;color:var(--accent3);letter-spacing:2px;text-transform:uppercase;}
-.tmr-next-time{font-family:'Space Mono',monospace;font-size:10px;color:var(--muted);}
-.tmr-next-desc{font-size:13px;color:var(--text);font-weight:500;}
+.tmr-next-lbl{font-family:'Space Mono',monospace;font-size:9px;color:var(--accent3);letter-spacing:2px;text-transform:uppercase;}
+.tmr-next-time{font-family:'Bebas Neue',sans-serif;font-size:20px;color:var(--accent3);letter-spacing:1px;}
+.tmr-next-desc{font-size:clamp(16px,4vw,22px);color:var(--text);font-weight:600;line-height:1.3;}
 
 /* controls */
 .tmr-controls{display:flex;gap:8px;margin-bottom:15px;}
@@ -320,9 +321,12 @@ body::before{content:'';position:fixed;inset:0;
 
     <div class="tmr-curr" id="tmrCurrCard">
       <div class="tmr-curr-label">AHORA</div>
-      <div><span class="tmr-curr-pos" id="tmrCurrPos">Sentado</span></div>
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px;flex-wrap:wrap;">
+        <span class="tmr-curr-pos" id="tmrCurrPos">Sentado</span>
+        <span class="tmr-curr-int" id="tmrCurrInt">—</span>
+      </div>
       <div class="tmr-curr-desc" id="tmrCurrDesc">—</div>
-      <span class="tmr-curr-int" id="tmrCurrInt">—</span>
+      <div style="margin-top:6px;font-family:'Space Mono',monospace;font-size:11px;color:var(--muted);" id="tmrCurrDurLabel"></div>
     </div>
 
     <div class="tmr-next" id="tmrNextWrap">
@@ -331,6 +335,7 @@ body::before{content:'';position:fixed;inset:0;
         <span class="tmr-next-time" id="tmrNextTime">—</span>
       </div>
       <div class="tmr-next-desc" id="tmrNextDesc">—</div>
+      <div style="font-family:'Space Mono',monospace;font-size:10px;color:var(--muted);margin-top:2px;" id="tmrNextDur"></div>
     </div>
 
     <div class="tmr-controls">
@@ -380,19 +385,28 @@ const BASE=10*60;
 // EXERCISES
 // ═══════════════════════════════════════════════════════
 const PLANO_EX=[
-  {desc:'90 RPM de pie',             pos:'Parado',  type:'90p', label:'90 RPM'},
-  {desc:'100 RPM de pie',            pos:'Parado',  type:'100p', label:'100 RPM'},
-  {desc:'100 RPM variante de pie',   pos:'Parado',  type:'100p2', label:'100 RPM'},
-  {desc:'110 RPM sentado',           pos:'Sentado', type:'110s', label:'110 RPM'},
-  {desc:'Sprint de plano',           pos:'Sentado', type:'sprint_p', label:'Sprint en plano'},
+  {desc:'90 RPM de pie',             pos:'Parado',  type:'90p',     label:'90 RPM',   weight:1},
+  {desc:'90 RPM sentado',            pos:'Sentado', type:'90p',     label:'90 RPM',   weight:1},
+  {desc:'100 RPM de pie',            pos:'Parado',  type:'100p',    label:'100 RPM',  weight:1},
+  {desc:'100 RPM sentado',           pos:'Sentado', type:'100p',    label:'100 RPM',  weight:1},
+  {desc:'100 RPM variante de pie',   pos:'Parado',  type:'100p2',   label:'100 RPM',  weight:1},
+  {desc:'110 RPM sentado',           pos:'Sentado', type:'110s',    label:'110 RPM',  weight:1},
+  {desc:'Sprint de plano',           pos:'Sentado', type:'sprint_p',label:'Sprint en plano', weight:1},
 ];
 const MONT_EX=[
-  {desc:'60 RPM fuerza base',        pos:null, type:'60b', label:'60 RPM'},
-  {desc:'Acelerado en montaña',      pos:null, type:'acel_m', label:'Acelerado montaña'},
-  {desc:'Sprint de montaña',         pos:null, type:'sprint_m', label:'Sprint montaña'},
-  {desc:'Fuerza Máxima (FM)',        pos:null, type:'fm', label:'Fuerza Máxima'},
-  {desc:'80 RPM viento en contra',   pos:null, type:'80vc', label:'80 RPM'},
+  {desc:'60 RPM fuerza base',        pos:null, type:'60b',     label:'60 RPM',           weight:3},
+  {desc:'Acelerado en montaña',      pos:null, type:'acel_m',  label:'Acelerado montaña', weight:3},
+  {desc:'Sprint de montaña',         pos:null, type:'sprint_m',label:'Sprint montaña',    weight:3},
+  {desc:'Fuerza Máxima (FM)',        pos:null, type:'fm',      label:'Fuerza Máxima',     weight:3},
+  {desc:'80 RPM viento en contra',   pos:null, type:'80vc',    label:'80 RPM',            weight:1},
 ];
+
+function weightedRandom(pool){
+  const totalWeight=pool.reduce((s,e)=>s+(e.weight||1),0);
+  let r=Math.random()*totalWeight;
+  for(const e of pool){ r-=(e.weight||1); if(r<=0)return e; }
+  return pool[pool.length-1];
+}
 
 const INT_MAP={
   '90p':     ['Media Baja','Media','Media Alta'],
@@ -415,7 +429,6 @@ function intCls(l){return({'Media Baja':'int-mb','Media':'int-m','Media Alta':'i
 function intColor(l){return({'Media Baja':'#4ade80','Media':'#e8d840','Media Alta':'#ff9040','Alta':'#ff3d5a','Muy Alta':'#ff2050','Muy Baja':'#86efac'}[l]||'#e8d840');}
 
 function safePos(ex,isP){
-  if(isP&&(ex.type==='sprint_p'||ex.type==='110s')) return'Sentado';
   if(ex.pos) return ex.pos;
   return rnd(['Sentado','Parado']);
 }
@@ -466,25 +479,36 @@ function genDurs(workSec){
 // ═══════════════════════════════════════════════════════
 // BUILD INTERVALS
 // ═══════════════════════════════════════════════════════
+let used80vcThisClass = false;
+
 function buildIntervals(terrain, durs, blockNum){
   const isP=terrain==='plano';
-  const pool=[...(isP?PLANO_EX:MONT_EX)];
+  const basePool=[...(isP?PLANO_EX:MONT_EX)];
   const out=[];
   
   let lastLabel = null;
   let lastPos = null;
+  let lastType = null;
 
   for(let i=0;i<durs.length;i++){
     let d=durs[i];
     
-    let choices=pool.filter(e=>{
+    let pool = basePool.filter(e=>{
+      if(e.type==='80vc'){
+        if(used80vcThisClass) return false;
+        if(Math.random()>0.3) return false;
+      }
       let futurePos = safePos(e, isP);
-      return !(e.label === lastLabel && futurePos === lastPos);
+      return !(e.type === lastType && futurePos === lastPos);
     });
     
-    if(!choices.length) choices=pool; 
-    const ex=choices[Math.floor(Math.random()*choices.length)];
+    if(!pool.length) pool=basePool.filter(e=>e.type!==lastType);
+    if(!pool.length) pool=basePool;
+
+    const ex=weightedRandom(pool);
     
+    if(ex.type==='80vc') used80vcThisClass=true;
+
     let pos=safePos(ex,isP);
     let intensity=getInt(ex.type,d);
 
@@ -494,6 +518,7 @@ function buildIntervals(terrain, durs, blockNum){
     
     lastLabel=ex.label;
     lastPos=pos;
+    lastType=ex.type;
 
     if(intensity==='Muy Alta' && d >= 30){
       out.push({
@@ -506,6 +531,7 @@ function buildIntervals(terrain, durs, blockNum){
       });
       if(i+1 < durs.length && durs[i+1] > 20) durs[i+1] -= 20;
       lastLabel = 'Recuperación';
+      lastType = 'rec';
       lastPos = out[out.length-1].pos;
     }
   }
@@ -543,6 +569,7 @@ function buildBlock(bType, num, durMin){
 let currentClass=null;
 
 function buildClass(mode){
+  used80vcThisClass = false;
   let bTypes=[...mode.blocks];
   const blockCount=bTypes.length;
   const totalWorkTime=32 + Math.floor(Math.random()*4);
@@ -783,6 +810,23 @@ function flattenClass(cls){
   return list;
 }
 
+let wakeLock=null;
+async function requestWakeLock(){
+  try{
+    if('wakeLock' in navigator){
+      wakeLock=await navigator.wakeLock.request('screen');
+    }
+  }catch(e){}
+}
+function releaseWakeLock(){
+  if(wakeLock){wakeLock.release();wakeLock=null;}
+}
+document.addEventListener('visibilitychange',async()=>{
+  if(document.visibilityState==='visible'&&timerState.interval&&!timerState.paused){
+    await requestWakeLock();
+  }
+});
+
 function openTimer(){
   if(!currentClass)return;
   const list=flattenClass(currentClass);
@@ -795,11 +839,13 @@ function openTimer(){
   document.getElementById('tmrModeLabel').textContent=`MODO ${String(currentClass.mode.id).padStart(2,'0')} · ${currentClass.mode.desc}`;
   document.getElementById('timerOverlay').classList.add('active');
   document.body.style.overflow='hidden';
+  requestWakeLock();
   startInterval();
 }
 
 function closeTimer(){
   clearInterval(timerState.interval);
+  releaseWakeLock();
   document.getElementById('timerOverlay').classList.remove('active');
   document.body.style.overflow='';
 }
@@ -876,6 +922,7 @@ function updateTimerUI(){
   const card=document.getElementById('tmrCurrCard');
   card.className=`tmr-curr ${iv.terrain==='plano'?'tc-p':iv.terrain==='montana'?'tc-m':'tc-r'}`;
   document.getElementById('tmrCurrDesc').textContent=iv.shortLabel;
+  document.getElementById('tmrCurrDurLabel').textContent=`Duración total: ${fmtSec(iv.d)}`;
   
   const posEl=document.getElementById('tmrCurrPos');
   posEl.textContent=iv.pos==='Sentado'?'🪑 Sentado':'🧍 Parado';
@@ -887,12 +934,14 @@ function updateTimerUI(){
 
   if(next){
     document.getElementById('tmrNextWrap').style.display='flex';
-    document.getElementById('tmrNextDesc').textContent=`${next.shortLabel} ${fmtSec(next.d)}`;
-    document.getElementById('tmrNextTime').textContent='En camino';
+    document.getElementById('tmrNextDesc').textContent=next.shortLabel;
+    document.getElementById('tmrNextTime').textContent=fmtSec(next.d);
+    document.getElementById('tmrNextDur').textContent=`Duración: ${fmtSec(next.d)}`;
   }else{
     document.getElementById('tmrNextWrap').style.display='flex';
     document.getElementById('tmrNextDesc').textContent='Fin de clase · Vuelta a la calma';
     document.getElementById('tmrNextTime').textContent='—';
+    document.getElementById('tmrNextDur').textContent='';
   }
 
   document.getElementById('tmrProgress').style.width=`${(timerState.elapsedSec/timerState.totalSec*100).toFixed(1)}%`;
