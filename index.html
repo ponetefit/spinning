@@ -383,43 +383,56 @@ const BASE=10*60;
 
 // ═══════════════════════════════════════════════════════
 // EXERCISES
+// Roles fisiológicos:
+//   opener  = puede abrir un bloque (intensidad baja-media para entrar en calor)
+//   build   = desarrollo del bloque (intensidad media-alta)
+//   peak    = pico del bloque (sólo aparece al final o en bloques cortos)
+// intScore  = nivel de intensidad relativo (1=mínimo … 5=máximo)
+// rare      = aparece máximo una vez por clase
 // ═══════════════════════════════════════════════════════
+
+// 90 RPM SENTADO → solo warmup e hidratación, NO entra al pool de trabajo
+
 const PLANO_EX=[
-  {desc:'90 RPM de pie',             pos:'Parado',  type:'90p',     label:'90 RPM',   weight:1},
-  {desc:'90 RPM sentado',            pos:'Sentado', type:'90p',     label:'90 RPM',   weight:1},
-  {desc:'100 RPM de pie',            pos:'Parado',  type:'100p',    label:'100 RPM',  weight:1},
-  {desc:'100 RPM sentado',           pos:'Sentado', type:'100p',    label:'100 RPM',  weight:1},
-  {desc:'100 RPM variante de pie',   pos:'Parado',  type:'100p2',   label:'100 RPM',  weight:1},
-  {desc:'110 RPM sentado',           pos:'Sentado', type:'110s',    label:'110 RPM',  weight:1},
-  {desc:'Sprint de plano',           pos:'Sentado', type:'sprint_p',label:'Sprint en plano', weight:1},
-];
-const MONT_EX=[
-  {desc:'60 RPM fuerza base',        pos:null, type:'60b',     label:'60 RPM',           weight:3},
-  {desc:'Acelerado en montaña',      pos:null, type:'acel_m',  label:'Acelerado montaña', weight:3},
-  {desc:'Sprint de montaña',         pos:null, type:'sprint_m',label:'Sprint montaña',    weight:3},
-  {desc:'Fuerza Máxima (FM)',        pos:null, type:'fm',      label:'Fuerza Máxima',     weight:3},
-  {desc:'80 RPM viento en contra',   pos:null, type:'80vc',    label:'80 RPM',            weight:1},
+  // openers — arrancan el bloque
+  {desc:'90 RPM de pie',             pos:'Parado',  type:'90p',     label:'90 RPM',          opener:true, intScore:1},
+  {desc:'100 RPM de pie',            pos:'Parado',  type:'100p',    label:'100 RPM de pie',   opener:true, intScore:2},
+  {desc:'100 RPM variante de pie',   pos:'Parado',  type:'100p2',   label:'100 RPM variante', opener:true, intScore:2},
+  // build — desarrollo del bloque
+  {desc:'110 RPM sentado',           pos:'Sentado', type:'110s',    label:'110 RPM',          intScore:3},
+  // peak — solo al final
+  {desc:'Sprint de plano',           pos:'Sentado', type:'sprint_p',label:'Sprint en plano',  peak:true, intScore:4},
 ];
 
-function weightedRandom(pool){
-  const totalWeight=pool.reduce((s,e)=>s+(e.weight||1),0);
-  let r=Math.random()*totalWeight;
-  for(const e of pool){ r-=(e.weight||1); if(r<=0)return e; }
-  return pool[pool.length-1];
-}
+const MONT_EX=[
+  // openers — arrancan el bloque (variados, no siempre el mismo)
+  {desc:'60 RPM fuerza base',        pos:'Parado',  type:'60b',     label:'60 RPM fuerza',    opener:true, intScore:1},
+  {desc:'Acelerado en montaña',      pos:'Parado',  type:'acel_m',  label:'Acelerado montaña',opener:true, intScore:2},
+  {desc:'80 RPM viento en contra',   pos:'Parado',  type:'80vc',    label:'80 RPM',           opener:true, intScore:1, rare:true},
+  // build — desarrollo
+  {desc:'60 RPM con más carga',      pos:'Parado',  type:'60b2',    label:'60 RPM cargado',   intScore:2},
+  {desc:'Acelerado en montaña',      pos:'Parado',  type:'acel_m2', label:'Acelerado fuerte',  intScore:3},
+  // peak — pico final
+  {desc:'Fuerza Máxima (FM)',        pos:'Parado',  type:'fm',      label:'Fuerza Máxima',    peak:true, intScore:4},
+  {desc:'Sprint de montaña',         pos:'Parado',  type:'sprint_m',label:'Sprint montaña',   peak:true, intScore:5},
+];
 
 const INT_MAP={
   '90p':     ['Media Baja','Media','Media Alta'],
-  '100p':    ['Media Baja','Media Alta','Alta'],
+  '100p':    ['Media','Media Alta','Alta'],
   '100p2':   ['Media','Media Alta','Alta'],
-  '110s':    ['Media','Media Alta','Alta'],
-  'sprint_p':['Media Alta','Alta','Muy Alta'],
+  '110s':    ['Media Alta','Alta','Alta'],
+  'sprint_p':['Alta','Alta','Muy Alta'],
   '60b':     ['Media Baja','Media','Media Alta'],
+  '60b2':    ['Media','Media Alta','Alta'],
   'acel_m':  ['Media','Media Alta','Alta'],
-  'sprint_m':['Media Alta','Alta','Muy Alta'],
+  'acel_m2': ['Media Alta','Alta','Alta'],
+  'sprint_m':['Alta','Alta','Muy Alta'],
   'fm':      ['Media Alta','Alta','Muy Alta'],
   '80vc':    ['Media Baja','Media','Media Alta'],
 };
+
+const INT_SCORE={'Media Baja':1,'Media':2,'Media Alta':3,'Alta':4,'Muy Alta':5,'Muy Baja':0};
 
 function getInt(type,sec){
   const t=sec<=30?0:sec<=45?1:2;
@@ -428,7 +441,7 @@ function getInt(type,sec){
 function intCls(l){return({'Media Baja':'int-mb','Media':'int-m','Media Alta':'int-ma','Alta':'int-a','Muy Alta':'int-va','Muy Baja':'int-vmb'}[l]||'int-m');}
 function intColor(l){return({'Media Baja':'#4ade80','Media':'#e8d840','Media Alta':'#ff9040','Alta':'#ff3d5a','Muy Alta':'#ff2050','Muy Baja':'#86efac'}[l]||'#e8d840');}
 
-function safePos(ex,isP){
+function safePos(ex){
   if(ex.pos) return ex.pos;
   return rnd(['Sentado','Parado']);
 }
@@ -477,62 +490,116 @@ function genDurs(workSec){
 }
 
 // ═══════════════════════════════════════════════════════
-// BUILD INTERVALS
+// BUILD INTERVALS — lógica fisiológica
+// Estructura de cada bloque:
+//   1er intervalo  → opener   (baja-media intensidad, entrada al bloque)
+//   intermedios    → build    (media-alta intensidad, desarrollo)
+//   último(s)      → peak     (pico de intensidad, sprint o fuerza máxima)
+// La progresión de intensidad respeta la fisiología del esfuerzo:
+//   no se arranca con un sprint ni con Fuerza Máxima.
 // ═══════════════════════════════════════════════════════
-let used80vcThisClass = false;
+
+let usedRareThisClass = {};   // { type: true } para ejercicios raros ya usados
+
+function pickEx(pool, lastType, preferHigher, minScore, maxScore){
+  // filtra por score y evita repetir el mismo tipo seguido
+  let candidates = pool.filter(e=>{
+    if(e.type === lastType) return false;
+    if(minScore !== undefined && e.intScore < minScore) return false;
+    if(maxScore !== undefined && e.intScore > maxScore) return false;
+    return true;
+  });
+  if(!candidates.length) candidates = pool.filter(e=>e.type !== lastType);
+  if(!candidates.length) candidates = pool;
+  // ordenar por score si preferHigher, sino aleatorio
+  if(preferHigher) candidates.sort((a,b)=>b.intScore-a.intScore);
+  // tomar entre los 2 mejores de forma aleatoria para no ser determinista
+  const top = candidates.slice(0, Math.min(2, candidates.length));
+  return rnd(top);
+}
 
 function buildIntervals(terrain, durs, blockNum){
   const isP=terrain==='plano';
-  const basePool=[...(isP?PLANO_EX:MONT_EX)];
+  const fullPool=[...(isP?PLANO_EX:MONT_EX)];
   const out=[];
-  
-  let lastLabel = null;
-  let lastPos = null;
-  let lastType = null;
+  const n=durs.length;
+  let lastType=null;
 
-  for(let i=0;i<durs.length;i++){
-    let d=durs[i];
-    
-    let pool = basePool.filter(e=>{
-      if(e.type==='80vc'){
-        if(used80vcThisClass) return false;
-        if(Math.random()>0.3) return false;
-      }
-      let futurePos = safePos(e, isP);
-      return !(e.type === lastType && futurePos === lastPos);
+  // Filtrar raros: solo aparecen si no se usaron ya
+  function filterRare(pool){
+    return pool.filter(e=>{
+      if(!e.rare) return true;
+      if(usedRareThisClass[e.type]) return false;
+      return Math.random()<0.35; // 35 % de chance de incluirlo
     });
-    
-    if(!pool.length) pool=basePool.filter(e=>e.type!==lastType);
-    if(!pool.length) pool=basePool;
+  }
 
-    const ex=weightedRandom(pool);
-    
-    if(ex.type==='80vc') used80vcThisClass=true;
+  for(let i=0;i<n;i++){
+    const d=durs[i];
+    const isFirst = i===0;
+    const isLast  = i===n-1;
 
-    let pos=safePos(ex,isP);
+    let pool = filterRare(fullPool);
+    if(!pool.length) pool=fullPool;
+
+    let ex;
+
+    if(isFirst){
+      // — OPENER: sólo ejercicios con opener:true, variados
+      let openers = pool.filter(e=>e.opener && !e.rare || (e.opener && e.rare && !usedRareThisClass[e.type]));
+      if(!openers.length) openers = pool.filter(e=>e.opener);
+      if(!openers.length) openers = pool;
+      // barajar openers para no ser siempre el mismo
+      openers = openers.slice().sort(()=>Math.random()-0.5);
+      ex = openers[0];
+
+    } else if(isLast && n>=3){
+      // — PEAK: preferir ejercicios peak si hay suficientes intervalos
+      const peaks = pool.filter(e=>e.peak && e.type!==lastType);
+      if(peaks.length){
+        ex = rnd(peaks);
+      } else {
+        // sino el de mayor intScore disponible, distinto al anterior
+        ex = pickEx(pool, lastType, true);
+      }
+
+    } else {
+      // — BUILD: ejercicios intermedios, excluye openers puros y peaks puros
+      // permite openers si el score es suficiente (>=2) para ir subiendo
+      let buildPool = pool.filter(e=>!e.peak && e.type!==lastType);
+      if(!buildPool.length) buildPool = pool.filter(e=>e.type!==lastType);
+      if(!buildPool.length) buildPool = pool;
+      // preferir score más alto que el opener (progresión)
+      const prevScore = out.length ? (INT_SCORE[out[out.length-1].intensity]||1) : 1;
+      const higher = buildPool.filter(e=>e.intScore >= prevScore);
+      ex = rnd(higher.length ? higher : buildPool);
+    }
+
+    if(ex.rare) usedRareThisClass[ex.type]=true;
+
+    const pos=safePos(ex);
     let intensity=getInt(ex.type,d);
 
-    if(blockNum===1&&intensity==='Muy Alta'&&d>=30) { intensity='Alta'; }
+    // Bloque 1 de la clase: suavizar picos (no arrancar a Muy Alta)
+    if(blockNum===1 && intensity==='Muy Alta') intensity='Alta';
+    // Opener nunca más de Media Alta independientemente de la duración
+    if(isFirst && INT_SCORE[intensity]>3) intensity='Media Alta';
 
     out.push({d,ex,pos,intensity,terrain});
-    
-    lastLabel=ex.label;
-    lastPos=pos;
     lastType=ex.type;
 
-    if(intensity==='Muy Alta' && d >= 30){
+    // Recuperación obligatoria tras Muy Alta (≥30s)
+    if(intensity==='Muy Alta' && d>=30){
       out.push({
         d:20,
-        ex:{desc:'Recuperación activa — cadencia suave',pos:null,type:'rec',label:'Recuperación'},
-        pos:rnd(['Sentado','Parado']),
-        intensity:'Media',
+        ex:{desc:'Recuperación activa — cadencia suave',pos:'Sentado',type:'rec',label:'Recuperación'},
+        pos:'Sentado',
+        intensity:'Media Baja',
         terrain,
         isRecovery:true
       });
-      if(i+1 < durs.length && durs[i+1] > 20) durs[i+1] -= 20;
-      lastLabel = 'Recuperación';
-      lastType = 'rec';
-      lastPos = out[out.length-1].pos;
+      if(i+1<n && durs[i+1]>20) durs[i+1]-=20;
+      lastType='rec';
     }
   }
   return out;
@@ -569,7 +636,7 @@ function buildBlock(bType, num, durMin){
 let currentClass=null;
 
 function buildClass(mode){
-  used80vcThisClass = false;
+  usedRareThisClass = {};
   let bTypes=[...mode.blocks];
   const blockCount=bTypes.length;
   const totalWorkTime=32 + Math.floor(Math.random()*4);
