@@ -518,47 +518,71 @@ const BASE=10*60;
 
 // 90 RPM SENTADO → solo warmup e hidratación, NO entra al pool de trabajo
 
+// ─────────────────────────────────────────────────────────────────────────────
+// PLANO — carretera plana: posición base es sentado, de pie solo en ataques
+// Ratio realista: ~60 % sentado / 40 % parado
+// ─────────────────────────────────────────────────────────────────────────────
 const PLANO_EX=[
-  // openers — arrancan el bloque
-  {desc:'90 RPM de pie',             pos:'Parado',  type:'90p',     label:'90 RPM',          opener:true, intScore:1},
+  // openers — 2 Parado + 2 Sentado para alternar el comienzo del bloque
+  {desc:'90 RPM de pie',             pos:'Parado',  type:'90p',     label:'90 RPM de pie',    opener:true, intScore:1},
   {desc:'100 RPM de pie',            pos:'Parado',  type:'100p',    label:'100 RPM de pie',   opener:true, intScore:2},
-  {desc:'100 RPM variante de pie',   pos:'Parado',  type:'100p2',   label:'100 RPM variante', opener:true, intScore:2},
-  // build — desarrollo del bloque
-  {desc:'110 RPM sentado',           pos:'Sentado', type:'110s',    label:'110 RPM',          intScore:3},
+  {desc:'100 RPM en silla',          pos:'Sentado', type:'100s',    label:'100 RPM en silla', opener:true, intScore:2},
+  {desc:'90 RPM cadencia alta',      pos:'Sentado', type:'90s_w',   label:'90 RPM en silla',  opener:true, intScore:1},
+  // build — desarrollo, alternancia silla/pie
+  {desc:'110 RPM sentado',           pos:'Sentado', type:'110s',    label:'110 RPM sentado',  intScore:3},
+  {desc:'100 RPM variante de pie',   pos:'Parado',  type:'100p2',   label:'100 RPM variante', intScore:2},
   // peak — solo al final
   {desc:'Sprint de plano',           pos:'Sentado', type:'sprint_p',label:'Sprint en plano',  peak:true, intScore:4},
+  {desc:'Ataque final de pie',       pos:'Parado',  type:'atq_f',   label:'Ataque de pie',    peak:true, intScore:4},
 ];
 
+// ─────────────────────────────────────────────────────────────────────────────
+// MONTAÑA — escalada: se alterna silla y pie, no se sube todo de pie
+// Ratio realista: ~50 % sentado / 50 % parado
+// ─────────────────────────────────────────────────────────────────────────────
 const MONT_EX=[
-  // openers — arrancan el bloque (variados, no siempre el mismo)
-  {desc:'60 RPM fuerza base',              pos:'Parado',  type:'60b',     label:'60 RPM fuerza',      opener:true, intScore:1},
-  {desc:'Acelerado en montaña',            pos:'Parado',  type:'acel_m',  label:'Acelerado montaña',  opener:true, intScore:2},
-  {desc:'80 RPM viento en contra',         pos:'Parado',  type:'80vc',    label:'80 RPM',             opener:true, intScore:1, rare:true},
-  // build — desarrollo
-  {desc:'60 RPM con más carga',            pos:'Parado',  type:'60b2',    label:'60 RPM cargado',     intScore:2},
-  {desc:'Acelerado en montaña',            pos:'Parado',  type:'acel_m2', label:'Acelerado fuerte',   intScore:3},
-  // sentado en montaña — permite descarga de manos sin salir del trabajo
-  {desc:'Escalada sentado — carga moderada', pos:'Sentado', type:'sent_m', label:'Escalada en silla', intScore:2},
-  // peak — pico final
-  {desc:'Fuerza Máxima (FM)',              pos:'Parado',  type:'fm',      label:'Fuerza Máxima',      peak:true, intScore:4},
-  {desc:'Sprint de montaña',               pos:'Parado',  type:'sprint_m',label:'Sprint montaña',     peak:true, intScore:5},
+  // openers — 2 Parado + 2 Sentado para variar la entrada al bloque
+  {desc:'60 RPM fuerza base de pie', pos:'Parado',  type:'60b',     label:'60 RPM de pie',     opener:true, intScore:1},
+  {desc:'60 RPM en silla',           pos:'Sentado', type:'60s',     label:'60 RPM en silla',   opener:true, intScore:1},
+  {desc:'Acelerado en montaña',      pos:'Parado',  type:'acel_m',  label:'Acelerado montaña', opener:true, intScore:2},
+  {desc:'80 RPM viento en contra',   pos:'Parado',  type:'80vc',    label:'80 RPM',            opener:true, intScore:1, rare:true},
+  // build — 2 Parado + 2 Sentado para alternar silla/pie durante el bloque
+  {desc:'60 RPM con más carga de pie',      pos:'Parado',  type:'60b2',    label:'60 RPM cargado',        intScore:2},
+  {desc:'60 RPM en silla — más carga',      pos:'Sentado', type:'60s2',    label:'60 RPM en silla carga', intScore:2},
+  {desc:'Acelerado de montaña de pie',      pos:'Parado',  type:'acel_m2', label:'Acelerado fuerte',      intScore:3},
+  {desc:'Escalada sentado — carga moderada',pos:'Sentado', type:'sent_m',  label:'Escalada en silla',     intScore:2},
+  {desc:'Escalada sentado — carga fuerte',  pos:'Sentado', type:'sent_m2', label:'Escalada fuerte silla', intScore:3},
+  // peak — picos finales: alternan silla/pie para mayor realismo
+  {desc:'Fuerza Máxima (FM)',            pos:'Parado',  type:'fm',        label:'Fuerza Máxima',          peak:true, intScore:4},
+  {desc:'Sprint de montaña de pie',      pos:'Parado',  type:'sprint_m',  label:'Sprint montaña de pie',  peak:true, intScore:5},
+  {desc:'Sprint en silla de montaña',    pos:'Sentado', type:'sprint_ms', label:'Sprint montaña en silla',peak:true, intScore:4},
 ];
 
 const INT_MAP={
-  '90p':     ['Media Baja','Media','Media Alta'],
-  '100p':    ['Media','Media Alta','Alta'],
-  '100p2':   ['Media','Media Alta','Alta'],
-  'sent_m':  ['Media Baja','Media','Media Alta'],
+  // Plano
+  '90p':      ['Media Baja','Media','Media Alta'],
+  '100p':     ['Media','Media Alta','Alta'],
+  '100s':     ['Media','Media Alta','Alta'],
+  '90s_w':    ['Media Baja','Media','Media Alta'],
+  '100p2':    ['Media','Media Alta','Alta'],
+  '110s':     ['Media Alta','Alta','Alta'],
+  'sprint_p': ['Alta','Alta','Muy Alta'],
+  'atq_f':    ['Alta','Alta','Muy Alta'],
+  // Montaña
+  '60b':      ['Media Baja','Media','Media Alta'],
+  '60s':      ['Media Baja','Media','Media Alta'],
+  '60b2':     ['Media','Media Alta','Alta'],
+  '60s2':     ['Media','Media Alta','Alta'],
+  'acel_m':   ['Media','Media Alta','Alta'],
+  'acel_m2':  ['Media Alta','Alta','Alta'],
+  'sent_m':   ['Media Baja','Media','Media Alta'],
+  'sent_m2':  ['Media','Media Alta','Alta'],
+  'fm':        ['Media Alta','Alta','Muy Alta'],
+  'sprint_m':  ['Alta','Alta','Muy Alta'],
+  'sprint_ms': ['Alta','Alta','Muy Alta'],
+  '80vc':      ['Media Baja','Media','Media Alta'],
+  // Recuperación / descanso
   'rest_hands':['Media Baja','Media Baja','Media Baja'],
-  '110s':    ['Media Alta','Alta','Alta'],
-  'sprint_p':['Alta','Alta','Muy Alta'],
-  '60b':     ['Media Baja','Media','Media Alta'],
-  '60b2':    ['Media','Media Alta','Alta'],
-  'acel_m':  ['Media','Media Alta','Alta'],
-  'acel_m2': ['Media Alta','Alta','Alta'],
-  'sprint_m':['Alta','Alta','Muy Alta'],
-  'fm':      ['Media Alta','Alta','Muy Alta'],
-  '80vc':    ['Media Baja','Media','Media Alta'],
 };
 
 const INT_SCORE={'Media Baja':1,'Media':2,'Media Alta':3,'Alta':4,'Muy Alta':5,'Muy Baja':0};
@@ -696,15 +720,27 @@ function buildIntervals(terrain, durs, blockNum){
       }
 
     } else {
-      // — BUILD: ejercicios intermedios, excluye openers puros y peaks puros
-      // permite openers si el score es suficiente (>=2) para ir subiendo
+      // — BUILD: ejercicios intermedios, excluye peaks, evita repetir tipo
       let buildPool = pool.filter(e=>!e.peak && e.type!==lastType);
       if(!buildPool.length) buildPool = pool.filter(e=>e.type!==lastType);
       if(!buildPool.length) buildPool = pool;
-      // preferir score más alto que el opener (progresión)
+
+      // Progresión de intensidad
       const prevScore = out.length ? (INT_SCORE[out[out.length-1].intensity]||1) : 1;
-      const higher = buildPool.filter(e=>e.intScore >= prevScore);
-      ex = rnd(higher.length ? higher : buildPool);
+      let higher = buildPool.filter(e=>e.intScore >= prevScore);
+      if(!higher.length) higher = buildPool;
+
+      // ── ALTERNANCIA SILLA / PIE ──────────────────────────────────
+      // Si el ejercicio anterior fue Parado, buscar Sentado (y viceversa).
+      // Esto refleja el ritmo real de una clase: se sube un rato de pie,
+      // luego se recupera en silla, luego se vuelve a poner de pie.
+      const lastPos = out.length ? out[out.length-1].pos : null;
+      if(lastPos){
+        const altPool = higher.filter(e=>e.pos !== lastPos);
+        ex = rnd(altPool.length ? altPool : higher);
+      } else {
+        ex = rnd(higher);
+      }
     }
 
     if(ex.rare) usedRareThisClass[ex.type]=true;
