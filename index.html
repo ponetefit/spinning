@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>SPIN LAB · Ponete Fit Pro</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#08080d; --surface:#0f0f16; --card:#141420; --border:#1e1e2e;
+  --accent:#e8d840; --accent2:#ff3d5a; --accent3:#00d4ff;
+  --green:#22c55e; --text:#ddddf0; --muted:#606080;
+  --plano:#00d4ff; --montana:#ff6520; --hibrido:#a855f7;
+  --rad:10px;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min-height:100vh;overflow-x:hidden;}
+body::before{content:'';position:fixed;inset:0;
+  background-image:radial-gradient(circle at 20% 20%,rgba(0,212,255,.04) 0%,transparent 50%),
+    radial-gradient(circle at 80% 80%,rgba(232,216,64,.03) 0%,transparent 50%);
+  pointer-events:none;z-index:0;}
+
+/* ── LAYOUT ── */
+.page{max-width:960px;margin:0 auto;padding:0 16px 80px;position:relative;z-index:1;}
+
+/* ── HEADER ── */
+.hdr{padding:32px 0 0;display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:12px;}
+.logo-text{font-family:'Bebas Neue',sans-serif;font-size:clamp(48px,9vw,80px);line-height:.88;color:var(--accent);letter-spacing:3px;}
+.logo-sub{font-family:'Space Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:4px;text-transform:uppercase;margin-top:6px;}
+.hdr-clock{text-align:right;}
+.clock-row{font-family:'Bebas Neue',sans-serif;font-size:clamp(22px,5vw,34px);letter-spacing:2px;line-height:1;}
+.clock-row .c1{color:var(--hibrido);} .clock-row .cs{color:var(--muted);margin:0 5px;} .clock-row .c2{color:var(--accent);}
+.clock-sub{font-family:'Space Mono',monospace;font-size:9px;color:var(--muted);letter-spacing:3px;text-transform:uppercase;margin-top:3px;text-align:right;}
+
+.div-line{height:2px;background:linear-gradient(90deg,var(--accent),transparent);margin:18px 0 30px;}
+
+/* ── SECTION LABEL ── */
+.sec-lbl{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:4px;color:var(--muted);text-transform:uppercase;
+  margin-bottom:14px;display:flex;align-items:center;gap:10px;}
+.sec-lbl::after{content:'';flex:1;height:1px;background:var(--border);}
+
+/* ── MODE GRID ── */
+.mode-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:32px;}
+@media(max-width:700px){.mode-grid{grid-template-columns:repeat(3,1fr);}}
+@media(max-width:480px){.mode-grid{grid-template-columns:repeat(2,1fr);}}
+
+.mc{background:var(--card);border:1.5px solid var(--border);border-radius:var(--rad);padding:12px 10px;cursor:pointer;transition:all .18s;position:relative;overflow:hidden;}
+.mc::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:transparent;transition:background .18s;}
+.mc:hover{border-color:rgba(232,216,64,.5);transform:translateY(-2px);}
+.mc.sel{border-color:var(--accent);background:#191926;}
+.mc.sel::after{background:var(--accent);}
+.mc-num{font-family:'Bebas Neue',sans-serif;font-size:28px;line-height:1;color:var(--accent);margin-bottom:3px;}
+.mc-cat{font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:.8px;margin-bottom:3px;}
+.mc-desc{font-size:9px;color:var(--muted);line-height:1.4;}
+.mc-tags{display:flex;gap:3px;margin-top:7px;flex-wrap:wrap;}
+.tg{font-size:8px;padding:2px 5px;border-radius:2px;font-family:'Space Mono',monospace;text-transform:uppercase;}
+.tg-p{background:rgba(0,212,255,.12);color:var(--plano);}
+.tg-m{background:rgba(255,101,32,.12);color:var(--montana);}
+.tg-h{background:rgba(168,85,247,.14);color:var(--hibrido);}
+
+/* ── INFO BAR ── */
+.info-bar{background:var(--card);border:1px solid var(--border);border-radius:var(--rad);padding:14px 18px;
+  margin-bottom:14px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;}
+.ii{display:flex;flex-direction:column;gap:2px;}
+.iv2{font-family:'Bebas Neue',sans-serif;font-size:22px;line-height:1;}
+.ik{font-size:8px;font-family:'Space Mono',monospace;color:var(--muted);letter-spacing:2px;text-transform:uppercase;}
+.isep{color:var(--border);font-size:18px;}
+
+/* ── BUTTON ── */
+.btn-main{width:100%;background:var(--accent);color:#08080d;border:none;font-family:'Bebas Neue',sans-serif;font-size:26px;
+  letter-spacing:3px;padding:16px;border-radius:var(--rad);cursor:pointer;transition:all .18s;text-transform:uppercase;}
+.btn-main:hover{opacity:.9;} .btn-main:active{transform:scale(.99);} .btn-main:disabled{opacity:.22;cursor:not-allowed;}
+
+/* ── LOADER ── */
+.loader{display:none;text-align:center;padding:36px;color:var(--muted);font-family:'Space Mono',monospace;font-size:11px;letter-spacing:2px;}
+.lspin{width:36px;height:36px;border:2px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 14px;}
+@keyframes spin{to{transform:rotate(360deg);}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px);}to{opacity:1;transform:translateY(0);}}
+
+/* ── OUTPUT CONTAINER ── */
+#output{display:none;margin-top:24px;}
+
+/* ── CLASS HEADER ── */
+.cls-hdr{background:var(--surface);border:1px solid var(--border);border-bottom:2px solid var(--accent);border-radius:var(--rad) var(--rad) 0 0;
+  padding:18px 20px;display:flex;align-items:flex-start;justify-content:space-between;gap:12px;animation:fadeUp .35s ease;}
+.cls-title{font-family:'Bebas Neue',sans-serif;font-size:22px;color:var(--accent);letter-spacing:2px;margin-bottom:3px;}
+.cls-sub{font-size:11px;color:var(--muted);}
+.cls-meta{font-family:'Space Mono',monospace;font-size:10px;color:var(--muted);text-align:right;line-height:1.7;flex-shrink:0;}
+.cls-meta strong{color:var(--text);}
+
+/* ── TIMELINE ── */
+.tl-wrap{background:var(--surface);border:1px solid var(--border);border-top:none;padding:10px 20px 0;animation:fadeUp .35s .05s ease both;}
+.tl-lbl{font-family:'Space Mono',monospace;font-size:8px;color:var(--muted);letter-spacing:3px;text-transform:uppercase;margin-bottom:6px;}
+.tl-strip{display:flex;height:7px;border-radius:4px;overflow:hidden;gap:2px;margin-bottom:6px;}
+.tl-seg{border-radius:2px;transition:opacity .15s;cursor:pointer;} .tl-seg:hover{opacity:.65;}
+.tl-times{display:flex;justify-content:space-between;font-family:'Space Mono',monospace;font-size:8px;color:var(--muted);padding-bottom:10px;}
+
+/* ── BLOCKS WRAPPER ── */
+.blks{background:var(--surface);border:1px solid var(--border);border-top:none;animation:fadeUp .35s .08s ease both;}
+
+.wu-bar,.cd-bar{padding:11px 20px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+.wu-bar{background:rgba(168,85,247,.06);border-bottom:1px solid var(--border);}
+.cd-bar{background:rgba(168,85,247,.04);border-top:1px solid var(--border);}
+.bar-lbl{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:3px;color:var(--hibrido);text-transform:uppercase;white-space:nowrap;}
+.bar-det{font-size:12px;color:var(--muted);}
+.bar-t{margin-left:auto;font-family:'Space Mono',monospace;font-size:10px;color:var(--hibrido);background:rgba(168,85,247,.1);padding:3px 8px;border-radius:3px;white-space:nowrap;}
+
+/* ── BLOCK ── */
+.blk{border-bottom:1px solid var(--border);}
+.blk:last-of-type{border-bottom:none;}
+.blk-hdr{padding:11px 20px;display:flex;align-items:center;gap:10px;cursor:pointer;user-select:none;transition:background .15s;}
+.blk-hdr:hover{background:rgba(255,255,255,.02);}
+.blk-num{font-family:'Bebas Neue',sans-serif;font-size:18px;color:var(--muted);width:24px;flex-shrink:0;line-height:1;}
+.blk-badge{font-size:9px;font-weight:700;font-family:'Space Mono',monospace;letter-spacing:.8px;padding:3px 8px;border-radius:3px;text-transform:uppercase;white-space:nowrap;}
+.bb-p{background:rgba(0,212,255,.1);color:var(--plano);}
+.bb-m{background:rgba(255,101,32,.1);color:var(--montana);}
+.bb-h{background:rgba(168,85,247,.12);color:var(--hibrido);}
+.blk-cnt{font-size:11px;color:var(--muted);}
+.blk-dur{margin-left:auto;font-family:'Space Mono',monospace;font-size:10px;color:var(--muted);margin-right:6px;}
+.blk-arr{color:var(--muted);font-size:11px;transition:transform .18s;flex-shrink:0;}
+.blk.open .blk-arr{transform:rotate(180deg);}
+.blk-body{display:none;padding:2px 20px 12px;}
+.blk.open .blk-body{display:block;}
+
+/* ── TERRAIN DIVIDER ── */
+.trn-div{display:flex;align-items:center;gap:8px;margin:8px 0 4px;
+  font-family:'Space Mono',monospace;font-size:8px;letter-spacing:3px;text-transform:uppercase;}
+.trn-div::before,.trn-div::after{content:'';flex:1;height:1px;}
+.trn-p{color:var(--plano);} .trn-p::before,.trn-p::after{background:rgba(0,212,255,.2);}
+.trn-m{color:var(--montana);} .trn-m::before,.trn-m::after{background:rgba(255,101,32,.2);}
+
+/* ── INTERVAL ROW ── */
+.iv-row{display:flex;align-items:center;gap:8px;padding:6px 8px;border-radius:5px;margin-bottom:2px;border-left:3px solid transparent;}
+.iv-row:hover{background:rgba(255,255,255,.02);}
+.iv-p{border-color:var(--plano);} .iv-m{border-color:var(--montana);} .iv-rec{border-color:var(--green);}
+.iv-time{font-family:'Space Mono',monospace;font-size:12px;font-weight:700;min-width:36px;flex-shrink:0;}
+.iv-time.cp{color:var(--plano);} .iv-time.cm{color:var(--montana);} .iv-time.cr{color:var(--green);}
+.iv-pos{font-size:9px;font-weight:700;font-family:'Space Mono',monospace;padding:2px 8px;border-radius:3px;
+  white-space:nowrap;flex-shrink:0;min-width:72px;text-align:center;text-transform:uppercase;letter-spacing:.5px;}
+.pos-s{background:rgba(0,212,255,.1);color:var(--plano);}
+.pos-p{background:rgba(255,101,32,.1);color:var(--montana);}
+.pos-r{background:rgba(34,197,94,.1);color:var(--green);}
+.iv-desc{font-size:12px;color:var(--text);flex:1;min-width:0;}
+.iv-int{font-size:8px;font-family:'Space Mono',monospace;padding:2px 6px;border-radius:2px;letter-spacing:.5px;white-space:nowrap;flex-shrink:0;}
+.int-mb{background:rgba(34,197,94,.1);color:#4ade80;}
+.int-m{background:rgba(232,216,64,.1);color:var(--accent);}
+.int-ma{background:rgba(255,101,32,.1);color:#ff9040;}
+.int-a{background:rgba(255,61,90,.1);color:var(--accent2);}
+.int-va{background:rgba(255,0,50,.2);color:#ff2050;}
+.int-vmb{background:rgba(100,220,100,.08);color:#86efac;}
+
+/* ── HYDRATION ── */
+.hyd{display:flex;align-items:center;gap:7px;padding:6px 8px;background:rgba(0,212,255,.04);border-radius:5px;margin-top:5px;}
+.hyd span{font-size:11px;color:var(--muted);}
+.hyd strong{font-family:'Space Mono',monospace;font-size:10px;color:var(--accent3);}
+
+/* ── SUMMARY ── */
+.summary{display:grid;grid-template-columns:repeat(5,1fr);gap:1px;background:var(--border);
+  border-top:1px solid var(--border);animation:fadeUp .35s .12s ease both;}
+@media(max-width:480px){.summary{grid-template-columns:repeat(3,1fr);}}
+.sum-c{background:var(--surface);padding:14px 10px;text-align:center;}
+.sum-c:first-child{border-radius:0 0 0 var(--rad);} .sum-c:last-child{border-radius:0 0 var(--rad) 0;}
+.sum-v{font-family:'Bebas Neue',sans-serif;font-size:26px;line-height:1;margin-bottom:3px;}
+.sum-k{font-size:8px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;font-family:'Space Mono',monospace;}
+
+/* ── TIMER BUTTON ── */
+.timer-btn-wrap{margin-top:14px;animation:fadeUp .35s .15s ease both;}
+.btn-timer{width:100%;background:transparent;color:var(--accent3);border:1.5px solid var(--accent3);
+  font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:3px;padding:14px;border-radius:var(--rad);
+  cursor:pointer;transition:all .18s;text-transform:uppercase;display:flex;align-items:center;justify-content:center;gap:10px;}
+.btn-timer:hover{background:rgba(0,212,255,.08);}
+
+/* ══════════════════════════════════════════
+   TIMER OVERLAY
+══════════════════════════════════════════ */
+#timerOverlay{
+  display:none;position:fixed;inset:0;background:var(--bg);z-index:100;
+  flex-direction:column;overflow-y:auto;
+}
+#timerOverlay.active{display:flex;}
+
+.timer-shell{
+  max-width:600px;margin:0 auto;width:100%;padding:0 16px 40px;
+  display:flex;flex-direction:column;min-height:100vh;
+}
+
+/* timer header */
+.tmr-top{padding:20px 0 16px;display:flex;align-items:center;gap:12px;border-bottom:1px solid var(--border);margin-bottom:20px;}
+.tmr-close{background:var(--card);border:1px solid var(--border);color:var(--muted);font-family:'Space Mono',monospace;
+  font-size:11px;padding:7px 14px;border-radius:5px;cursor:pointer;transition:all .15s;white-space:nowrap;}
+.tmr-close:hover{color:var(--text);border-color:var(--muted);}
+.tmr-mode-lbl{font-family:'Space Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:3px;text-transform:uppercase;margin-left:auto;}
+
+/* progress bar */
+.tmr-progress-wrap{height:5px;background:var(--border);border-radius:3px;margin-bottom:20px;overflow:hidden;}
+.tmr-progress{height:100%;background:var(--accent);border-radius:3px;transition:width .5s linear;width:0%;}
+
+/* block label */
+.tmr-block-label{font-family:'Space Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:3px;text-transform:uppercase;
+  text-align:center;margin-bottom:8px;}
+
+/* big timer */
+.tmr-circle-wrap{display:flex;flex-direction:column;align-items:center;margin-bottom:20px;}
+.tmr-circle{
+  position:relative;width:clamp(180px,45vw,240px);height:clamp(180px,45vw,240px);
+  border-radius:50%;display:flex;align-items:center;justify-content:center;flex-direction:column;
+}
+.tmr-circle svg{position:absolute;inset:0;width:100%;height:100%;transform:rotate(-90deg);}
+.tmr-circle-bg{fill:none;stroke:var(--border);stroke-width:4;}
+.tmr-circle-prog{fill:none;stroke-width:5;stroke-linecap:round;transition:stroke-dashoffset .8s linear,stroke .3s;}
+.tmr-digits{font-family:'Bebas Neue',sans-serif;font-size:clamp(52px,12vw,72px);line-height:1;letter-spacing:2px;z-index:1;}
+.tmr-interval-num{font-family:'Space Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:2px;margin-top:4px;z-index:1;}
+
+/* current interval card */
+.tmr-curr{background:var(--card);border:1px solid var(--border);border-radius:var(--rad);padding:16px 18px;margin-bottom:14px;position:relative;overflow:hidden;}
+.tmr-curr::before{content:'';position:absolute;top:0;left:0;bottom:0;width:4px;}
+.tmr-curr.tc-p::before{background:var(--plano);}
+.tmr-curr.tc-m::before{background:var(--montana);}
+.tmr-curr.tc-r::before{background:var(--green);}
+.tmr-curr-label{font-family:'Space Mono',monospace;font-size:8px;color:var(--muted);letter-spacing:3px;text-transform:uppercase;margin-bottom:8px;}
+.tmr-curr-pos{display:inline-block;font-size:9px;font-weight:700;font-family:'Space Mono',monospace;padding:3px 10px;border-radius:3px;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px;}
+.tmr-curr-desc{font-size:clamp(16px,3.5vw,20px);color:var(--text);font-weight:500;margin-bottom:6px;line-height:1.3;}
+.tmr-curr-int{display:inline-block;font-size:9px;font-family:'Space Mono',monospace;padding:2px 8px;border-radius:3px;letter-spacing:.5px;}
+
+/* next interval */
+.tmr-next{background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:var(--rad);
+  padding:10px 14px;margin-bottom:18px;display:flex;align-items:center;gap:10px;}
+.tmr-next-lbl{font-family:'Space Mono',monospace;font-size:8px;color:var(--muted);letter-spacing:2px;text-transform:uppercase;white-space:nowrap;}
+.tmr-next-desc{font-size:12px;color:var(--muted);flex:1;}
+.tmr-next-time{font-family:'Space Mono',monospace;font-size:11px;color:var(--muted);white-space:nowrap;}
+
+/* controls */
+.tmr-controls{display:flex;gap:10px;margin-bottom:20px;}
+.btn-ctrl{flex:1;background:var(--card);border:1px solid var(--border);color:var(--text);font-family:'Bebas Neue',sans-serif;
+  font-size:18px;letter-spacing:2px;padding:14px;border-radius:var(--rad);cursor:pointer;transition:all .15s;text-transform:uppercase;}
+.btn-ctrl:hover{border-color:var(--accent);}
+.btn-ctrl.primary{background:var(--accent);color:#08080d;border-color:var(--accent);}
+.btn-ctrl.primary:hover{opacity:.9;}
+
+/* mini schedule */
+.tmr-schedule{background:var(--surface);border:1px solid var(--border);border-radius:var(--rad);overflow:hidden;}
+.tmr-sched-hdr{padding:10px 14px;font-family:'Space Mono',monospace;font-size:9px;color:var(--muted);letter-spacing:3px;text-transform:uppercase;border-bottom:1px solid var(--border);}
+.tmr-sched-list{max-height:240px;overflow-y:auto;}
+.sched-item{display:flex;align-items:center;gap:8px;padding:7px 14px;border-bottom:1px solid rgba(255,255,255,.03);}
+.sched-item:last-child{border-bottom:none;}
+.sched-item.done{opacity:.3;}
+.sched-item.current{background:rgba(232,216,64,.06);}
+.sched-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+.sched-t{font-family:'Space Mono',monospace;font-size:10px;color:var(--muted);min-width:32px;flex-shrink:0;}
+.sched-d{font-size:11px;color:var(--text);flex:1;}
+.sched-pos{font-size:9px;color:var(--muted);}
+
+::-webkit-scrollbar{width:3px;height:3px;} ::-webkit-scrollbar-track{background:var(--bg);} ::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px;}
+</style>
+</head>
+<body>
+<div class="page">
+  <header class="hdr">
+    <div>
+      <div class="logo-text">SPIN<br>LAB</div>
+      <div class="logo-sub">Ponete Fit Pro · Metodología Rafael</div>
+    </div>
+    <div class="hdr-clock">
+      <div class="clock-row"><span class="c1">10:15</span><span class="cs">→</span><span class="c2">10:52–55</span></div>
+      <div class="clock-sub">Calentamiento · Cuerpo principal</div>
+    </div>
+  </header>
+  <div class="div-line"></div>
+
+  <div class="sec-lbl">01 · Elegí el modo de recorrido</div>
+  <div class="mode-grid" id="modeGrid"></div>
+
+  <div class="sec-lbl">02 · Arrancar</div>
+  <div class="info-bar">
+    <div class="ii"><div class="iv2" style="color:var(--hibrido)">10:15</div><div class="ik">Inicio</div></div>
+    <div class="isep">·</div>
+    <div class="ii"><div class="iv2" style="color:var(--hibrido)">10:20</div><div class="ik">Fin calentamiento</div></div>
+    <div class="isep">·</div>
+    <div class="ii"><div class="iv2" style="color:var(--accent)" id="iBlocks">—</div><div class="ik">Bloques</div></div>
+    <div class="isep">·</div>
+    <div class="ii"><div class="iv2" style="color:var(--accent)" id="iDur">—</div><div class="ik">Min / bloque</div></div>
+    <div class="isep">·</div>
+    <div class="ii"><div class="iv2" style="color:var(--accent2)" id="iCierre">—</div><div class="ik">Cierre</div></div>
+  </div>
+  <button class="btn-main" id="btnStart" disabled>⚡ Iniciar Recorrido</button>
+
+  <div class="loader" id="loader"><div class="lspin"></div>GENERANDO CLASE...</div>
+  <div id="output"></div>
+</div>
+
+<!-- TIMER OVERLAY -->
+<div id="timerOverlay">
+  <div class="timer-shell">
+    <div class="tmr-top">
+      <button class="tmr-close" onclick="closeTimer()">✕ Cerrar</button>
+      <div class="tmr-mode-lbl" id="tmrModeLabel">—</div>
+    </div>
+    <div class="tmr-progress-wrap"><div class="tmr-progress" id="tmrProgress"></div></div>
+    <div class="tmr-block-label" id="tmrBlockLabel">—</div>
+    <div class="tmr-circle-wrap">
+      <div class="tmr-circle">
+        <svg viewBox="0 0 100 100">
+          <circle class="tmr-circle-bg" cx="50" cy="50" r="44"/>
+          <circle class="tmr-circle-prog" id="tmrCircle" cx="50" cy="50" r="44"
+            stroke-dasharray="276.46" stroke-dashoffset="0" stroke="var(--accent)"/>
+        </svg>
+        <div class="tmr-digits" id="tmrDigits">0:00</div>
+        <div class="tmr-interval-num" id="tmrIvNum">Intervalo 1 / 1</div>
+      </div>
+    </div>
+    <div class="tmr-curr" id="tmrCurrCard">
+      <div class="tmr-curr-label">AHORA</div>
+      <div><span class="tmr-curr-pos" id="tmrCurrPos">Sentado</span></div>
+      <div class="tmr-curr-desc" id="tmrCurrDesc">—</div>
+      <span class="tmr-curr-int" id="tmrCurrInt">—</span>
+    </div>
+    <div class="tmr-next" id="tmrNextWrap">
+      <span class="tmr-next-lbl">SIGUIENTE</span>
+      <span class="tmr-next-desc" id="tmrNextDesc">—</span>
+      <span class="tmr-next-time" id="tmrNextTime">—</span>
+    </div>
+    <div class="tmr-controls">
+      <button class="btn-ctrl" onclick="skipInterval()">⏭ Saltar</button>
+      <button class="btn-ctrl primary" id="btnPlayPause" onclick="togglePause()">⏸ Pausar</button>
+      <button class="btn-ctrl" onclick="restartTimer()">↺ Reiniciar</button>
+    </div>
+    <div class="tmr-schedule">
+      <div class="tmr-sched-hdr">Todos los intervalos</div>
+      <div class="tmr-sched-list" id="tmrSchedList"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════════
+// MODES
+// ═══════════════════════════════════════════════════════
+const MODES=[
+  // ── PUROS ──
+  {id:1, cat:'Puro',        desc:'3 Plano + 3 Montaña',   blocks:['P','P','P','M','M','M']},
+  {id:2, cat:'Puro',        desc:'2 Plano + 2 Montaña',   blocks:['P','P','M','M']},
+  {id:3, cat:'Puro',        desc:'3 Montaña + 3 Plano',   blocks:['M','M','M','P','P','P']},
+  {id:4, cat:'Puro',        desc:'2 Montaña + 2 Plano',   blocks:['M','M','P','P']},
+  // ── INTERCALADOS ──
+  {id:5, cat:'Intercalado', desc:'Plano/Montaña ×3',       blocks:['P','M','P','M','P','M']},
+  {id:6, cat:'Intercalado', desc:'Plano/Montaña ×2',       blocks:['P','M','P','M']},
+  {id:7, cat:'Intercalado', desc:'Montaña/Plano ×3',       blocks:['M','P','M','P','M','P']},
+  {id:8, cat:'Intercalado', desc:'Montaña/Plano ×2',       blocks:['M','P','M','P']},
+  // ── HÍBRIDOS ──
+  {id:9,  cat:'Híbrido', desc:'Plano→Montaña interno ×6', blocks:['HP','HP','HP','HP','HP','HP']},
+  {id:10, cat:'Híbrido', desc:'Plano→Montaña interno ×4', blocks:['HP','HP','HP','HP']},
+  {id:11, cat:'Híbrido', desc:'Montaña→Plano interno ×6', blocks:['HM','HM','HM','HM','HM','HM']},
+  {id:12, cat:'Híbrido', desc:'Montaña→Plano interno ×4', blocks:['HM','HM','HM','HM']},
+];
+
+const CLOSE=['10:52','10:53','10:54','10:55'];
+const DUR_POOL=[15,20,30,45,60];
+
+// Valid combos: blockCount × blockDurMin ∈ 32–35
+const ALL_COMBOS=[];
+for(let dur=5;dur<=9;dur++)
+  for(let cnt=4;cnt<=7;cnt++){const t=dur*cnt;if(t>=32&&t<=35)ALL_COMBOS.push({dur,cnt,total:t});}
+
+// ═══════════════════════════════════════════════════════
+// HELPERS
+// ═══════════════════════════════════════════════════════
+const rnd=a=>a[Math.floor(Math.random()*a.length)];
+function fmtSec(s){if(s<60)return`${s}"`;const m=Math.floor(s/60),r=s%60;return r?`${m}'${String(r).padStart(2,'0')}"`:`${m}'`;}
+function addMin(base,add){const t=base+add;return`${Math.floor(t/60)}:${String(t%60).padStart(2,'0')}`;}
+const BASE=10*60;
+
+// ═══════════════════════════════════════════════════════
+// EXERCISES
+// ═══════════════════════════════════════════════════════
+const PLANO_EX=[
+  {desc:'90 RPM de pie',             pos:'Parado',  type:'90p',     maxInt:'Media Alta'},
+  {desc:'100 RPM de pie',            pos:'Parado',  type:'100p',    maxInt:'Alta'},
+  {desc:'100 RPM variante de pie',   pos:'Parado',  type:'100p2',   maxInt:'Alta'},
+  {desc:'110 RPM sentado',           pos:'Sentado', type:'110s',    maxInt:'Alta'},
+  {desc:'Sprint de plano',           pos:'Sentado', type:'sprint_p',maxInt:'Muy Alta'},
+];
+const MONT_EX=[
+  {desc:'60 RPM fuerza base',        pos:null, type:'60b',      maxInt:'Media Alta'},
+  {desc:'Acelerado en montaña',      pos:null, type:'acel_m',   maxInt:'Alta'},
+  {desc:'Sprint de montaña',         pos:null, type:'sprint_m', maxInt:'Muy Alta'},
+  {desc:'Fuerza Máxima (FM)',        pos:null, type:'fm',       maxInt:'Muy Alta'},
+  {desc:'80 RPM viento en contra',   pos:null, type:'80vc',     maxInt:'Media Alta'},
+];
+
+// Intensity matrix [tier0=≤30s, tier1=≤45s, tier2=>45s]
+const INT_MAP={
+  '90p':     ['Media Baja','Media','Media Alta'],
+  '100p':    ['Media Baja','Media Alta','Alta'],
+  '100p2':   ['Media','Media Alta','Alta'],
+  '110s':    ['Media','Media Alta','Alta'],
+  'sprint_p':['Media Alta','Alta','Muy Alta'],
+  '60b':     ['Media Baja','Media','Media Alta'],
+  'acel_m':  ['Media','Media Alta','Alta'],
+  'sprint_m':['Media Alta','Alta','Muy Alta'],
+  'fm':      ['Media Alta','Alta','Muy Alta'],
+  '80vc':    ['Media Baja','Media','Media Alta'],
+};
+function getInt(type,sec){
+  const t=sec<=30?0:sec<=45?1:2;
+  return(INT_MAP[type]&&INT_MAP[type][t])||'Media';
+}
+function intCls(l){return({'Media Baja':'int-mb','Media':'int-m','Media Alta':'int-ma','Alta':'int-a','Muy Alta':'int-va','Muy Baja':'int-vmb'}[l]||'int-m');}
+function intColor(l){return({'Media Baja':'#4ade80','Media':'#e8d840','Media Alta':'#ff9040','Alta':'#ff3d5a','Muy Alta':'#ff2050','Muy Baja':'#86efac'}[l]||'#e8d840');}
+
+function safePos(ex,isP){
+  if(isP&&(ex.type==='sprint_p'||ex.type==='110s')) return'Sentado';
+  if(ex.pos) return ex.pos;
+  return rnd(['Sentado','Parado']);
+}
+
+// ═══════════════════════════════════════════════════════
+// DURATION GENERATOR — anti-monotony, no consecutive 60"
+// ═══════════════════════════════════════════════════════
+function genDurs(workSec){
+  const out=[];let e=0,prev=null,pp=null;
+  while(e<workSec-10){
+    const rem=workSec-e;
+    let pool=DUR_POOL.filter(d=>d<=rem+5);if(!pool.length)break;
+    // no consecutive 60"
+    if(prev===60)pool=pool.filter(d=>d!==60);if(!pool.length)pool=DUR_POOL.filter(d=>d<=rem+5);
+    const d=rnd(pool);out.push(d);e+=d;pp=prev;prev=d;
+  }
+  return out;
+}
+
+// ═══════════════════════════════════════════════════════
+// BUILD INTERVALS for a terrain segment
+// blockNum used for "Very High" rule (block1 → force <30")
+// ═══════════════════════════════════════════════════════
+function buildIntervals(terrain, durs, blockNum){
+  const isP=terrain==='plano';
+  const pool=[...(isP?PLANO_EX:MONT_EX)];
+  const out=[];
+  let lastType=null;
+
+  for(let i=0;i<durs.length;i++){
+    let d=durs[i];
+    // pick exercise – no same type consecutively
+    let choices=pool.filter(e=>e.type!==lastType);
+    if(!choices.length)choices=pool;
+    const ex=choices[i%choices.length];
+    let pos=safePos(ex,isP);
+    let intensity=getInt(ex.type,d);
+
+    // Block 1 rule: Muy Alta must be <30"
+    if(blockNum===1&&intensity==='Muy Alta'&&d>=30) d=rnd([15,20]);
+
+    out.push({d,ex,pos,intensity,terrain});
+    lastType=ex.type;
+
+    // Compensación fisiológica: after Muy Alta → insert 30" recovery
+    if(intensity==='Muy Alta'){
+      out.push({
+        d:30,
+        ex:{desc:'Recuperación activa — cadencia suave',pos:null,type:'rec'},
+        pos:rnd(['Sentado','Parado']),
+        intensity:'Media',
+        terrain,
+        isRecovery:true
+      });
+    }
+  }
+  return out;
+}
+
+// ═══════════════════════════════════════════════════════
+// BUILD BLOCK
+// ═══════════════════════════════════════════════════════
+function buildBlock(bType, num, durMin){
+  const workSec=(durMin-1)*60; // last 60" = hydration (Muy Baja)
+  const hydration={d:60,ex:{desc:'Hidratación — cadencia muy suave',pos:null,type:'hyd'},pos:'Sentado',intensity:'Muy Baja',terrain:'hyd',isHydration:true};
+
+  if(bType==='P'||bType==='M'){
+    const terrain=bType==='P'?'plano':'montana';
+    const durs=genDurs(workSec);
+    const intervals=[...buildIntervals(terrain,durs,num),hydration];
+    return{bType,num,durMin,intervals,isHybrid:false,terrain};
+  }
+
+  // HYBRID
+  const firstT = bType==='HP'?'plano':'montana';
+  const secondT= bType==='HP'?'montana':'plano';
+  const half=Math.floor(workSec*0.5);
+  const d1=genDurs(half);
+  const d2=genDurs(workSec-half);
+  const iv1=buildIntervals(firstT,d1,num);
+  const iv2=buildIntervals(secondT,d2,num);
+  const intervals=[...iv1,...iv2,hydration];
+  return{bType,num,durMin,intervals,isHybrid:true,firstTerrain:firstT,secondTerrain:secondT};
+}
+
+// ═══════════════════════════════════════════════════════
+// BUILD CLASS
+// ═══════════════════════════════════════════════════════
+function pickCombo(cnt){
+  const m=ALL_COMBOS.filter(c=>c.cnt===cnt);
+  return rnd(m.length?m:ALL_COMBOS);
+}
+
+let currentClass=null;
+
+function buildClass(mode){
+  let bTypes=[...mode.blocks];
+  const combo=pickCombo(bTypes.length);
+  while(bTypes.length<combo.cnt)bTypes.push(rnd(['P','M']));
+  bTypes=bTypes.slice(0,combo.cnt);
+  const blocks=bTypes.map((t,i)=>buildBlock(t,i+1,combo.dur));
+  const closeTime=rnd(CLOSE);
+  return{blocks,combo,mode,closeTime};
+}
+
+// ═══════════════════════════════════════════════════════
+// RENDER INTERVALS
+// ═══════════════════════════════════════════════════════
+function renderIv(iv){
+  if(iv.isHydration) return''; // rendered as separate bar
+  const isP=iv.terrain==='plano';
+  const bdrCls=iv.isRecovery?'iv-rec':isP?'iv-p':'iv-m';
+  const tCls=iv.isRecovery?'cr':isP?'cp':'cm';
+  const posCls=iv.pos==='Sentado'?'pos-s':'pos-p';
+  const posIcon=iv.pos==='Sentado'?'🪑 Sentado':'🧍 Parado';
+  return`<div class="iv-row ${bdrCls}">
+  <span class="iv-time ${tCls}">${fmtSec(iv.d)}</span>
+  <span class="iv-pos ${posCls}">${posIcon}</span>
+  <span class="iv-desc">${iv.ex.desc}</span>
+  <span class="iv-int ${intCls(iv.intensity)}">${iv.intensity}</span>
+</div>`;
+}
+
+// ═══════════════════════════════════════════════════════
+// RENDER CLASS
+// ═══════════════════════════════════════════════════════
+function renderClass(cls){
+  const{blocks,combo,mode,closeTime}=cls;
+  const nP=blocks.filter(b=>b.bType==='P').length;
+  const nM=blocks.filter(b=>b.bType==='M').length;
+  const nH=blocks.filter(b=>b.isHybrid).length;
+
+  let tl=`<div class="tl-strip"><div class="tl-seg" style="background:var(--hibrido);flex:5"></div>`;
+  blocks.forEach(b=>{
+    const c=b.isHybrid?'var(--hibrido)':b.terrain==='plano'?'var(--plano)':'var(--montana)';
+    tl+=`<div class="tl-seg" style="background:${c};flex:${b.durMin}"></div>`;
+  });
+  tl+=`</div>`;
+
+  let times=`<div class="tl-times"><span>10:15</span><span>10:20</span>`;
+  let cur=20;
+  blocks.forEach(()=>{cur+=combo.dur;times+=`<span>${addMin(BASE,cur)}</span>`;});
+  times+=`</div>`;
+
+  let html=`
+<div class="cls-hdr">
+  <div><div class="cls-title">MODO ${String(mode.id).padStart(2,'0')} · ${mode.cat.toUpperCase()}</div><div class="cls-sub">${mode.desc}</div></div>
+  <div class="cls-meta"><strong>${blocks.length}</strong> bloques · <strong>${combo.dur}'</strong> c/u<br>Total: <strong>${combo.total} min</strong><br>Cierre: <strong style="color:var(--accent)">${closeTime}</strong></div>
+</div>
+<div class="tl-wrap"><div class="tl-lbl">Recorrido · 10:15 → ${closeTime}</div>${tl}${times}</div>
+<div class="blks">
+  <div class="wu-bar">
+    <span class="bar-lbl">▸ Entrada en Calor</span>
+    <span class="bar-det">Pedaleo progresivo, cadencia paulatina</span>
+    <span class="bar-t">10:15 → 10:20 · 5'</span>
+  </div>`;
+
+  blocks.forEach((blk,bi)=>{
+    const tS=addMin(BASE,20+bi*combo.dur);
+    const tE=addMin(BASE,20+(bi+1)*combo.dur);
+    let bdgCls,bdgTxt;
+    if(blk.isHybrid){
+      bdgCls='bb-h';
+      bdgTxt=`⚡ Híbrido · ${blk.firstTerrain==='plano'?'Plano → Montaña':'Montaña → Plano'}`;
+    }else if(blk.terrain==='plano'){bdgCls='bb-p';bdgTxt='🔵 Plano';}
+    else{bdgCls='bb-m';bdgTxt='🟠 Montaña';}
+
+    const ivCount=blk.intervals.filter(v=>!v.isHydration).length;
+
+    html+=`<div class="blk ${bi===0?'open':''}">
+  <div class="blk-hdr" onclick="this.parentElement.classList.toggle('open')">
+    <span class="blk-num">${String(bi+1).padStart(2,'0')}</span>
+    <span class="blk-badge ${bdgCls}">${bdgTxt}</span>
+    <span class="blk-cnt">${ivCount} intervalos</span>
+    <span class="blk-dur">${tS} → ${tE}</span>
+    <span class="blk-arr">▾</span>
+  </div>
+  <div class="blk-body">`;
+
+    if(blk.isHybrid){
+      const lbl1=blk.firstTerrain==='plano'?'🔵 Plano':'🟠 Montaña';
+      const lbl2=blk.secondTerrain==='plano'?'🔵 Plano':'🟠 Montaña';
+      const c1=blk.firstTerrain==='plano'?'trn-p':'trn-m';
+      const c2=blk.secondTerrain==='plano'?'trn-p':'trn-m';
+      html+=`<div class="trn-div ${c1}">${lbl1}</div>`;
+      blk.intervals.filter(v=>!v.isHydration&&v.terrain===blk.firstTerrain).forEach(iv=>{ html+=renderIv(iv); });
+      html+=`<div class="trn-div ${c2}">${lbl2}</div>`;
+      blk.intervals.filter(v=>!v.isHydration&&v.terrain===blk.secondTerrain).forEach(iv=>{ html+=renderIv(iv); });
+    }else{
+      blk.intervals.filter(v=>!v.isHydration).forEach(iv=>{ html+=renderIv(iv); });
+    }
+
+    html+=`<div class="hyd"><span>💧</span><strong>1' HIDRATACIÓN</strong><span>— intensidad Muy Baja, cadencia libre</span></div></div></div>`;
+  });
+
+  html+=`<div class="cd-bar">
+    <span class="bar-lbl">▸ Vuelta a la Calma</span>
+    <span class="bar-det">Posterior a ${closeTime} — pedaleo libre + estiramientos</span>
+    <span class="bar-t" style="color:var(--hibrido)">${closeTime} →</span>
+  </div></div>
+  <div class="summary">
+    <div class="sum-c"><div class="sum-v" style="color:var(--hibrido)">10:15</div><div class="sum-k">Inicio</div></div>
+    <div class="sum-c"><div class="sum-v" style="color:var(--accent)">${combo.total}'</div><div class="sum-k">Min bloques</div></div>
+    <div class="sum-c"><div class="sum-v" style="color:var(--accent)">${blocks.length}</div><div class="sum-k">Bloques</div></div>
+    <div class="sum-c"><div class="sum-v" style="color:var(--plano)">${nP}</div><div class="sum-k">Plano</div></div>
+    <div class="sum-c"><div class="sum-v" style="color:var(--montana)">${nM+nH}</div><div class="sum-k">Mont/Híb</div></div>
+  </div>`;
+
+  return html;
+}
+
+// ═══════════════════════════════════════════════════════
+// MODE GRID BUILD
+// ═══════════════════════════════════════════════════════
+let selectedMode=null;
+const grid=document.getElementById('modeGrid');
+const catColor={Puro:'#e8d840',Intercalado:'#00d4ff',Híbrido:'#c084fc'};
+const catGroups=['Puro','Intercalado','Híbrido'];
+
+// Insert group headers
+let lastCat='';
+MODES.forEach(m=>{
+  if(m.cat!==lastCat){
+    if(lastCat!==''){
+      // spacer label
+      const lbl=document.createElement('div');
+      lbl.style.cssText='grid-column:1/-1;font-family:"Space Mono",monospace;font-size:9px;color:var(--muted);letter-spacing:4px;text-transform:uppercase;padding:4px 0 0;border-top:1px solid var(--border);margin-top:4px;';
+      lbl.textContent=m.cat+'S';
+      grid.appendChild(lbl);
+    }
+    lastCat=m.cat;
+  }
+  const el=document.createElement('div');
+  el.className='mc';
+  const tc=catColor[m.cat];
+  const tagHtml=m.blocks.map(b=>{
+    if(b==='P')return`<span class="tg tg-p">P</span>`;
+    if(b==='M')return`<span class="tg tg-m">M</span>`;
+    return`<span class="tg tg-h">${b==='HP'?'H↓':'H↑'}</span>`;
+  }).join('');
+  el.innerHTML=`<div class="mc-num">${String(m.id).padStart(2,'0')}</div>
+<div class="mc-cat" style="color:${tc}">${m.cat}</div>
+<div class="mc-desc">${m.desc}</div>
+<div class="mc-tags">${tagHtml}</div>`;
+  el.addEventListener('click',()=>{
+    document.querySelectorAll('.mc').forEach(c=>c.classList.remove('sel'));
+    el.classList.add('sel'); selectedMode=m;
+    const p=ALL_COMBOS.filter(c=>c.cnt===m.blocks.length);
+    const s=p.length?p[0]:ALL_COMBOS[0];
+    document.getElementById('iBlocks').textContent=s.cnt;
+    document.getElementById('iDur').textContent=s.dur+"'";
+    document.getElementById('iCierre').textContent=rnd(CLOSE);
+    document.getElementById('btnStart').disabled=false;
+  });
+  grid.appendChild(el);
+});
+
+// ═══════════════════════════════════════════════════════
+// START CLASS
+// ═══════════════════════════════════════════════════════
+document.getElementById('btnStart').addEventListener('click',async()=>{
+  if(!selectedMode)return;
+  const loader=document.getElementById('loader');
+  const output=document.getElementById('output');
+  output.style.display='none'; loader.style.display='block';
+  await new Promise(r=>setTimeout(r,700));
+  currentClass=buildClass(selectedMode);
+  output.innerHTML=renderClass(currentClass);
+  // Add timer button
+  output.insertAdjacentHTML('beforeend',`
+    <div class="timer-btn-wrap">
+      <button class="btn-timer" onclick="openTimer()">
+        <span>⏱</span><span>INICIAR TIMER DE CLASE</span>
+      </button>
+    </div>`);
+  output.style.display='block'; loader.style.display='none';
+  output.scrollIntoView({behavior:'smooth',block:'start'});
+});
+
+// ═══════════════════════════════════════════════════════
+// TIMER ENGINE
+// ═══════════════════════════════════════════════════════
+let timerState={
+  flatList:[],   // all intervals in order
+  idx:0,
+  remaining:0,
+  totalSec:0,
+  elapsedSec:0,
+  interval:null,
+  paused:false,
+};
+
+// Flatten class into a linear list of intervals
+function flattenClass(cls){
+  const list=[];
+  // warmup
+  list.push({d:300,desc:'Entrada en Calor — pedaleo progresivo',pos:'Sentado',intensity:'Media Baja',terrain:'warmup',isWarmup:true});
+  cls.blocks.forEach((blk,bi)=>{
+    blk.intervals.forEach(iv=>{
+      list.push({
+        d:iv.d,
+        desc:iv.ex.desc,
+        pos:iv.pos||(rnd(['Sentado','Parado'])),
+        intensity:iv.intensity,
+        terrain:iv.terrain,
+        blockNum:bi+1,
+        isHydration:iv.isHydration||false,
+        isRecovery:iv.isRecovery||false,
+      });
+    });
+  });
+  return list;
+}
+
+function openTimer(){
+  if(!currentClass)return;
+  const list=flattenClass(currentClass);
+  timerState.flatList=list;
+  timerState.idx=0;
+  timerState.paused=false;
+  timerState.elapsedSec=0;
+  timerState.totalSec=list.reduce((a,v)=>a+v.d,0);
+  buildSchedule(list);
+  document.getElementById('tmrModeLabel').textContent=`MODO ${String(currentClass.mode.id).padStart(2,'0')} · ${currentClass.mode.desc}`;
+  document.getElementById('timerOverlay').classList.add('active');
+  document.body.style.overflow='hidden';
+  startInterval();
+}
+
+function closeTimer(){
+  clearInterval(timerState.interval);
+  document.getElementById('timerOverlay').classList.remove('active');
+  document.body.style.overflow='';
+}
+
+function buildSchedule(list){
+  const ul=document.getElementById('tmrSchedList');
+  ul.innerHTML=list.map((iv,i)=>{
+    const dotColor=iv.terrain==='plano'?'var(--plano)':iv.terrain==='montana'?'var(--montana)':iv.isWarmup?'var(--hibrido)':'var(--green)';
+    return`<div class="sched-item" id="sched_${i}">
+  <div class="sched-dot" style="background:${dotColor}"></div>
+  <span class="sched-t">${fmtSec(iv.d)}</span>
+  <span class="sched-d">${iv.desc}</span>
+  <span class="sched-pos">${iv.pos}</span>
+</div>`;
+  }).join('');
+}
+
+function startInterval(){
+  const iv=timerState.flatList[timerState.idx];
+  timerState.remaining=iv.d;
+  updateTimerUI();
+  clearInterval(timerState.interval);
+  timerState.interval=setInterval(tick,1000);
+}
+
+function tick(){
+  if(timerState.paused)return;
+  timerState.remaining--;
+  timerState.elapsedSec++;
+  if(timerState.remaining<=0){
+    timerState.idx++;
+    if(timerState.idx>=timerState.flatList.length){
+      clearInterval(timerState.interval);
+      document.getElementById('tmrDigits').textContent='FIN';
+      document.getElementById('tmrCurrDesc').textContent='¡Clase completada! 🎉';
+      document.getElementById('tmrNextWrap').style.display='none';
+      return;
+    }
+    playBell();
+    timerState.remaining=timerState.flatList[timerState.idx].d;
+  }
+  updateTimerUI();
+}
+
+function updateTimerUI(){
+  const iv=timerState.flatList[timerState.idx];
+  const next=timerState.flatList[timerState.idx+1];
+  const r=timerState.remaining;
+  const m=Math.floor(r/60),s=r%60;
+
+  // Digits
+  document.getElementById('tmrDigits').textContent=`${m}:${String(s).padStart(2,'0')}`;
+  document.getElementById('tmrIvNum').textContent=`Intervalo ${timerState.idx+1} / ${timerState.flatList.length}`;
+
+  // Circle
+  const circ=document.getElementById('tmrCircle');
+  const total=timerState.flatList[timerState.idx].d;
+  const prog=r/total;
+  const circumference=276.46;
+  circ.style.strokeDashoffset=circumference*(1-prog);
+  // Color by terrain
+  const strokeColor=iv.terrain==='plano'?'var(--plano)':iv.terrain==='montana'?'var(--montana)':iv.isWarmup?'var(--hibrido)':'var(--green)';
+  circ.style.stroke=strokeColor;
+  document.getElementById('tmrDigits').style.color=strokeColor;
+
+  // Block label
+  document.getElementById('tmrBlockLabel').textContent=
+    iv.isWarmup?'ENTRADA EN CALOR':`BLOQUE ${iv.blockNum} · ${iv.terrain==='plano'?'PLANO':iv.terrain==='montana'?'MONTAÑA':iv.terrain==='hyd'?'HIDRATACIÓN':'—'}`;
+
+  // Current card
+  const card=document.getElementById('tmrCurrCard');
+  card.className=`tmr-curr ${iv.terrain==='plano'?'tc-p':iv.terrain==='montana'?'tc-m':'tc-r'}`;
+  document.getElementById('tmrCurrDesc').textContent=iv.desc;
+  const posEl=document.getElementById('tmrCurrPos');
+  posEl.textContent=iv.pos==='Sentado'?'🪑 Sentado':'🧍 Parado';
+  posEl.className=`tmr-curr-pos ${iv.pos==='Sentado'?'pos-s':'pos-p'}`;
+  const intEl=document.getElementById('tmrCurrInt');
+  intEl.textContent=iv.intensity;
+  intEl.className=`tmr-curr-int ${intCls(iv.intensity)}`;
+  intEl.style.color=intColor(iv.intensity);
+
+  // Next
+  if(next){
+    document.getElementById('tmrNextWrap').style.display='flex';
+    document.getElementById('tmrNextDesc').textContent=next.desc;
+    document.getElementById('tmrNextTime').textContent=fmtSec(next.d);
+  }else{
+    document.getElementById('tmrNextWrap').style.display='none';
+  }
+
+  // Overall progress
+  document.getElementById('tmrProgress').style.width=`${(timerState.elapsedSec/timerState.totalSec*100).toFixed(1)}%`;
+
+  // Schedule highlight
+  document.querySelectorAll('.sched-item').forEach((el,i)=>{
+    el.classList.toggle('done',i<timerState.idx);
+    el.classList.toggle('current',i===timerState.idx);
+  });
+  const cur=document.getElementById(`sched_${timerState.idx}`);
+  if(cur)cur.scrollIntoView({block:'nearest',behavior:'smooth'});
+}
+
+function togglePause(){
+  timerState.paused=!timerState.paused;
+  document.getElementById('btnPlayPause').textContent=timerState.paused?'▶ Reanudar':'⏸ Pausar';
+}
+
+function skipInterval(){
+  timerState.idx++;
+  if(timerState.idx>=timerState.flatList.length){closeTimer();return;}
+  playBell();
+  startInterval();
+}
+
+function restartTimer(){
+  clearInterval(timerState.interval);
+  timerState.idx=0;
+  timerState.elapsedSec=0;
+  timerState.paused=false;
+  document.getElementById('btnPlayPause').textContent='⏸ Pausar';
+  startInterval();
+}
+
+// ═══════════════════════════════════════════════════════
+// BELL — Web Audio API
+// ═══════════════════════════════════════════════════════
+let audioCtx=null;
+function getAudio(){if(!audioCtx)audioCtx=new(window.AudioContext||window.webkitAudioContext)();return audioCtx;}
+function playBell(){
+  try{
+    const ctx=getAudio();
+    const osc=ctx.createOscillator();
+    const gain=ctx.createGain();
+    osc.connect(gain);gain.connect(ctx.destination);
+    osc.type='sine';
+    osc.frequency.setValueAtTime(880,ctx.currentTime);
+    osc.frequency.exponentialRampToValueAtTime(440,ctx.currentTime+0.4);
+    gain.gain.setValueAtTime(0.5,ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.001,ctx.currentTime+0.6);
+    osc.start(ctx.currentTime);
+    osc.stop(ctx.currentTime+0.6);
+  }catch(e){}
+}
+</script>
+</body>
+</html>
