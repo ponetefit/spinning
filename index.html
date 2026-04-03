@@ -7,9 +7,9 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="PoneFit Spinning">
+<meta name="apple-mobile-web-app-title" content="Ponetefit">
 <link rel="manifest" id="pwa-manifest">
-<title>PONETEFIT EN SPINNING · Profe Rafa López</title>
+<title>Ponetefit con Spinning · Profe Rafa López</title>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
 :root{
@@ -53,20 +53,19 @@ body::before{content:'';position:fixed;inset:0;
 .sec-lbl::after{content:'';flex:1;height:1px;background:var(--border);}
 
 /* ── MODE GRID ── */
-.mode-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:28px;}
-@media(max-width:700px){.mode-grid{grid-template-columns:repeat(3,1fr);}}
-@media(max-width:480px){.mode-grid{grid-template-columns:repeat(2,1fr);}}
+.mode-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:28px;}
+@media(max-width:600px){.mode-grid{grid-template-columns:repeat(2,1fr);gap:10px;}}
 
-.mc{background:var(--card);border:1.5px solid var(--border);border-radius:var(--rad);padding:14px 12px;cursor:pointer;transition:all .18s;position:relative;overflow:hidden;}
-.mc::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:transparent;transition:background .18s;}
+.mc{background:var(--card);border:1.5px solid var(--border);border-radius:var(--rad);padding:18px 14px;cursor:pointer;transition:all .18s;position:relative;overflow:hidden;}
+.mc::after{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:transparent;transition:background .18s;}
 .mc:hover{border-color:rgba(232,216,64,.5);transform:translateY(-2px);}
 .mc.sel{border-color:var(--accent);background:#191926;}
 .mc.sel::after{background:var(--accent);}
-.mc-num{font-family:'Bebas Neue',sans-serif;font-size:clamp(28px,6vw,36px);line-height:1;color:var(--accent);margin-bottom:4px;}
-.mc-cat{font-size:var(--fs-xs);font-weight:700;text-transform:uppercase;letter-spacing:.8px;margin-bottom:4px;}
-.mc-desc{font-size:var(--fs-xs);color:var(--muted);line-height:1.5;}
-.mc-tags{display:flex;gap:4px;margin-top:8px;flex-wrap:wrap;}
-.tg{font-size:clamp(10px,2.5vw,12px);padding:3px 7px;border-radius:3px;font-family:'Space Mono',monospace;text-transform:uppercase;}
+.mc-num{font-family:'Bebas Neue',sans-serif;font-size:clamp(36px,8vw,48px);line-height:1;color:var(--accent);margin-bottom:6px;}
+.mc-cat{font-size:clamp(12px,3vw,14px);font-weight:700;text-transform:uppercase;letter-spacing:.8px;margin-bottom:5px;}
+.mc-desc{font-size:clamp(13px,3.2vw,15px);color:var(--muted);line-height:1.5;}
+.mc-tags{display:flex;gap:5px;margin-top:10px;flex-wrap:wrap;}
+.tg{font-size:clamp(11px,2.8vw,13px);padding:4px 8px;border-radius:3px;font-family:'Space Mono',monospace;text-transform:uppercase;}
 .tg-p{background:rgba(0,212,255,.12);color:var(--plano);}
 .tg-m{background:rgba(255,101,32,.12);color:var(--montana);}
 .tg-h{background:rgba(168,85,247,.14);color:var(--hibrido);}
@@ -114,48 +113,48 @@ body::before{content:'';position:fixed;inset:0;
 /* ── BLOCK HEADER ── */
 .blk{border-bottom:1px solid var(--border);}
 .blk:last-of-type{border-bottom:none;}
-.blk-hdr{padding:14px 16px;display:flex;align-items:center;gap:10px;cursor:pointer;user-select:none;transition:background .15s;}
+.blk-hdr{padding:18px 16px;display:flex;align-items:center;gap:10px;cursor:pointer;user-select:none;transition:background .15s;}
 .blk-hdr:hover{background:rgba(255,255,255,.02);}
-.blk-num{font-family:'Bebas Neue',sans-serif;font-size:clamp(20px,4vw,24px);color:var(--muted);width:28px;flex-shrink:0;line-height:1;}
-.blk-badge{font-size:var(--fs-sm);font-weight:700;font-family:'Space Mono',monospace;letter-spacing:.5px;padding:5px 10px;border-radius:4px;text-transform:uppercase;white-space:nowrap;}
+.blk-num{font-family:'Bebas Neue',sans-serif;font-size:clamp(26px,6vw,34px);color:var(--muted);width:34px;flex-shrink:0;line-height:1;}
+.blk-badge{font-size:clamp(14px,3.5vw,18px);font-weight:700;font-family:'Space Mono',monospace;letter-spacing:.5px;padding:7px 14px;border-radius:4px;text-transform:uppercase;white-space:nowrap;}
 .bb-p{background:rgba(0,212,255,.1);color:var(--plano);}
 .bb-m{background:rgba(255,101,32,.1);color:var(--montana);}
 .bb-h{background:rgba(168,85,247,.12);color:var(--hibrido);}
-.blk-cnt{font-size:var(--fs-sm);color:var(--muted);}
-.blk-dur{margin-left:auto;font-family:'Space Mono',monospace;font-size:var(--fs-sm);color:var(--muted);margin-right:6px;}
-.blk-arr{color:var(--muted);font-size:var(--fs-md);transition:transform .18s;flex-shrink:0;}
+.blk-cnt{font-size:clamp(14px,3.5vw,17px);color:var(--muted);}
+.blk-dur{margin-left:auto;font-family:'Space Mono',monospace;font-size:clamp(14px,3.5vw,17px);color:var(--muted);margin-right:6px;}
+.blk-arr{color:var(--muted);font-size:clamp(16px,4vw,20px);transition:transform .18s;flex-shrink:0;}
 .blk.open .blk-arr{transform:rotate(180deg);}
-.blk-body{display:none;padding:4px 14px 14px;}
+.blk-body{display:none;padding:6px 12px 18px;}
 .blk.open .blk-body{display:block;}
 
 /* ── TERRAIN DIVIDER ── */
-.trn-div{display:flex;align-items:center;gap:8px;margin:10px 0 6px;
-  font-family:'Space Mono',monospace;font-size:var(--fs-xs);letter-spacing:2px;text-transform:uppercase;}
+.trn-div{display:flex;align-items:center;gap:8px;margin:12px 0 8px;
+  font-family:'Space Mono',monospace;font-size:clamp(12px,3vw,14px);letter-spacing:2px;text-transform:uppercase;}
 .trn-div::before,.trn-div::after{content:'';flex:1;height:1px;}
 .trn-p{color:var(--plano);} .trn-p::before,.trn-p::after{background:rgba(0,212,255,.2);}
 .trn-m{color:var(--montana);} .trn-m::before,.trn-m::after{background:rgba(255,101,32,.2);}
 
 /* ── INTERVAL ROW ── */
-.iv-row{display:flex;align-items:center;gap:8px;padding:9px 10px;border-radius:6px;margin-bottom:4px;border-left:4px solid transparent;}
+.iv-row{display:flex;align-items:center;gap:10px;padding:14px 10px;border-radius:8px;margin-bottom:6px;border-left:5px solid transparent;}
 .iv-row:hover{background:rgba(255,255,255,.03);}
 .iv-p{border-color:var(--plano);} .iv-m{border-color:var(--montana);} .iv-rec{border-color:var(--green);}
 
 /* tiempo */
-.iv-time{font-family:'Space Mono',monospace;font-size:var(--fs-md);font-weight:700;min-width:44px;flex-shrink:0;}
+.iv-time{font-family:'Space Mono',monospace;font-size:clamp(18px,4.5vw,24px);font-weight:700;min-width:52px;flex-shrink:0;}
 .iv-time.cp{color:var(--plano);} .iv-time.cm{color:var(--montana);} .iv-time.cr{color:var(--green);}
 
 /* posición */
-.iv-pos{font-size:var(--fs-xs);font-weight:700;font-family:'Space Mono',monospace;padding:4px 10px;border-radius:4px;
-  white-space:nowrap;flex-shrink:0;min-width:80px;text-align:center;text-transform:uppercase;letter-spacing:.3px;}
+.iv-pos{font-size:clamp(13px,3.2vw,16px);font-weight:700;font-family:'Space Mono',monospace;padding:6px 14px;border-radius:4px;
+  white-space:nowrap;flex-shrink:0;min-width:96px;text-align:center;text-transform:uppercase;letter-spacing:.3px;}
 .pos-s{background:rgba(0,212,255,.1);color:var(--plano);}
 .pos-p{background:rgba(255,101,32,.1);color:var(--montana);}
 .pos-r{background:rgba(34,197,94,.1);color:var(--green);}
 
-/* descripción — más grande, protagonista */
-.iv-desc{font-size:var(--fs-md);color:var(--text);flex:1;min-width:0;line-height:1.4;}
+/* descripción — protagonista */
+.iv-desc{font-size:clamp(18px,4.5vw,22px);color:var(--text);flex:1;min-width:0;line-height:1.4;font-weight:600;}
 
 /* intensidad */
-.iv-int{font-size:var(--fs-xs);font-family:'Space Mono',monospace;padding:3px 8px;border-radius:3px;letter-spacing:.3px;white-space:nowrap;flex-shrink:0;}
+.iv-int{font-size:clamp(12px,3vw,14px);font-family:'Space Mono',monospace;padding:4px 9px;border-radius:3px;letter-spacing:.3px;white-space:nowrap;flex-shrink:0;}
 .int-mb{background:rgba(34,197,94,.1);color:#4ade80;}
 .int-m{background:rgba(232,216,64,.1);color:var(--accent);}
 .int-ma{background:rgba(255,101,32,.1);color:#ff9040;}
@@ -163,25 +162,38 @@ body::before{content:'';position:fixed;inset:0;
 .int-va{background:rgba(255,0,50,.2);color:#ff2050;}
 .int-vmb{background:rgba(100,220,100,.08);color:#86efac;}
 
+/* rango de intensidades — tres etapas */
+.iv-range{display:flex;align-items:center;gap:3px;flex-shrink:0;}
+.iv-range>span{font-size:clamp(12px,3vw,14px);font-family:'Space Mono',monospace;padding:4px 8px;border-radius:3px;white-space:nowrap;}
+.iv-range-sep{font-size:11px;color:var(--muted);padding:0 !important;background:none !important;}
+
 /* terreno en bloques híbridos */
-.iv-terrain{font-size:var(--fs-xs);font-family:'Space Mono',monospace;padding:3px 8px;border-radius:3px;white-space:nowrap;flex-shrink:0;font-weight:700;}
+.iv-terrain{font-size:clamp(12px,3vw,14px);font-family:'Space Mono',monospace;padding:4px 9px;border-radius:3px;white-space:nowrap;flex-shrink:0;font-weight:700;}
 .ivt-p{background:rgba(0,212,255,.12);color:var(--plano);}
 .ivt-m{background:rgba(255,101,32,.12);color:var(--montana);}
 
-/* ── En mobile: apilar descripción e intensidad para dar más espacio ── */
-@media(max-width:480px){
-  .iv-row{flex-wrap:wrap;gap:6px;padding:10px 10px;}
-  .iv-desc{width:100%;order:3;font-size:var(--fs-lg);}
-  .iv-int{order:4;}
+/* ── En mobile: apilar descripción para dar más espacio ── */
+@media(max-width:600px){
+  .iv-row{flex-wrap:wrap;gap:8px;padding:14px 10px;}
+  .iv-desc{width:100%;order:3;font-size:clamp(19px,5vw,24px);}
+  .iv-range{order:4;flex-wrap:wrap;gap:4px;}
+  .iv-range>span{font-size:clamp(12px,3vw,14px);}
   .iv-terrain{order:5;}
-  .iv-time{font-size:var(--fs-lg);}
-  .iv-pos{font-size:var(--fs-sm);min-width:unset;}
+  .iv-time{font-size:clamp(20px,5vw,26px);}
+  .iv-pos{font-size:clamp(13px,3.5vw,16px);min-width:unset;}
 }
 
 /* ── HYDRATION ── */
-.hyd{display:flex;align-items:center;gap:8px;padding:8px 10px;background:rgba(0,212,255,.04);border-radius:6px;margin-top:6px;}
-.hyd span{font-size:var(--fs-sm);color:var(--muted);}
-.hyd strong{font-family:'Space Mono',monospace;font-size:var(--fs-sm);color:var(--accent3);}
+.hyd{display:flex;align-items:center;gap:10px;padding:12px 12px;background:rgba(0,212,255,.04);border-radius:8px;margin-top:8px;}
+.hyd span{font-size:clamp(15px,3.8vw,18px);color:var(--muted);}
+.hyd strong{font-family:'Space Mono',monospace;font-size:clamp(15px,3.8vw,18px);color:var(--accent3);}
+
+/* ── REPETICIÓN — micro-secuencia (A) y bloque completo (B) ── */
+.blk-rep-badge{display:inline-block;background:var(--accent3);color:#000;font-size:clamp(10px,2.5vw,12px);font-weight:700;font-family:'Space Mono',monospace;padding:1px 6px;border-radius:3px;margin-left:5px;vertical-align:middle;}
+.blk-whole-rep{display:inline-block;background:var(--accent);color:#000;font-size:clamp(10px,2.5vw,11px);font-weight:700;font-family:'Space Mono',monospace;padding:2px 7px;border-radius:3px;margin-left:7px;vertical-align:middle;letter-spacing:.5px;}
+.micro-rep-wrap{border:1.5px dashed rgba(255,200,0,.35);border-radius:8px;padding:8px 6px 2px;margin-bottom:4px;background:rgba(255,200,0,.04);}
+.micro-rep-lbl{text-align:center;font-size:clamp(13px,3.2vw,15px);color:var(--accent3);font-family:'Space Mono',monospace;letter-spacing:1px;padding:10px 6px 6px;font-weight:700;}
+.blk-rep-note{text-align:center;font-size:clamp(13px,3.2vw,15px);color:var(--accent);font-family:'Space Mono',monospace;letter-spacing:1px;padding:10px 6px 4px;font-weight:700;border-top:1px solid rgba(255,255,255,.07);margin-top:8px;}
 
 /* ── SUMMARY ── */
 .summary{display:grid;grid-template-columns:repeat(5,1fr);gap:1px;background:var(--border);
@@ -254,48 +266,50 @@ body::before{content:'';position:fixed;inset:0;
   text-transform:uppercase;max-width:78%;text-align:center;line-height:1.4;word-break:break-word;
 }
 
-/* ── AHORA ── */
+/* ── AHORA — modo normal: compacto para que siempre entre el texto ── */
 .tmr-curr{
   background:var(--card);border:1px solid var(--border);
-  border-radius:var(--rad);padding:20px 20px 18px;
-  margin-bottom:12px;position:relative;overflow:hidden;
+  border-radius:var(--rad);padding:14px 16px 12px;
+  margin-bottom:10px;position:relative;overflow:hidden;
 }
-.tmr-curr::before{content:'';position:absolute;top:0;left:0;bottom:0;width:6px;}
+.tmr-curr::before{content:'';position:absolute;top:0;left:0;bottom:0;width:5px;}
 .tmr-curr.tc-p::before{background:var(--plano);}
 .tmr-curr.tc-m::before{background:var(--montana);}
 .tmr-curr.tc-r::before{background:var(--green);}
 .tmr-curr-label{
   font-family:'Space Mono',monospace;font-size:var(--fs-xs);color:var(--muted);
-  letter-spacing:4px;text-transform:uppercase;margin-bottom:12px;
+  letter-spacing:4px;text-transform:uppercase;margin-bottom:8px;
 }
-.tmr-curr-row{display:flex;align-items:center;gap:10px;margin-bottom:14px;flex-wrap:wrap;}
+.tmr-curr-row{display:flex;align-items:center;gap:8px;margin-bottom:8px;flex-wrap:wrap;}
 .tmr-curr-pos{
-  display:inline-block;font-size:clamp(15px,4vw,18px);font-weight:700;
-  font-family:'Space Mono',monospace;padding:8px 18px;border-radius:4px;
+  display:inline-block;font-size:clamp(13px,3.5vw,16px);font-weight:700;
+  font-family:'Space Mono',monospace;padding:5px 12px;border-radius:4px;
   text-transform:uppercase;letter-spacing:.5px;
 }
 .tmr-curr-int{
-  display:inline-block;font-size:clamp(14px,3.8vw,17px);
-  font-family:'Space Mono',monospace;padding:8px 16px;border-radius:4px;letter-spacing:.5px;
+  display:inline-block;font-size:clamp(12px,3.2vw,15px);
+  font-family:'Space Mono',monospace;padding:5px 12px;border-radius:4px;letter-spacing:.5px;
 }
+/* descripción: escala hacia abajo si el texto es largo */
 .tmr-curr-desc{
-  font-size:clamp(28px,8vw,40px);
+  font-size:clamp(20px,5.5vw,32px);
   color:var(--text);font-weight:700;
-  line-height:1.2;margin-bottom:12px;
+  line-height:1.15;margin-bottom:8px;
+  word-break:break-word;overflow-wrap:break-word;
 }
 .tmr-curr-dur{
-  font-family:'Space Mono',monospace;font-size:clamp(13px,3.5vw,16px);
+  font-family:'Space Mono',monospace;font-size:clamp(11px,3vw,14px);
   color:var(--muted);
 }
 
-/* ── LO SIGUIENTE ── */
+/* ── LO SIGUIENTE — tamaño razonable para no tapar nada ── */
 .tmr-next{
   background:rgba(0,212,255,.05);
   border:1px solid rgba(0,212,255,.18);
   border-left:5px solid var(--accent3);
   border-radius:var(--rad);
-  padding:18px 20px;margin-bottom:16px;
-  display:flex;flex-direction:column;gap:10px;
+  padding:12px 16px;margin-bottom:12px;
+  display:flex;flex-direction:column;gap:6px;
 }
 .tmr-next-top{display:flex;justify-content:space-between;align-items:center;gap:8px;}
 .tmr-next-lbl{
@@ -304,12 +318,12 @@ body::before{content:'';position:fixed;inset:0;
 }
 .tmr-next-time{
   font-family:'Bebas Neue',sans-serif;
-  font-size:clamp(32px,8vw,44px);
+  font-size:clamp(20px,5vw,28px);
   color:var(--accent3);letter-spacing:2px;line-height:1;
 }
 .tmr-next-desc{
-  font-size:clamp(22px,6vw,32px);
-  color:var(--text);font-weight:700;line-height:1.25;
+  font-size:clamp(16px,4.2vw,22px);
+  color:var(--text);font-weight:700;line-height:1.2;
 }
 
 /* ── CONTROLES ── */
@@ -349,56 +363,114 @@ body::before{content:'';position:fixed;inset:0;
 .btn-fs:hover{background:rgba(232,216,64,.12);}
 
 /* ══════════════════════════════════════════
-   MODO FULLSCREEN
+   MODO FULLSCREEN — layout garantizado
+   Los controles SIEMPRE se ven al fondo.
+   Usamos dvh (dynamic viewport height) con
+   fallback a vh para cubrir la barra del nav
+   del celular.
 ══════════════════════════════════════════ */
+#timerOverlay.fs-mode{overflow:hidden;}
+#timerOverlay.fs-mode .timer-shell{
+  max-width:100%;padding:0;
+  display:grid;
+  /* top-bar | progress | AHORA(flex) | SIGUIENTE(fijo) | controles(fijo) */
+  grid-template-rows:auto 5px minmax(0,1fr) auto auto;
+  height:100dvh; /* dynamic viewport height — respeta la barra del nav */
+  height:100vh;  /* fallback */
+  overflow:hidden;
+}
+@supports(height:100dvh){
+  #timerOverlay.fs-mode .timer-shell{height:100dvh;}
+}
+
+/* barra superior */
+#timerOverlay.fs-mode .tmr-top{
+  padding:10px 16px 8px;margin-bottom:0;border-bottom:none;grid-row:1;
+}
+#timerOverlay.fs-mode .tmr-progress-wrap{
+  height:5px;margin-bottom:0;border-radius:0;grid-row:2;
+}
+
+/* ocultar elementos no necesarios */
 #timerOverlay.fs-mode .tmr-block-context{display:none;}
+#timerOverlay.fs-mode .tmr-circle-wrap{display:none;}
 #timerOverlay.fs-mode .tmr-schedule{display:none;}
-#timerOverlay.fs-mode .timer-shell{max-width:100%;padding:0 22px 22px;}
-#timerOverlay.fs-mode .tmr-progress-wrap{height:8px;margin-bottom:12px;}
 
-#timerOverlay.fs-mode .tmr-circle{
-  width:clamp(260px,62vw,380px);
-  height:clamp(260px,62vw,380px);
+/* ── ZONA AHORA — ocupa espacio disponible, no más ── */
+#timerOverlay.fs-mode .tmr-curr{
+  grid-row:3;
+  margin:0;border-radius:0;border:none;
+  padding:8px 24px 4px;
+  display:flex;flex-direction:column;justify-content:center;align-items:center;
+  text-align:center;
+  position:relative;overflow:hidden;
+  background:var(--card);
+  min-height:0;
 }
-#timerOverlay.fs-mode .tmr-digits{
-  font-size:clamp(100px,25vw,156px);
+#timerOverlay.fs-mode .tmr-curr::before{
+  width:100%;height:4px;top:0;left:0;right:0;bottom:auto;
 }
-#timerOverlay.fs-mode .tmr-interval-num{
-  font-size:clamp(13px,3.2vw,17px);
-}
-#timerOverlay.fs-mode .tmr-circle-wrap{margin-bottom:14px;}
+#timerOverlay.fs-mode .tmr-curr-row{justify-content:center;}
 
-#timerOverlay.fs-mode .tmr-curr{padding:22px 22px 20px;}
+/* label con solo el reloj */
+#timerOverlay.fs-mode .tmr-curr-label{
+  display:flex;align-items:center;justify-content:center;
+  margin-bottom:6px;
+}
+#timerOverlay.fs-mode .tmr-curr-label .fs-ahora-txt{display:none;}
+
+/* reloj — más grande */
+#timerOverlay.fs-mode .fs-clock{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(88px,22vw,150px);
+  line-height:1;letter-spacing:4px;
+}
+
+/* nombre del ejercicio actual — igual que SIGUIENTE */
 #timerOverlay.fs-mode .tmr-curr-desc{
-  font-size:clamp(34px,10vw,64px);
-  margin-bottom:16px;
+  font-size:clamp(28px,7vw,52px);
+  line-height:1.05;margin-bottom:8px;font-weight:800;
+  max-width:100%;word-break:break-word;
 }
-#timerOverlay.fs-mode .tmr-curr-pos{
-  font-size:clamp(16px,5vw,26px);
-  padding:10px 20px;
-}
-#timerOverlay.fs-mode .tmr-curr-int{
-  font-size:clamp(15px,4.5vw,24px);
-  padding:10px 18px;
-}
-#timerOverlay.fs-mode .tmr-curr-dur{
-  font-size:clamp(13px,3.5vw,17px);margin-top:8px;
-}
+#timerOverlay.fs-mode .tmr-curr-row{gap:8px;margin-bottom:6px;}
+#timerOverlay.fs-mode .tmr-curr-pos{font-size:clamp(14px,3.5vw,20px);padding:6px 14px;}
+#timerOverlay.fs-mode .tmr-curr-int{font-size:clamp(12px,3vw,17px);padding:6px 12px;}
+#timerOverlay.fs-mode .tmr-curr-dur{font-size:clamp(11px,2.5vw,14px);margin-top:0;}
 
-/* LO SIGUIENTE — grande y visible */
-#timerOverlay.fs-mode .tmr-next{padding:18px 20px;gap:10px;}
-#timerOverlay.fs-mode .tmr-next-time{
-  font-size:clamp(40px,10vw,60px);
+/* ── ZONA SIGUIENTE — más arriba, más grande, menos padding ── */
+#timerOverlay.fs-mode .tmr-next{
+  grid-row:4;
+  border-radius:0;border-left:none;border-right:none;border-bottom:none;
+  border-top:2px solid rgba(0,212,255,.3);
+  background:rgba(0,212,255,.07);
+  margin:0;padding:6px 20px;
+  display:flex;flex-direction:row;align-items:center;gap:16px;
+  flex-shrink:0;
 }
+#timerOverlay.fs-mode .tmr-next-top{
+  display:flex;flex-direction:column;align-items:flex-start;gap:1px;
+  flex-shrink:0;border-right:1px solid rgba(0,212,255,.2);padding-right:16px;
+}
+#timerOverlay.fs-mode .tmr-next-lbl{font-size:clamp(9px,2vw,11px);letter-spacing:3px;}
+#timerOverlay.fs-mode .tmr-next-time{font-size:clamp(42px,10.5vw,66px);line-height:1;}
+/* mismo tamaño que curr-desc */
 #timerOverlay.fs-mode .tmr-next-desc{
-  font-size:clamp(24px,7vw,44px);
+  font-size:clamp(28px,7vw,52px);line-height:1.1;flex:1;word-break:break-word;font-weight:800;
 }
 
-/* controles más grandes en fullscreen */
-#timerOverlay.fs-mode .btn-ctrl{
-  font-size:clamp(18px,5vw,26px);
-  padding:16px 8px;
+/* ── CONTROLES — más visibles, más espacio ── */
+#timerOverlay.fs-mode .tmr-controls{
+  grid-row:5;
+  gap:0;margin:0;flex-shrink:0;
+  border-top:2px solid var(--border);
+  min-height:52px;
 }
+#timerOverlay.fs-mode .btn-ctrl{
+  border-radius:0;border:none;border-right:1px solid var(--border);
+  font-size:clamp(14px,3.5vw,18px);
+  padding:clamp(12px,2.8vh,18px) 8px;
+}
+#timerOverlay.fs-mode .btn-ctrl:last-child{border-right:none;}
 </style>
 </head>
 <body>
@@ -508,7 +580,7 @@ const MODES=[
 ];
 
 const CLOSE=['10:52','10:53','10:54','10:55'];
-const DUR_POOL=[15,20,30,45,60]; // máximo 60s por intervalo
+const DUR_POOL=[15,20,30,40,45,50,60]; // máximo 60s por intervalo
 
 // ═══════════════════════════════════════════════════════
 // HELPERS
@@ -531,54 +603,47 @@ const BASE=10*60;
 // 90 RPM SENTADO → solo warmup e hidratación, NO entra al pool de trabajo
 
 // ─────────────────────────────────────────────────────────────────────────────
-// PLANO — Matriz de intensidad exacta según parámetros del Profe Rafa López
-//
-// 90 RPM         → Parado    | MB / M / MA
-// 100 RPM        → Parado    | MB / M  / A      ← "Media Baja" en 15-30s
-// 100 RPM Var.2  → Parado    | M  / MA / A
-// 110 RPM        → SIEMPRE SENTADO | M / MA / A
-// Sprint (Máx.)  → SIEMPRE SENTADO | MA / A  / MA
-//
-// REGLA: 100 Sentado (100s) y 100 Parado (100p / 100p2) NUNCA juntos
+// PLANO — exactamente los 5 de la tabla de parámetros:
+//   90 RPM | 100 RPM | 100 RPM (Var. 2) | 110 RPM (Velocidad) | Sprint (Máx. Vel.)
+// Posición fija según parámetros. REGLA: 100 RPM y 100 RPM (Var.2) no son adyacentes.
 // ─────────────────────────────────────────────────────────────────────────────
 const PLANO_EX=[
-  // openers
-  {desc:'90 RPM de pie',           pos:'Parado',  type:'90p',      label:'90 RPM de pie',       opener:true, intScore:1},
-  {desc:'100 RPM de pie',          pos:'Parado',  type:'100p',     label:'100 RPM de pie',       opener:true, intScore:2},
-  {desc:'100 RPM en silla',        pos:'Sentado', type:'100s',     label:'100 RPM en silla',     opener:true, intScore:2},
-  {desc:'90 RPM cadencia alta',    pos:'Sentado', type:'90s_w',    label:'90 RPM en silla',      opener:true, intScore:1},
-  // build
-  {desc:'110 RPM sentado',         pos:'Sentado', type:'110s',     label:'110 RPM sentado',      intScore:3},
-  {desc:'100 RPM Variante 2',      pos:'Parado',  type:'100p2',    label:'100 RPM Var.2 de pie', intScore:2},
-  // peak — 110 RPM y Sprint SIEMPRE SENTADO
-  {desc:'Sprint velocidad máxima', pos:'Sentado', type:'sprint_p', label:'Sprint plano',         peak:true, intScore:4},
+  {pos:'Parado',  type:'90p',      label:'90 RPM',           opener:true, intScore:1},
+  {pos:'Parado',  type:'100p',     label:'100 RPM',           opener:true, intScore:2},
+  {pos:'Sentado', type:'100s',     label:'100 RPM',           opener:true, intScore:2},
+  {pos:'Parado',  type:'100p2',    label:'100 RPM (Var. 2)',  intScore:2},
+  {pos:'Sentado', type:'110s',     label:'110 RPM',           intScore:3},
+  {pos:'Sentado', type:'sprint_p', label:'Sprint (Máx. Vel.)',peak:true, intScore:4},
 ];
 
 // ─────────────────────────────────────────────────────────────────────────────
-// MONTAÑA — Matriz de intensidad exacta según parámetros del Profe Rafa López
-//
-// 60 RPM Base         → Sentado/Parado | MB / M  / MA
-// Acelerado           → Sentado/Parado | M  / MA / A
-// Sprint Montaña      → Sentado/Parado | MA / A  / MA
-// Fuerza Máxima 60v   → Sentado/Parado | MA / A  / MA
-// 80v Viento contra   → Sentado/Parado | MB / M  / MA
+// MONTAÑA — técnicas reales de clase:
+//   Acelerado | Sprint (Montaña) | Fuerza Máxima (60v) | 80v Viento en contra
+// Nota: "60 RPM Base" no existe como ejercicio independiente.
+// Tipos compartidos (acel / 80vc / fm / sprint_m) evitan que la misma
+// técnica aparezca dos veces seguida aunque cambie de posición.
+// ─────────────────────────────────────────────────────────────────────────────
+// ── PESOS: cada entrada es una "bolilla" en el sorteo aleatorio ──────────────
+// Sprint aparece 4 veces (2 libre + 2 pico final) → frecuente en clases reales
+// 80vc: rare → aparece máximo 1 vez por clase y con baja probabilidad
 // ─────────────────────────────────────────────────────────────────────────────
 const MONT_EX=[
-  // openers
-  {desc:'60 RPM fuerza base de pie', pos:'Parado',  type:'60b',     label:'60 RPM de pie',       opener:true, intScore:1},
-  {desc:'60 RPM en silla',           pos:'Sentado', type:'60s',     label:'60 RPM en silla',     opener:true, intScore:1},
-  {desc:'Acelerado en montaña',      pos:'Parado',  type:'acel_m',  label:'Acelerado montaña',   opener:true, intScore:2},
-  {desc:'80v Viento en contra',      pos:'Parado',  type:'80vc',    label:'80v Viento en contra',opener:true, intScore:1, rare:true},
-  // build
-  {desc:'60 RPM con más carga de pie',      pos:'Parado',  type:'60b2',    label:'60 RPM cargado',      intScore:2},
-  {desc:'60 RPM en silla — más carga',      pos:'Sentado', type:'60s2',    label:'60 RPM en silla carga',intScore:2},
-  {desc:'Acelerado de montaña fuerte',      pos:'Parado',  type:'acel_m2', label:'Acelerado fuerte',    intScore:3},
-  {desc:'Acelerado en silla montaña',       pos:'Sentado', type:'acel_ms', label:'Acelerado en silla',  intScore:2},
-  // peak
-  {desc:'Fuerza Máxima 60v de pie',  pos:'Parado',  type:'fm',       label:'Fuerza Máxima de pie', peak:true, intScore:4},
-  {desc:'Fuerza Máxima 60v en silla',pos:'Sentado', type:'fm_s',     label:'Fuerza Máxima en silla',peak:true, intScore:4},
-  {desc:'Sprint montaña de pie',     pos:'Parado',  type:'sprint_m', label:'Sprint montaña de pie', peak:true, intScore:5},
-  {desc:'Sprint montaña en silla',   pos:'Sentado', type:'sprint_ms',label:'Sprint montaña silla',  peak:true, intScore:4},
+  // Acelerado — intensidad media (puede abrir bloque)
+  {pos:'Parado',  type:'acel',     label:'Acelerado',            opener:true, intScore:2},
+  {pos:'Sentado', type:'acel',     label:'Acelerado',            opener:true, intScore:2},
+  // Sprint libre — aparece a lo largo del bloque (no solo al final)
+  // Refleja el patrón real: (base + sprint) × 3 del 20/7/2022
+  {pos:'Parado',  type:'sprint_m', label:'Sprint (Montaña)',     intScore:3},
+  {pos:'Sentado', type:'sprint_m', label:'Sprint (Montaña)',     intScore:3},
+  // Sprint pico — reservado para el final del bloque de máxima intensidad
+  {pos:'Parado',  type:'sprint_m', label:'Sprint (Montaña)',     peak:true, intScore:5},
+  {pos:'Sentado', type:'sprint_m', label:'Sprint (Montaña)',     peak:true, intScore:4},
+  // Fuerza Máxima — solo al final de bloques de pico
+  {pos:'Parado',  type:'fm',       label:'Fuerza Máxima (60v)',  peak:true, intScore:4},
+  {pos:'Sentado', type:'fm',       label:'Fuerza Máxima (60v)',  peak:true, intScore:4},
+  // 80v Viento en contra — aparece muy poco (rare = máx. 1 vez por clase)
+  {pos:'Parado',  type:'80vc',     label:'80v Viento en contra', opener:true, intScore:1, rare:true},
+  {pos:'Sentado', type:'80vc',     label:'80v Viento en contra', opener:true, intScore:1, rare:true},
 ];
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -586,27 +651,19 @@ const MONT_EX=[
 // Índices: [0]=15-30s  [1]=30-45s  [2]=45-60s
 // ─────────────────────────────────────────────────────────────────────────────
 const INT_MAP={
-  // PLANO
-  '90p':      ['Media Baja','Media',     'Media Alta'],  // 90 RPM Parado
-  '90s_w':    ['Media Baja','Media',     'Media Alta'],  // 90 RPM en silla (opener/warmup)
+  // PLANO — 5 técnicas exactas de la tabla
+  '90p':      ['Media Baja','Media',     'Media Alta'],  // 90 RPM
+  '90s_w':    ['Media Baja','Media',     'Media Alta'],  // 90 RPM (hidratación)
   '100p':     ['Media Baja','Media',     'Alta'],        // 100 RPM Parado
   '100s':     ['Media Baja','Media',     'Alta'],        // 100 RPM Sentado
-  '100p2':    ['Media',     'Media Alta','Alta'],        // 100 RPM Variante 2 Parado
-  '110s':     ['Media',     'Media Alta','Alta'],        // 110 RPM SENTADO
-  'sprint_p': ['Media Alta','Alta',      'Muy Alta'],    // Sprint SENTADO
-  // MONTAÑA
-  '60b':      ['Media Baja','Media',     'Media Alta'],  // 60 RPM Base Parado
-  '60s':      ['Media Baja','Media',     'Media Alta'],  // 60 RPM Base Sentado
-  '60b2':     ['Media Baja','Media',     'Media Alta'],  // 60 RPM cargado Parado
-  '60s2':     ['Media Baja','Media',     'Media Alta'],  // 60 RPM cargado Sentado
-  'acel_m':   ['Media',     'Media Alta','Alta'],        // Acelerado Parado
-  'acel_m2':  ['Media',     'Media Alta','Alta'],        // Acelerado fuerte Parado
-  'acel_ms':  ['Media',     'Media Alta','Alta'],        // Acelerado Sentado
-  'fm':       ['Media Alta','Alta',      'Muy Alta'],    // FM 60v Parado
-  'fm_s':     ['Media Alta','Alta',      'Muy Alta'],    // FM 60v Sentado
-  'sprint_m': ['Media Alta','Alta',      'Muy Alta'],    // Sprint montaña Parado
-  'sprint_ms':['Media Alta','Alta',      'Muy Alta'],    // Sprint montaña Sentado
-  '80vc':     ['Media Baja','Media',     'Media Alta'],  // 80v Viento contra
+  '100p2':    ['Media',     'Media Alta','Alta'],        // 100 RPM (Var. 2)
+  '110s':     ['Media',     'Media Alta','Alta'],        // 110 RPM (Velocidad)
+  'sprint_p': ['Media Alta','Alta',      'Muy Alta'],    // Sprint (Máx. Vel.)
+  // MONTAÑA — técnicas reales (tipo compartido por posición)
+  'acel':     ['Media',     'Media Alta','Alta'],        // Acelerado (Parado o Sentado)
+  '80vc':     ['Media Baja','Media',     'Media Alta'],  // 80v Viento en contra (Parado o Sentado)
+  'fm':       ['Media Alta','Alta',      'Muy Alta'],    // Fuerza Máxima (60v)
+  'sprint_m': ['Media Alta','Alta',      'Muy Alta'],    // Sprint (Montaña)
   // Recuperación
   'rest_hands':['Media Baja','Media Baja','Media Baja'],
   'rec':       ['Media Baja','Media Baja','Media Baja'],
@@ -631,44 +688,158 @@ function safePos(ex){
 }
 
 // ═══════════════════════════════════════════════════════
-// DURACIONES DE BLOQUES
+// PERFILES DE CLASE — curva de intensidad a lo largo de la sesión
+// Cada perfil determina cuánto "espacio" de intensidad se le da a cada bloque.
+// classProfile.blockPhase[i] = fase del bloque i:
+//   'build'   → bloque de desarrollo (intensidad media, opener obligatorio)
+//   'peak'    → bloque de pico (máxima intensidad, puede terminar con sprint/FM)
+//   'descent' → bloque de bajada post-pico (intensidad que cede)
+//   'valley'  → bloque de valle activo (respiro entre bloques duros)
 // ═══════════════════════════════════════════════════════
-function distributeBlockDurations(totalWorkTime, blockCount){
-  let durations=[];
-  for(let i=0; i<blockCount; i++){ durations.push(5); }
-  let currentSum = durations.reduce((a,b)=>a+b, 0);
-  let attempts = 0;
 
-  while(currentSum !== totalWorkTime && attempts < 200){
-    attempts++;
-    let i = Math.floor(Math.random() * blockCount);
-    if(currentSum < totalWorkTime && durations[i] < 9){ durations[i]++; currentSum++; }
-    else if(currentSum > totalWorkTime && durations[i] > 5){ durations[i]--; currentSum--; }
+const CLASS_PROFILES = [
+  // PROGRESIVO CLÁSICO: sube continuo → pico al final
+  { name:'progresivo',    buildPhases: (n)=>{ const p=[]; for(let i=0;i<n;i++) p.push(i<n-2?'build':i===n-2?'peak':'descent'); return p; } },
+  // PICO ANTICIPADO: pico en el 70% → bajada final
+  { name:'pico_anticipado', buildPhases: (n)=>{ const pk=Math.max(1,Math.round(n*0.65)); const p=[]; for(let i=0;i<n;i++) p.push(i<pk-1?'build':i===pk-1?'peak':'descent'); return p; } },
+  // ONDULADO: alterna fuerte/suave creando oleadas
+  { name:'ondulado',      buildPhases: (n)=>{ const p=[]; for(let i=0;i<n;i++) p.push(i%2===0?'peak':'valley'); return p; } },
+  // DOBLE PICO: dos picos con un valle entre medio
+  { name:'doble_pico',    buildPhases: (n)=>{ const p=[]; const pk1=Math.floor(n/3); const pk2=Math.floor(n*0.72); for(let i=0;i<n;i++){ if(i===pk1||i===pk2) p.push('peak'); else if(i>pk1&&i<pk2-1) p.push(i===pk1+1?'valley':'build'); else p.push('build'); } return p; } },
+  // ESCALERA: sube en escalones sin bajar hasta el final
+  { name:'escalera',      buildPhases: (n)=>{ const p=[]; for(let i=0;i<n;i++) p.push(i===n-1?'peak':Math.floor(i*3/n)===Math.floor((i+1)*3/n)?'build':'valley'); return p; } },
+];
+
+// ── Nivel de intensidad de bloque según su fase en la clase ─────────────────
+// blockIntLevel: cuánto se habilita el techo de intensidad dentro del bloque
+//   1 = conservador (sin peaks), 2 = moderado, 3 = máximo (peaks habilitados)
+function blkIntLevel(phase){
+  return {build:2, peak:3, descent:1, valley:1}[phase] || 2;
+}
+
+// ═══════════════════════════════════════════════════════
+// DURACIONES DE BLOQUES — con forma de curva fisiológica
+// Los bloques de pico reciben más tiempo; los de valle, menos.
+// ═══════════════════════════════════════════════════════
+function distributeBlockDurations(totalWorkTime, blockCount, phases){
+  // Pesos por fase: peak=1.4, build=1.0, valley=0.75, descent=0.85
+  const weights = phases
+    ? phases.map(p=>({peak:1.4, build:1.0, valley:0.75, descent:0.85}[p]||1.0))
+    : Array(blockCount).fill(1.0);
+
+  const sumW = weights.reduce((a,b)=>a+b, 0);
+  let durations = weights.map(w => Math.round((w/sumW)*totalWorkTime));
+
+  // Ajustar suma exacta
+  let diff = totalWorkTime - durations.reduce((a,b)=>a+b, 0);
+  let idx = 0;
+  while(diff !== 0){
+    const delta = diff > 0 ? 1 : -1;
+    const candidate = durations[idx % blockCount] + delta;
+    if(candidate >= 5 && candidate <= 9){ durations[idx % blockCount] = candidate; diff -= delta; }
+    idx++;
+    if(idx > blockCount * 20) break;
   }
+  // Asegurar rango 5-9 minutos (incluyendo hidratación) por bloque
+  durations = durations.map(d=>Math.max(5, Math.min(9, d)));
+  // Segunda pasada para ajustar suma
+  let sum2 = durations.reduce((a,b)=>a+b,0);
+  let extra = sum2 - totalWorkTime;
+  if(extra > 0){ for(let i=durations.length-1;i>=0&&extra>0;i--){ if(durations[i]>5){durations[i]--;extra--;} } }
+  if(extra < 0){ for(let i=0;i<durations.length&&extra<0;i++){ if(durations[i]<9){durations[i]++;extra++;} } }
   return durations;
 }
 
-function genDurs(workSec){
-  const out=[];
-  let remaining=workSec;
-  let prev=null;
+// ═══════════════════════════════════════════════════════
+// GENERACIÓN DE DURACIONES DE INTERVALOS — variada según carácter del bloque
+// 'explosivo': intervalos cortos/medios para trabajo anaeróbico de alta intensidad
+// 'sostenido': intervalos más largos para resistencia aeróbica
+// 'mixto':     combinación natural (el más frecuente en clases reales)
+// 'escalon':   intervalos en orden creciente de duración (pirámide ascendente)
+// ═══════════════════════════════════════════════════════
+function genDurs(workSec, blkStyle){
+  // Cada vez que se llama puede venir con un estilo o usar uno por defecto
+  const style = blkStyle || rnd(['explosivo','sostenido','mixto','mixto','escalon']);
 
-  while(remaining > 0){
-    if(remaining <= 15){ out.push(remaining); break; }
-    let pool=DUR_POOL.filter(d=>d <= remaining);
-    if(!pool.length) { out.push(remaining); break; }
-    if(prev===60) pool=pool.filter(d=>d!==60);
-    
-    const d=rnd(pool);
-    out.push(d);
-    remaining -= d;
-    prev=d;
+  const POOL_SHORT  = [15, 20, 20, 30];          // sprint/explosivo
+  const POOL_MEDIUM = [20, 30, 40, 40, 45, 50];  // intermedio
+  const POOL_LONG   = [30, 40, 45, 50, 60];      // sostenido/fuerza
+  const POOL_ALL    = [15, 20, 30, 40, 45, 50, 60]; // mixto
 
-    if(remaining > 0 && remaining < 15){ out[out.length-1] += remaining; remaining = 0; }
+  function fill(pool, remaining, noRepeatLast){
+    const out = [];
+    let prev = null;
+    while(remaining > 0){
+      if(remaining <= 15){ out.push(remaining); break; }
+      let p = pool.filter(d => d <= remaining);
+      if(!p.length){ out.push(remaining); break; }
+      if(noRepeatLast && prev !== null){ const pf=p.filter(d=>d!==prev); if(pf.length) p=pf; }
+      if(!p.length) p = pool.filter(d=>d<=remaining);
+      const d = rnd(p);
+      out.push(d);
+      remaining -= d;
+      prev = d;
+      if(remaining > 0 && remaining < 15){ out[out.length-1] += remaining; remaining=0; }
+    }
+    return out;
   }
-  for (let i = out.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [out[i], out[j]] = [out[j], out[i]];
+
+  let out;
+  if(style === 'explosivo'){
+    out = fill(POOL_SHORT, workSec, true);
+  } else if(style === 'sostenido'){
+    out = fill(POOL_LONG, workSec, true);
+  } else if(style === 'escalon'){
+    // Pirámide ascendente con incrementos de 10" — igual que clases reales:
+    // p.ej. 20"→30"→40"→50"→1' o 30"→40"→50"→60"
+    const STEPS = [15, 20, 30, 40, 50, 60];
+    // Elegir punto de inicio aleatorio (15", 20" o 30")
+    const startOptions = [15, 20, 30].filter(s => s < workSec / 2);
+    const start = rnd(startOptions.length ? startOptions : [20]);
+    const startIdx = STEPS.indexOf(start);
+    out = [];
+    let remaining = workSec;
+    let idx = startIdx;
+    while(remaining > 0 && idx < STEPS.length){
+      const d = STEPS[idx];
+      if(d > remaining) break;
+      out.push(d);
+      remaining -= d;
+      idx++;
+    }
+    // Si sobra tiempo, rellenar con el mayor intervalo usado
+    if(remaining > 0){
+      const fillWith = out.length ? out[out.length-1] : 30;
+      while(remaining >= 15){
+        const add = Math.min(fillWith, remaining);
+        out.push(add);
+        remaining -= add;
+        if(remaining < 15){ out[out.length-1] += remaining; remaining=0; }
+      }
+    }
+  } else {
+    // mixto: pool completo, sin repetición de 60 consecutivos
+    out = [];
+    let remaining = workSec;
+    let prev = null;
+    while(remaining > 0){
+      if(remaining <= 15){ out.push(remaining); break; }
+      let p = POOL_ALL.filter(d=>d<=remaining);
+      if(!p.length){ out.push(remaining); break; }
+      if(prev===60) p = p.filter(d=>d!==60);
+      if(!p.length) p = POOL_ALL.filter(d=>d<=remaining);
+      const d = rnd(p);
+      out.push(d);
+      remaining -= d;
+      prev = d;
+      if(remaining>0&&remaining<15){ out[out.length-1]+=remaining; remaining=0; }
+    }
+    // Mezcla aleatoria para romper monotonía, pero manteniendo el primero corto
+    if(out.length > 2){
+      const head = out.shift();
+      for(let i=out.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [out[i],out[j]]=[out[j],out[i]]; }
+      out.unshift(head);
+    }
   }
   return out;
 }
@@ -677,43 +848,37 @@ function genDurs(workSec){
 // BUILD INTERVALS — lógica fisiológica
 // Estructura de cada bloque:
 //   1er intervalo  → opener   (baja-media intensidad, entrada al bloque)
-//   intermedios    → build    (media-alta intensidad, desarrollo)
+//   intermedios    → build    (media-alta intensidad, desarrollo progresivo)
 //   último(s)      → peak     (pico de intensidad, sprint o fuerza máxima)
-// La progresión de intensidad respeta la fisiología del esfuerzo:
-//   no se arranca con un sprint ni con Fuerza Máxima.
+//                             solo habilitado si intLevel === 3
+// intLevel: 1=conservador, 2=moderado, 3=máximo
+// La progresión de intensidad dentro del bloque siempre respeta la fisiología:
+//   no se arranca con sprint ni con Fuerza Máxima.
 // ═══════════════════════════════════════════════════════
 
-let usedRareThisClass = {};   // { type: true } para ejercicios raros ya usados
+let usedRareThisClass = {};
 
 function pickEx(pool, lastType, preferHigher, minScore, maxScore){
-  // Bloquea: mismo tipo, y si lastType es del grupo 100, bloquea todos los del grupo
   const last100 = GRUPO_100.has(lastType);
   let candidates = pool.filter(e=>{
     if(e.type === lastType) return false;
-    if(last100 && GRUPO_100.has(e.type)) return false; // regla 100 no-adyacente
+    if(last100 && GRUPO_100.has(e.type)) return false;
     if(minScore !== undefined && e.intScore < minScore) return false;
     if(maxScore !== undefined && e.intScore > maxScore) return false;
     return true;
   });
   if(!candidates.length) candidates = pool.filter(e=>e.type !== lastType);
   if(!candidates.length) candidates = pool;
-  // ordenar por score si preferHigher, sino aleatorio
   if(preferHigher) candidates.sort((a,b)=>b.intScore-a.intScore);
-  // tomar entre los 2 mejores de forma aleatoria para no ser determinista
   const top = candidates.slice(0, Math.min(2, candidates.length));
   return rnd(top);
 }
 
-const MAX_CONSEC_SEC=180; // 3 minutos máximo de pie O sentado consecutivos
+const MAX_CONSEC_SEC=180;
 
-// ── Lógica de posición con memoria de contexto ──────────────────────────────
-// Evita la alternancia mecánica parado/sentado/parado/sentado.
-// En cambio: decide cuándo cambiar de posición de forma natural,
-// forzando solo cuando se llega al límite de 3 min.
 function decidePos(pool, lastPos, consecSec, d, lastType){
   const mustSwitch = lastPos && (consecSec + d > MAX_CONSEC_SEC);
   const oppositePos = lastPos === 'Parado' ? 'Sentado' : 'Parado';
-  // helper: bloquea adyacencia de grupo 100
   const no100adj = e => !(GRUPO_100.has(lastType) && GRUPO_100.has(e.type));
 
   if(mustSwitch){
@@ -723,7 +888,8 @@ function decidePos(pool, lastPos, consecSec, d, lastType){
   }
 
   const timeInPos = consecSec;
-  const switchChance = timeInPos > 90 ? 0.6 : timeInPos > 60 ? 0.4 : 0.2;
+  // Variación natural de posición — probabilidades distintas por tiempo acumulado
+  const switchChance = timeInPos > 120 ? 0.72 : timeInPos > 90 ? 0.55 : timeInPos > 60 ? 0.38 : 0.18;
   const wantSwitch = lastPos && Math.random() < switchChance;
 
   if(wantSwitch){
@@ -734,7 +900,12 @@ function decidePos(pool, lastPos, consecSec, d, lastType){
   return null;
 }
 
-function buildIntervals(terrain, durs, blockNum){
+// ── buildIntervals recibe el nivel de intensidad del bloque (intLevel) ──────
+// intLevel 1: bloques de valle/bajada → sin peaks, máximo intScore 3
+// intLevel 2: bloques de desarrollo   → sin peaks, máximo intScore 3-4
+// intLevel 3: bloques de pico         → peaks habilitados al final
+function buildIntervals(terrain, durs, blockNum, intLevel){
+  const lvl = intLevel || 2;
   const isP=terrain==='plano';
   const fullPool=[...(isP?PLANO_EX:MONT_EX)];
   const out=[];
@@ -743,44 +914,63 @@ function buildIntervals(terrain, durs, blockNum){
   let lastPos=null;
   let consecSec=0;
 
+  // En bloques conservadores (valle/bajada), excluir peaks del pool de partida
+  const workingPool = lvl === 1 ? fullPool.filter(e=>!e.peak) : fullPool;
+
   function filterRare(pool){
     return pool.filter(e=>{
       if(!e.rare) return true;
       if(usedRareThisClass[e.type]) return false;
-      return Math.random()<0.35;
+      // Raro: probabilidad de aparición varía con el nivel del bloque
+      return Math.random() < (lvl === 3 ? 0.5 : 0.3);
     });
   }
 
-  // Bloquea adyacencia de grupo 100 RPM
   function no100(e){ return !(GRUPO_100.has(lastType) && GRUPO_100.has(e.type)); }
 
   for(let i=0;i<n;i++){
     let d=durs[i];
     const isFirst = i===0;
     const isLast  = i===n-1;
+    const isSecondToLast = i===n-2 && n>=4;
 
-    let pool = filterRare(fullPool).filter(e=>no100(e) && e.type!==lastType);
-    if(!pool.length) pool = fullPool.filter(e=>e.type!==lastType);
-    if(!pool.length) pool = fullPool;
+    let pool = filterRare(workingPool).filter(e=>no100(e) && e.type!==lastType);
+    if(!pool.length) pool = workingPool.filter(e=>e.type!==lastType);
+    if(!pool.length) pool = workingPool;
 
     let ex;
 
     if(isFirst){
+      // Opener siempre — entrada al bloque con intensidad baja-media
       let openers = pool.filter(e=>e.opener);
       if(!openers.length) openers = pool;
       openers = openers.slice().sort(()=>Math.random()-0.5);
       ex = openers[0];
 
-    } else if(isLast && n>=3){
+    } else if(isLast && n>=3 && lvl === 3){
+      // Pico final: solo en bloques de pico habilitados
+      const peaks = pool.filter(e=>e.peak);
+      ex = peaks.length ? rnd(peaks) : pickEx(pool, lastType, true);
+
+    } else if(isSecondToLast && lvl === 3 && n >= 5 && Math.random() < 0.4){
+      // En bloques largos de pico, a veces el anteúltimo también es peak
       const peaks = pool.filter(e=>e.peak);
       ex = peaks.length ? rnd(peaks) : pickEx(pool, lastType, true);
 
     } else {
-      let buildPool = pool.filter(e=>!e.peak);
+      // Build: desarrollar intensidad progresivamente
+      let buildPool = lvl < 3 ? pool.filter(e=>!e.peak) : pool.filter(e=>!e.peak);
       if(!buildPool.length) buildPool = pool;
 
-      const prevScore = out.length ? (INT_SCORE[out[out.length-1].intensity]||1) : 1;
-      let candidates = buildPool.filter(e=>e.intScore >= prevScore);
+      // Progresión interna del bloque: cada intervalo puede ser igual o mayor al anterior
+      const prevScore = out.filter(v=>!v.isRecovery).length
+        ? (INT_SCORE[out.filter(v=>!v.isRecovery)[out.filter(v=>!v.isRecovery).length-1].intensity]||1) : 1;
+
+      // El techo de score del bloque varía con el nivel:
+      // lvl 1 → hasta score 2, lvl 2 → hasta score 3, lvl 3 → hasta score 4 en build
+      const scoreCap = {1:2, 2:3, 3:4}[lvl] || 3;
+      let candidates = buildPool.filter(e=>e.intScore >= prevScore && e.intScore <= scoreCap);
+      if(!candidates.length) candidates = buildPool.filter(e=>e.intScore <= scoreCap);
       if(!candidates.length) candidates = buildPool;
 
       const posCandidate = decidePos(candidates, lastPos, consecSec, d, lastType);
@@ -788,7 +978,7 @@ function buildIntervals(terrain, durs, blockNum){
         ex = posCandidate;
       } else if(lastPos && consecSec + d > MAX_CONSEC_SEC){
         const oppositePos = lastPos === 'Parado' ? 'Sentado' : 'Parado';
-        const anyOpposite = fullPool.filter(e=>e.pos===oppositePos && !e.peak && e.type!==lastType && no100(e));
+        const anyOpposite = workingPool.filter(e=>e.pos===oppositePos && !e.peak && e.type!==lastType && no100(e));
         if(anyOpposite.length){
           ex = rnd(anyOpposite);
         } else {
@@ -819,8 +1009,14 @@ function buildIntervals(terrain, durs, blockNum){
     const pos = safePos(ex);
     let intensity = getInt(ex.type, d);
 
+    // El primer bloque de la clase siempre es más suave
     if(blockNum===1 && intensity==='Muy Alta') intensity='Alta';
+    if(blockNum===1 && intensity==='Alta') intensity='Media Alta';
+    // El primer intervalo del bloque nunca supera Media Alta
     if(isFirst && INT_SCORE[intensity]>3) intensity='Media Alta';
+    // En bloques de valle o bajada, capping de intensidad
+    if(lvl===1 && INT_SCORE[intensity]>3) intensity='Media Alta';
+    if(lvl===1 && INT_SCORE[intensity]>2 && isFirst) intensity='Media';
 
     out.push({d, ex, pos, intensity, terrain});
     lastType = ex.type;
@@ -842,44 +1038,74 @@ function buildIntervals(terrain, durs, blockNum){
 }
 
 // ═══════════════════════════════════════════════════════
-// BUILD BLOCK
+// ESTILOS DE INTERVALOS POR FASE — cómo se dividen los segundos del bloque
 // ═══════════════════════════════════════════════════════
-function buildBlock(bType, num, durMin){
-  const workSec=(durMin-1)*60;
+const BLOCK_STYLES = {
+  peak:    ['explosivo','escalon','mixto'],
+  build:   ['mixto','sostenido','mixto'],
+  valley:  ['sostenido','mixto'],
+  descent: ['sostenido','mixto'],
+};
+
+// ═══════════════════════════════════════════════════════
+// BUILD BLOCK — recibe la fase del bloque en la clase
+// ═══════════════════════════════════════════════════════
+function buildBlock(bType, num, durMin, phase){
+  const intLevel = blkIntLevel(phase || 'build');
+  const blkStyle = rnd(BLOCK_STYLES[phase || 'build'] || BLOCK_STYLES.build);
   const hydration={d:60,ex:{desc:'Hidratación — cadencia muy suave',pos:null,type:'hyd',label:'Hidratación'},pos:'Sentado',intensity:'Muy Baja',terrain:'hyd',isHydration:true};
+
+  // A — Micro-repetición: la secuencia se genera para 1/N del tiempo y se repite
+  // Solo en bloques simples P/M, >= 5 min, en fases activas
+  const canMicro = (bType==='P'||bType==='M')
+    && durMin >= 5
+    && (phase==='build'||phase==='peak')
+    && Math.random() < 0.35;
+  const microRepeat = canMicro ? rnd([2,2,3]) : 1;
+  const workSec = (durMin-1)*60;
+  const baseWorkSec = microRepeat > 1 ? Math.floor(workSec / microRepeat) : workSec;
 
   if(bType==='P'||bType==='M'){
     const terrain=bType==='P'?'plano':'montana';
-    const durs=genDurs(workSec);
-    const intervals=[...buildIntervals(terrain,durs,num),hydration];
-    return{bType,num,durMin,intervals,isHybrid:false,terrain};
+    const durs=genDurs(baseWorkSec, blkStyle);
+    const baseIvs=buildIntervals(terrain, durs, num, intLevel);
+    const singleRepeatIvCount=baseIvs.length;
+    // Expandir la secuencia para el timer (cada rep es copia exacta)
+    let allIvs=[];
+    for(let r=0;r<microRepeat;r++){
+      baseIvs.forEach(iv=>allIvs.push(Object.assign({},iv)));
+    }
+    allIvs.push(hydration);
+    return{bType,num,durMin,intervals:allIvs,isHybrid:false,terrain,phase,intLevel,style:blkStyle,microRepeat,singleRepeatIvCount};
   }
 
-  // ── BLOQUE HÍBRIDO: terrenos intercalados, no divididos en mitades ──────────
-  // Se genera una secuencia unificada de duraciones y se asigna el terreno
-  // intervalo a intervalo, con lógica de variedad (no siempre alternado).
+  // ── BLOQUE HÍBRIDO ──────────────────────────────────────────────────────────
   const firstT = bType==='HP'?'plano':'montana';
   const secondT= bType==='HP'?'montana':'plano';
-  const allDurs = genDurs(workSec);
+  const allDurs = genDurs(workSec, blkStyle);
   const n = allDurs.length;
 
-  // Construir secuencia de terrenos variada:
-  //   · Nunca el mismo terreno más de 2 intervalos seguidos (evita bloques de un solo terreno)
-  //   · No siempre alternado: a veces se repite 1 o 2 veces antes de cambiar
+  // Secuencia de terrenos variada: no mecánicamente alternada
+  // En bloques de pico: mayor presencia del terreno principal (más carga acumulada)
+  // En bloques de valle/bajada: alternancia más rápida para alivio
+  const maxSameByPhase = {peak:2, build:2, valley:1, descent:1};
+  const maxSame = maxSameByPhase[phase||'build'] || 2;
+
   const terrainSeq = [];
   let lastT = null;
   let sameCount = 0;
   for(let i=0; i<n; i++){
-    const maxSame = n > 3 ? 2 : 1; // si hay pocos intervalos, alternar más
     let t;
     if(sameCount >= maxSame){
-      // Forzar cambio de terreno
       t = (lastT === firstT) ? secondT : firstT;
     } else if(lastT === null){
-      t = firstT; // siempre arrancar con firstT
+      t = firstT;
     } else {
-      // Probabilidad de cambio: ~45% si llevamos 1 igual, ~80% si llevamos 2
-      const switchP = sameCount === 1 ? 0.45 : 0.80;
+      // Probabilidad de cambio adaptada a la fase:
+      //   pico: menor probabilidad de cambio → más estrés acumulado
+      //   valle: mayor probabilidad de cambio → variedad como alivio
+      const switchBase = {peak:0.35, build:0.45, valley:0.65, descent:0.60}[phase||'build'] || 0.45;
+      const switchP = sameCount === 1 ? switchBase : switchBase + 0.3;
       t = Math.random() < switchP
         ? (lastT === firstT ? secondT : firstT)
         : lastT;
@@ -889,18 +1115,15 @@ function buildBlock(bType, num, durMin){
     lastT = t;
   }
 
-  // Dividir duraciones por terreno respetando el orden
   const d1=[],d2=[];
   terrainSeq.forEach((t,i)=>{
     if(t===firstT) d1.push(allDurs[i]);
     else d2.push(allDurs[i]);
   });
 
-  // Construir intervalos de cada terreno y luego re-intercalarlos por índice
-  const iv1Raw = buildIntervals(firstT, d1.length?d1:[30], num);
-  const iv2Raw = buildIntervals(secondT, d2.length?d2:[30], num);
+  const iv1Raw = buildIntervals(firstT, d1.length?d1:[30], num, intLevel);
+  const iv2Raw = buildIntervals(secondT, d2.length?d2:[30], num, intLevel);
 
-  // Re-mezclar según terrainSeq
   const iv1Q=[...iv1Raw.filter(v=>!v.isRecovery&&!v.isHydration)];
   const iv2Q=[...iv2Raw.filter(v=>!v.isRecovery&&!v.isHydration)];
   const recs=[...iv1Raw.filter(v=>v.isRecovery),...iv2Raw.filter(v=>v.isRecovery)];
@@ -910,32 +1133,63 @@ function buildBlock(bType, num, durMin){
     const q = t===firstT ? iv1Q : iv2Q;
     if(q.length) mixedIv.push(q.shift());
   });
-  // Reinsertar recuperaciones al final de su intervalo de origen (simplificado: al final)
   recs.forEach(r=>mixedIv.push(r));
 
   const intervals=[...mixedIv, hydration];
-  return{bType,num,durMin,intervals,isHybrid:true,firstTerrain:firstT,secondTerrain:secondT,terrainSeq};
+  return{bType,num,durMin,intervals,isHybrid:true,firstTerrain:firstT,secondTerrain:secondT,terrainSeq,phase,intLevel,style:blkStyle,microRepeat:1,singleRepeatIvCount:0};
 }
 
 // ═══════════════════════════════════════════════════════
-// BUILD CLASS
+// BUILD CLASS — selecciona perfil, distribuye duraciones con forma de curva
 // ═══════════════════════════════════════════════════════
 let currentClass=null;
 
 function buildClass(mode){
   usedRareThisClass = {};
-  let bTypes=[...mode.blocks];
+  const bTypes=[...mode.blocks];
   const blockCount=bTypes.length;
-  const totalWorkTime=32 + Math.floor(Math.random()*4);
-  const randomDurations = distributeBlockDurations(totalWorkTime, blockCount);
-  
-  const blocks=bTypes.map((t,i)=>buildBlock(t,i+1,randomDurations[i]));
-  const closeTime=rnd(CLOSE);
-  return{blocks,totalWorkTime,mode,closeTime};
+
+  // Cierre real de la clase: siempre 10:52-10:55, elegido primero
+  const closeTime = rnd(CLOSE);
+  // Derivar totalWorkTime desde el cierre:
+  //   10:15 inicio → 10:20 fin calentamiento (5')
+  //   10:20 + totalWorkTime → fin de bloques
+  //   fin de bloques + vuelta a la calma (2-4') = closeTime
+  const closeParts = closeTime.split(':');
+  const closeMin = (parseInt(closeParts[0])-10)*60 + parseInt(closeParts[1]); // minutos desde 10:00
+  const coolDown = 2 + Math.floor(Math.random()*3); // 2, 3 o 4 min de vuelta a la calma
+  // totalWorkTime: entre (closeTime - coolDown - 20min warmup) y siempre ≥ 5' × bloque
+  const totalWorkTime = Math.max(5 * blockCount, closeMin - 20 - coolDown);
+
+  // Elegir perfil de clase al azar
+  const profile = rnd(CLASS_PROFILES);
+  const phases = profile.buildPhases(blockCount);
+
+  // El primer bloque siempre es de desarrollo (no de pico) para respetar la fisiología
+  if(phases[0] === 'peak') phases[0] = 'build';
+
+  // Distribuir duraciones según la curva del perfil
+  const blockDurations = distributeBlockDurations(totalWorkTime, blockCount, phases);
+
+  const blocks = bTypes.map((t,i)=>buildBlock(t, i+1, blockDurations[i], phases[i]));
+
+  // B — Repetición de bloque completo: marcar 1 bloque (del medio) con "Hacer × N"
+  // Solo en bloques P/M simples, ni el primero ni el último, sin micro-repetición ya
+  if(blockCount >= 3 && Math.random() < 0.40){
+    const candidates = blocks.slice(1, blockCount-1).filter(b=>
+      !b.isHybrid && b.microRepeat === 1 && (b.phase==='build'||b.phase==='peak')
+    );
+    if(candidates.length){
+      const chosen = rnd(candidates);
+      chosen.repeatTimes = rnd([2,2,3]);
+    }
+  }
+
+  return{blocks, totalWorkTime, mode, closeTime, profile: profile.name, phases};
 }
 
 // ═══════════════════════════════════════════════════════
-// RENDER INTERVALS
+// RENDER INTERVALS — formato tabla: RPM | Posición | Intensidad
 // ═══════════════════════════════════════════════════════
 function renderIv(iv, showTerrain){
   if(iv.isHydration) return'';
@@ -944,14 +1198,28 @@ function renderIv(iv, showTerrain){
   const tCls=iv.isRecovery?'cr':isP?'cp':'cm';
   const posCls=iv.pos==='Sentado'?'pos-s':'pos-p';
   const posIcon=iv.pos==='Sentado'?'🪑 Sentado':'🧍 Parado';
+
+  // Rango completo de intensidades para este ejercicio según la tabla
+  const intRange = INT_MAP[iv.ex.type];
+  const rangeHtml = intRange
+    ? `<span class="iv-range">
+        <span class="${intCls(intRange[0])}" title="15-30s">${intRange[0]}</span>
+        <span class="iv-range-sep">›</span>
+        <span class="${intCls(intRange[1])}" title="30-45s">${intRange[1]}</span>
+        <span class="iv-range-sep">›</span>
+        <span class="${intCls(intRange[2])}" title="45-60s">${intRange[2]}</span>
+       </span>`
+    : `<span class="iv-int ${intCls(iv.intensity)}">${iv.intensity}</span>`;
+
   const terrainBadge = showTerrain
     ? `<span class="iv-terrain ${isP?'ivt-p':'ivt-m'}">${isP?'🔵 Plano':'🟠 Montaña'}</span>`
     : '';
+
   return`<div class="iv-row ${bdrCls}">
   <span class="iv-time ${tCls}">${fmtSec(iv.d)}</span>
   <span class="iv-pos ${posCls}">${posIcon}</span>
-  ${terrainBadge}<span class="iv-desc">${iv.ex.label} (${iv.ex.desc})</span>
-  <span class="iv-int ${intCls(iv.intensity)}">${iv.intensity}</span>
+  ${terrainBadge}<span class="iv-desc">${iv.ex.label}</span>
+  ${rangeHtml}
 </div>`;
 }
 
@@ -976,9 +1244,22 @@ function renderClass(cls){
   blocks.forEach((b)=>{cur+=b.durMin;times+=`<span>${addMin(BASE,cur)}</span>`;});
   times+=`</div>`;
 
+  // Etiquetas legibles del perfil
+  const profileLabels={
+    progresivo:'▲ Progresivo',
+    pico_anticipado:'◆ Pico anticipado',
+    ondulado:'〜 Ondulado',
+    doble_pico:'◆◆ Doble pico',
+    escalera:'⌇ Escalera'
+  };
+  const profileLabel = profileLabels[cls.profile] || cls.profile || '';
+
   let html=`
 <div class="cls-hdr">
-  <div><div class="cls-title">MODO ${String(mode.id).padStart(2,'0')} · ${mode.cat.toUpperCase()}</div><div class="cls-sub">${mode.desc}</div></div>
+  <div>
+    <div class="cls-title">MODO ${String(mode.id).padStart(2,'0')} · ${mode.cat.toUpperCase()}</div>
+    <div class="cls-sub">${mode.desc} &nbsp;·&nbsp; <span style="color:var(--accent3);font-family:'Space Mono',monospace;font-size:var(--fs-xs);letter-spacing:2px">${profileLabel}</span></div>
+  </div>
   <div class="cls-meta"><strong>${blocks.length}</strong> bloques · Tiempos variables<br>Total: <strong>${totalWorkTime} min</strong><br>Cierre: <strong style="color:var(--accent)">${closeTime}</strong></div>
 </div>
 <div class="tl-wrap"><div class="tl-lbl">Recorrido · 10:15 → ${closeTime}</div>${tl}${times}</div>
@@ -1002,26 +1283,48 @@ function renderClass(cls){
     }else if(blk.terrain==='plano'){bdgCls='bb-p';bdgTxt='🔵 Plano';}
     else{bdgCls='bb-m';bdgTxt='🟠 Montaña';}
 
-    const ivCount=blk.intervals.filter(v=>!v.isHydration).length;
+    // A — Micro-repetición: en el header mostrar "5 ivs × 3" en lugar de "15 ivs"
+    const mr = blk.microRepeat || 1;
+    const seqLen = mr > 1 ? blk.singleRepeatIvCount : 0;
+    const displayIvCount = mr > 1 ? blk.singleRepeatIvCount : blk.intervals.filter(v=>!v.isHydration).length;
+    const ivCountLabel = mr > 1
+      ? `${displayIvCount} ivs <span class="blk-rep-badge">×${mr}</span>`
+      : `${displayIvCount} intervalos`;
+
+    // B — Repetición de bloque: mostrar badge en el header
+    const rt = blk.repeatTimes || 1;
+    const repBadge = rt > 1 ? `<span class="blk-whole-rep">🔁 ×${rt}</span>` : '';
 
     html+=`<div class="blk ${bi===0?'open':''}">
   <div class="blk-hdr" onclick="this.parentElement.classList.toggle('open')">
     <span class="blk-num">${String(bi+1).padStart(2,'0')}</span>
-    <span class="blk-badge ${bdgCls}">${bdgTxt} (${blk.durMin}')</span>
-    <span class="blk-cnt">${ivCount} intervalos</span>
+    <span class="blk-badge ${bdgCls}">${bdgTxt} (${blk.durMin}')${repBadge}</span>
+    <span class="blk-cnt">${ivCountLabel}</span>
     <span class="blk-dur">${tS} → ${tE}</span>
     <span class="blk-arr">▾</span>
   </div>
   <div class="blk-body">`;
 
     if(blk.isHybrid){
-      // Mostrar todos los intervalos en orden (terrenos intercalados) con badge de terreno
       blk.intervals.filter(v=>!v.isHydration).forEach(iv=>{ html+=renderIv(iv, true); });
-    }else{
+    } else if(mr > 1){
+      // A — Mostrar solo la primera repetición con badge de repetición
+      const showTerrain = false;
+      const seqIvs = blk.intervals.filter(v=>!v.isHydration).slice(0, seqLen);
+      html += `<div class="micro-rep-wrap">`;
+      seqIvs.forEach(iv=>{ html+=renderIv(iv, showTerrain); });
+      html += `<div class="micro-rep-lbl">🔄 Repetir esta secuencia <strong>× ${mr}</strong> veces</div>`;
+      html += `</div>`;
+    } else {
       blk.intervals.filter(v=>!v.isHydration).forEach(iv=>{ html+=renderIv(iv, false); });
     }
 
-    html+=`<div class="hyd"><span>💧</span><strong>1' HIDRATACIÓN</strong><span>— intensidad Muy Baja, cadencia libre</span></div></div></div>`;
+    // B — Nota de repetición del bloque completo
+    const repNote = rt > 1
+      ? `<div class="blk-rep-note">🔁 Hacer este bloque <strong>× ${rt} veces</strong></div>`
+      : '';
+
+    html+=`<div class="hyd"><span>💧</span><strong>1' HIDRATACIÓN</strong><span>— intensidad Muy Baja, cadencia libre</span></div>${repNote}</div></div>`;
   });
 
   html+=`<div class="cd-bar">
@@ -1164,32 +1467,61 @@ function flattenClass(cls){
 
 let wakeLock=null;
 let wakeLockActive=false;
+let _noSleepVideo=null; // fallback para dispositivos sin WakeLock API
+
+function _startNoSleepVideo(){
+  // Truco clásico: reproducir un video invisible de 1×1 en loop para evitar sleep
+  if(_noSleepVideo) return;
+  try{
+    const v=document.createElement('video');
+    v.setAttribute('playsinline','');
+    v.setAttribute('muted','');
+    v.style.cssText='position:fixed;top:-1px;left:-1px;width:1px;height:1px;opacity:0.01;pointer-events:none;';
+    // video mínimo en base64 (1px webm transparente, loop)
+    v.src='data:video/webm;base64,GkXfowEAAAAAAAAfQoaBAUL3gQFC8oEEQvOBCEKChHdlYm1Ch4ECQoWBAhhTgGcBAAAAAAAVkhFNm3RALE27i1OrhBVJqWZTrIHfTbuMU6uEFlSua1OsggEwTbuMU6uEHFO7a1OsggI+7AEAAAAAAACkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAVSalmAQAAAAAAAEUq17GDD0JATYCNTGF2ZjU4LjI5LjEwMFdBjUxhdmY1OC4yOS4xMDBEiYhARAAAAAAAABZUrmsBAAAAAAAAHe0BAAAAAAAAGd0BAAAAAAAAFe0BAAAAAAAAEe0BAAAAAAAADe0BAAAAAAAA';
+    v.loop=true;
+    document.body.appendChild(v);
+    v.play().catch(()=>{});
+    _noSleepVideo=v;
+  }catch(e){}
+}
+
+function _stopNoSleepVideo(){
+  if(!_noSleepVideo)return;
+  try{_noSleepVideo.pause();_noSleepVideo.remove();}catch(e){}
+  _noSleepVideo=null;
+}
 
 async function requestWakeLock(){
-  if(!('wakeLock' in navigator)) return;
-  try{
-    wakeLock=await navigator.wakeLock.request('screen');
-    wakeLockActive=true;
-    // cuando el sistema libera el lock (ej: pantalla se apagó manualmente),
-    // lo re-pedimos automáticamente si el timer sigue corriendo
-    wakeLock.addEventListener('release',()=>{
-      wakeLockActive=false;
-      if(timerState.interval && !timerState.paused && document.visibilityState==='visible'){
-        requestWakeLock();
-      }
-    });
-  }catch(e){}
+  if('wakeLock' in navigator){
+    try{
+      if(wakeLock){try{wakeLock.release();}catch(e){} wakeLock=null;}
+      wakeLock=await navigator.wakeLock.request('screen');
+      wakeLockActive=true;
+      wakeLock.addEventListener('release',()=>{
+        wakeLockActive=false;
+        // re-pedir automáticamente si el timer sigue
+        if(timerState.interval && !timerState.paused && document.visibilityState==='visible'){
+          requestWakeLock();
+        }
+      });
+      return;
+    }catch(e){}
+  }
+  // Fallback: video invisible
+  _startNoSleepVideo();
+  wakeLockActive=true;
 }
 
 function releaseWakeLock(){
   wakeLockActive=false;
   if(wakeLock){try{wakeLock.release();}catch(e){} wakeLock=null;}
+  _stopNoSleepVideo();
 }
 
-// Al volver a la pestaña/app después de salir, re-pedir el lock si el timer corre
+// Re-pedir al volver a la pestaña
 document.addEventListener('visibilitychange',async()=>{
-  if(document.visibilityState==='visible' && wakeLockActive===false &&
-     timerState.interval && !timerState.paused){
+  if(document.visibilityState==='visible' && timerState.interval && !timerState.paused){
     await requestWakeLock();
   }
 });
@@ -1262,10 +1594,10 @@ function updateTimerUI(){
   const next=timerState.flatList[timerState.idx+1];
   const r=timerState.remaining;
   const m=Math.floor(r/60),s=r%60;
+  const timeStr=`${m}:${String(s).padStart(2,'0')}`;
 
-  document.getElementById('tmrDigits').textContent=`${m}:${String(s).padStart(2,'0')}`;
-  
-  // Imprimimos el texto en el reloj (ahora acepta múltiples líneas por CSS)
+  document.getElementById('tmrDigits').textContent=timeStr;
+
   const fullLabelText = `${timerState.idx+1} · ${iv.shortLabel}`;
   document.getElementById('tmrIvNum').textContent = fullLabelText;
 
@@ -1289,8 +1621,17 @@ function updateTimerUI(){
   const card=document.getElementById('tmrCurrCard');
   card.className=`tmr-curr ${iv.terrain==='plano'?'tc-p':iv.terrain==='montana'?'tc-m':'tc-r'}`;
   document.getElementById('tmrCurrDesc').textContent=iv.shortLabel;
-  document.getElementById('tmrCurrDurLabel').textContent=`Duración total: ${fmtSec(iv.d)}`;
-  
+  document.getElementById('tmrCurrDurLabel').textContent=`Duración: ${fmtSec(iv.d)}`;
+
+  // En fullscreen: inyectar reloj grande dentro del label AHORA (texto AHORA oculto por CSS)
+  const isFsMode = document.getElementById('timerOverlay').classList.contains('fs-mode');
+  const labelEl = document.querySelector('.tmr-curr-label');
+  if(isFsMode){
+    labelEl.innerHTML = `<span class="fs-clock" style="color:${strokeColor}">${timeStr}</span><span class="fs-ahora-txt">AHORA</span>`;
+  } else {
+    labelEl.innerHTML = `<span>AHORA</span>`;
+  }
+
   const posEl=document.getElementById('tmrCurrPos');
   posEl.textContent=iv.pos==='Sentado'?'🪑 Sentado':'🧍 Parado';
   posEl.className=`tmr-curr-pos ${iv.pos==='Sentado'?'pos-s':'pos-p'}`;
@@ -1301,11 +1642,12 @@ function updateTimerUI(){
 
   if(next){
     document.getElementById('tmrNextWrap').style.display='flex';
-    document.getElementById('tmrNextDesc').textContent=next.shortLabel;
+    const nextPos = next.pos==='Sentado'?'🪑':'🧍';
+    document.getElementById('tmrNextDesc').textContent=`${nextPos} ${next.shortLabel}`;
     document.getElementById('tmrNextTime').textContent=fmtSec(next.d);
   }else{
     document.getElementById('tmrNextWrap').style.display='flex';
-    document.getElementById('tmrNextDesc').textContent='Fin de clase · Vuelta a la calma';
+    document.getElementById('tmrNextDesc').textContent='🏁 Fin de clase · Vuelta a la calma';
     document.getElementById('tmrNextTime').textContent='—';
   }
 
@@ -1370,8 +1712,9 @@ function toggleFullscreen(){
     const req=el.requestFullscreen||el.webkitRequestFullscreen||el.mozRequestFullScreen||el.msRequestFullscreen;
     if(req) req.call(el).catch(()=>{});
     overlay.classList.add('fs-mode');
-    document.getElementById('btnFs').textContent='✕ Salir de pantalla completa';
+    document.getElementById('btnFs').textContent='✕ Salir';
     _isFs=true;
+    requestWakeLock(); // asegurar pantalla encendida al entrar a fullscreen
   } else {
     const ex=document.exitFullscreen||document.webkitExitFullscreen||document.mozCancelFullScreen||document.msExitFullscreen;
     if(ex) ex.call(document).catch(()=>{});
@@ -1379,6 +1722,8 @@ function toggleFullscreen(){
     document.getElementById('btnFs').textContent='⛶ Pantalla completa';
     _isFs=false;
   }
+  // Actualizar UI para reflejar el nuevo modo (reloj integrado en AHORA)
+  if(timerState.flatList && timerState.flatList.length) updateTimerUI();
 }
 
 // si el usuario sale con Escape, sincronizar estado
@@ -1401,21 +1746,78 @@ function toggleFullscreen(){
     const c=document.createElement('canvas');
     c.width=c.height=size;
     const ctx=c.getContext('2d');
-    // fondo
+    const s=size, cx=s/2, cy=s/2;
+
+    // fondo redondeado
     ctx.fillStyle='#08080d';
-    ctx.fillRect(0,0,size,size);
-    // círculo exterior accent
-    ctx.strokeStyle='#e8d840';
-    ctx.lineWidth=size*0.06;
+    const r=s*0.18;
     ctx.beginPath();
-    ctx.arc(size/2,size/2,size*0.42,0,Math.PI*2);
-    ctx.stroke();
-    // texto "SL"
-    ctx.fillStyle='#e8d840';
-    ctx.font=`bold ${size*0.38}px Arial,sans-serif`;
-    ctx.textAlign='center';
-    ctx.textBaseline='middle';
-    ctx.fillText('PF',size/2,size/2+size*0.02);
+    ctx.moveTo(r,0);ctx.lineTo(s-r,0);ctx.quadraticCurveTo(s,0,s,r);
+    ctx.lineTo(s,s-r);ctx.quadraticCurveTo(s,s,s-r,s);
+    ctx.lineTo(r,s);ctx.quadraticCurveTo(0,s,0,s-r);
+    ctx.lineTo(0,r);ctx.quadraticCurveTo(0,0,r,0);
+    ctx.closePath();ctx.fill();
+
+    // colores
+    const acc='#e8d840';
+    ctx.strokeStyle=acc;
+    ctx.fillStyle=acc;
+    ctx.lineCap='round';
+    ctx.lineJoin='round';
+
+    // escala relativa al tamaño del icono
+    const u=s/192; // unidad base
+
+    // ── rueda trasera ──
+    const wr=36*u, wxR=62*u, wy=118*u;
+    ctx.lineWidth=7*u;
+    ctx.beginPath();ctx.arc(wxR,wy,wr,0,Math.PI*2);ctx.stroke();
+    // radios rueda trasera
+    ctx.lineWidth=3*u;
+    for(let a=0;a<6;a++){const ang=a*Math.PI/3;ctx.beginPath();ctx.moveTo(wxR,wy);ctx.lineTo(wxR+Math.cos(ang)*wr,wy+Math.sin(ang)*wr);ctx.stroke();}
+
+    // ── rueda delantera ──
+    const wxF=130*u;
+    ctx.lineWidth=7*u;
+    ctx.beginPath();ctx.arc(wxF,wy,wr,0,Math.PI*2);ctx.stroke();
+    // radios rueda delantera
+    ctx.lineWidth=3*u;
+    for(let a=0;a<6;a++){const ang=a*Math.PI/3;ctx.beginPath();ctx.moveTo(wxF,wy);ctx.lineTo(wxF+Math.cos(ang)*wr,wy+Math.sin(ang)*wr);ctx.stroke();}
+
+    // ── cuadro (frame) ──
+    ctx.lineWidth=7*u;
+    // tubo diagonal: pedalier → poste de sillín
+    const pedX=96*u, pedY=118*u;
+    const silX=72*u, silY=74*u;
+    ctx.beginPath();ctx.moveTo(pedX,pedY);ctx.lineTo(silX,silY);ctx.stroke();
+    // tubo superior: sillín → dirección
+    const dirX=120*u, dirY=74*u;
+    ctx.beginPath();ctx.moveTo(silX,silY);ctx.lineTo(dirX,dirY);ctx.stroke();
+    // tubo dirección: dirección → rueda delantera
+    ctx.beginPath();ctx.moveTo(dirX,dirY);ctx.lineTo(wxF,wy);ctx.stroke();
+    // vaina trasera inferior: pedalier → rueda trasera
+    ctx.beginPath();ctx.moveTo(pedX,pedY);ctx.lineTo(wxR,wy);ctx.stroke();
+    // vaina trasera superior: sillín → rueda trasera
+    ctx.beginPath();ctx.moveTo(silX,silY);ctx.lineTo(wxR,wy);ctx.stroke();
+
+    // ── sillín ──
+    ctx.lineWidth=6*u;
+    ctx.beginPath();ctx.moveTo(silX-12*u,silY-4*u);ctx.lineTo(silX+10*u,silY-4*u);ctx.stroke();
+    // poste sillín (vertical corto)
+    ctx.beginPath();ctx.moveTo(silX,silY);ctx.lineTo(silX,silY-14*u);ctx.stroke();
+
+    // ── manillar ──
+    ctx.beginPath();ctx.moveTo(dirX,dirY);ctx.lineTo(dirX+4*u,dirY-18*u);ctx.stroke();
+    ctx.beginPath();ctx.moveTo(dirX+4*u,dirY-18*u);ctx.lineTo(dirX+16*u,dirY-14*u);ctx.stroke();
+
+    // ── pedalier (círculo) ──
+    ctx.lineWidth=5*u;
+    ctx.beginPath();ctx.arc(pedX,pedY,8*u,0,Math.PI*2);ctx.stroke();
+    // manivela + pedal
+    ctx.lineWidth=4*u;
+    ctx.beginPath();ctx.moveTo(pedX,pedY);ctx.lineTo(pedX+16*u,pedY+6*u);ctx.stroke();
+    ctx.beginPath();ctx.moveTo(pedX+12*u,pedY+4*u);ctx.lineTo(pedX+20*u,pedY+2*u);ctx.stroke();
+
     return c.toDataURL('image/png');
   }
 
@@ -1424,8 +1826,8 @@ function toggleFullscreen(){
 
   // ── Manifest ──
   const manifest={
-    name:'PONETEFIT EN SPINNING · Profe Rafa López',
-    short_name:'PoneFit Spinning',
+    name:'Ponetefit con Spinning',
+    short_name:'Ponetefit',
     description:'Planeador y timer de clase de spinning — Profe Rafa López',
     start_url:'./',
     scope:'./',
