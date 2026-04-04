@@ -1752,82 +1752,97 @@ function toggleFullscreen(){
    PWA — manifest + service worker
 ══════════════════════════════════════════ */
 (function setupPWA(){
-  // ── Genera íconos con canvas ──
+  // ── Genera íconos con canvas: bicicleta + letras PFS ──
   function makeIcon(size){
     const c=document.createElement('canvas');
     c.width=c.height=size;
     const ctx=c.getContext('2d');
-    const s=size, cx=s/2, cy=s/2;
+    const s=size;
 
-    // fondo redondeado
+    // ── Fondo negro con esquinas redondeadas ──
     ctx.fillStyle='#08080d';
-    const r=s*0.18;
+    const rr=s*0.18;
     ctx.beginPath();
-    ctx.moveTo(r,0);ctx.lineTo(s-r,0);ctx.quadraticCurveTo(s,0,s,r);
-    ctx.lineTo(s,s-r);ctx.quadraticCurveTo(s,s,s-r,s);
-    ctx.lineTo(r,s);ctx.quadraticCurveTo(0,s,0,s-r);
-    ctx.lineTo(0,r);ctx.quadraticCurveTo(0,0,r,0);
+    ctx.moveTo(rr,0);ctx.lineTo(s-rr,0);ctx.quadraticCurveTo(s,0,s,rr);
+    ctx.lineTo(s,s-rr);ctx.quadraticCurveTo(s,s,s-rr,s);
+    ctx.lineTo(rr,s);ctx.quadraticCurveTo(0,s,0,s-rr);
+    ctx.lineTo(0,rr);ctx.quadraticCurveTo(0,0,rr,0);
     ctx.closePath();ctx.fill();
 
-    // colores
     const acc='#e8d840';
     ctx.strokeStyle=acc;
     ctx.fillStyle=acc;
     ctx.lineCap='round';
     ctx.lineJoin='round';
 
-    // escala relativa al tamaño del icono
-    const u=s/192; // unidad base
+    // ── Escala: bici en zona superior (70% alto), PFS abajo ──
+    // Coordenadas base diseñadas en 192×192, zona bici 0..134
+    // La bici se escala y centra en la franja superior del icono
+    const bikeRegionH = s * 0.70; // altura reservada a la bici
+    const bikeScale = bikeRegionH / 134;
+    // Centro horizontal del diseño original: (58+134)/2 = 96 → centrar en s/2
+    const offX = s/2 - 96*bikeScale;
+    const offY = s * 0.015; // pequeño margen superior
 
-    // ── rueda trasera ──
-    const wr=36*u, wxR=62*u, wy=118*u;
-    ctx.lineWidth=7*u;
-    ctx.beginPath();ctx.arc(wxR,wy,wr,0,Math.PI*2);ctx.stroke();
-    // radios rueda trasera
-    ctx.lineWidth=3*u;
-    for(let a=0;a<6;a++){const ang=a*Math.PI/3;ctx.beginPath();ctx.moveTo(wxR,wy);ctx.lineTo(wxR+Math.cos(ang)*wr,wy+Math.sin(ang)*wr);ctx.stroke();}
+    function bx(x){ return offX + x*bikeScale; }
+    function by(y){ return offY + y*bikeScale; }
 
-    // ── rueda delantera ──
-    const wxF=130*u;
-    ctx.lineWidth=7*u;
-    ctx.beginPath();ctx.arc(wxF,wy,wr,0,Math.PI*2);ctx.stroke();
-    // radios rueda delantera
-    ctx.lineWidth=3*u;
-    for(let a=0;a<6;a++){const ang=a*Math.PI/3;ctx.beginPath();ctx.moveTo(wxF,wy);ctx.lineTo(wxF+Math.cos(ang)*wr,wy+Math.sin(ang)*wr);ctx.stroke();}
+    // ── Ruedas ──
+    const wr = 38*bikeScale;
+    const wxR=bx(58), wyW=by(108);
+    const wxF=bx(134);
 
-    // ── cuadro (frame) ──
-    ctx.lineWidth=7*u;
-    // tubo diagonal: pedalier → poste de sillín
-    const pedX=96*u, pedY=118*u;
-    const silX=72*u, silY=74*u;
-    ctx.beginPath();ctx.moveTo(pedX,pedY);ctx.lineTo(silX,silY);ctx.stroke();
-    // tubo superior: sillín → dirección
-    const dirX=120*u, dirY=74*u;
-    ctx.beginPath();ctx.moveTo(silX,silY);ctx.lineTo(dirX,dirY);ctx.stroke();
-    // tubo dirección: dirección → rueda delantera
-    ctx.beginPath();ctx.moveTo(dirX,dirY);ctx.lineTo(wxF,wy);ctx.stroke();
-    // vaina trasera inferior: pedalier → rueda trasera
-    ctx.beginPath();ctx.moveTo(pedX,pedY);ctx.lineTo(wxR,wy);ctx.stroke();
-    // vaina trasera superior: sillín → rueda trasera
-    ctx.beginPath();ctx.moveTo(silX,silY);ctx.lineTo(wxR,wy);ctx.stroke();
+    // ruedas (llanta)
+    ctx.lineWidth=6.5*bikeScale;
+    ctx.beginPath();ctx.arc(wxR,wyW,wr,0,Math.PI*2);ctx.stroke();
+    ctx.beginPath();ctx.arc(wxF,wyW,wr,0,Math.PI*2);ctx.stroke();
 
-    // ── sillín ──
-    ctx.lineWidth=6*u;
-    ctx.beginPath();ctx.moveTo(silX-12*u,silY-4*u);ctx.lineTo(silX+10*u,silY-4*u);ctx.stroke();
-    // poste sillín (vertical corto)
-    ctx.beginPath();ctx.moveTo(silX,silY);ctx.lineTo(silX,silY-14*u);ctx.stroke();
+    // radios — 8 por rueda, finos
+    ctx.lineWidth=2*bikeScale;
+    for(let a=0;a<8;a++){
+      const ang=a*Math.PI/4;
+      const reach=wr*0.87;
+      ctx.beginPath();ctx.moveTo(wxR,wyW);ctx.lineTo(wxR+Math.cos(ang)*reach,wyW+Math.sin(ang)*reach);ctx.stroke();
+      ctx.beginPath();ctx.moveTo(wxF,wyW);ctx.lineTo(wxF+Math.cos(ang)*reach,wyW+Math.sin(ang)*reach);ctx.stroke();
+    }
 
-    // ── manillar ──
-    ctx.beginPath();ctx.moveTo(dirX,dirY);ctx.lineTo(dirX+4*u,dirY-18*u);ctx.stroke();
-    ctx.beginPath();ctx.moveTo(dirX+4*u,dirY-18*u);ctx.lineTo(dirX+16*u,dirY-14*u);ctx.stroke();
+    // ── Cuadro ──
+    ctx.lineWidth=6.5*bikeScale;
+    const pedX=bx(96),  pedY=by(108);
+    const silX=bx(70),  silY=by(66);
+    const dirX=bx(122), dirY=by(66);
 
-    // ── pedalier (círculo) ──
-    ctx.lineWidth=5*u;
-    ctx.beginPath();ctx.arc(pedX,pedY,8*u,0,Math.PI*2);ctx.stroke();
-    // manivela + pedal
-    ctx.lineWidth=4*u;
-    ctx.beginPath();ctx.moveTo(pedX,pedY);ctx.lineTo(pedX+16*u,pedY+6*u);ctx.stroke();
-    ctx.beginPath();ctx.moveTo(pedX+12*u,pedY+4*u);ctx.lineTo(pedX+20*u,pedY+2*u);ctx.stroke();
+    ctx.beginPath();ctx.moveTo(pedX,pedY);ctx.lineTo(silX,silY);ctx.stroke();   // diagonal
+    ctx.beginPath();ctx.moveTo(silX,silY);ctx.lineTo(dirX,dirY);ctx.stroke();   // tubo superior
+    ctx.beginPath();ctx.moveTo(dirX,dirY);ctx.lineTo(wxF,wyW);ctx.stroke();     // horquilla
+    ctx.beginPath();ctx.moveTo(pedX,pedY);ctx.lineTo(wxR,wyW);ctx.stroke();     // vaina inf
+    ctx.beginPath();ctx.moveTo(silX,silY);ctx.lineTo(wxR,wyW);ctx.stroke();     // vaina sup
+
+    // ── Sillín ──
+    ctx.lineWidth=5.5*bikeScale;
+    const spH=silY-13*bikeScale;
+    ctx.beginPath();ctx.moveTo(silX,silY);ctx.lineTo(silX,spH);ctx.stroke();
+    ctx.beginPath();ctx.moveTo(silX-12*bikeScale,spH-3*bikeScale);ctx.lineTo(silX+10*bikeScale,spH-3*bikeScale);ctx.stroke();
+
+    // ── Manillar ──
+    const mTop=dirY-19*bikeScale;
+    ctx.beginPath();ctx.moveTo(dirX,dirY);ctx.lineTo(dirX+2*bikeScale,mTop);ctx.stroke();
+    ctx.beginPath();ctx.moveTo(dirX+2*bikeScale,mTop);ctx.lineTo(dirX+16*bikeScale,mTop+5*bikeScale);ctx.stroke();
+
+    // ── Pedalier ──
+    ctx.lineWidth=5*bikeScale;
+    ctx.beginPath();ctx.arc(pedX,pedY,7.5*bikeScale,0,Math.PI*2);ctx.stroke();
+    ctx.lineWidth=3.5*bikeScale;
+    ctx.beginPath();ctx.moveTo(pedX,pedY);ctx.lineTo(pedX+16*bikeScale,pedY+6*bikeScale);ctx.stroke();
+    ctx.beginPath();ctx.moveTo(pedX+12*bikeScale,pedY+4*bikeScale);ctx.lineTo(pedX+21*bikeScale,pedY);ctx.stroke();
+
+    // ── Texto PFS ──
+    const fontSize=Math.round(s*0.27);
+    ctx.font='900 '+fontSize+'px "Arial Black",Arial,sans-serif';
+    ctx.textAlign='center';
+    ctx.textBaseline='alphabetic';
+    ctx.fillStyle=acc;
+    ctx.fillText('PFS', s*0.5, s*0.965);
 
     return c.toDataURL('image/png');
   }
