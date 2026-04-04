@@ -742,11 +742,14 @@ function distributeBlockDurations(totalWorkTime, blockCount, phases){
   }
   // Asegurar rango 5-9 minutos (incluyendo hidratación) por bloque
   durations = durations.map(d=>Math.max(5, Math.min(9, d)));
-  // Segunda pasada para ajustar suma
-  let sum2 = durations.reduce((a,b)=>a+b,0);
-  let extra = sum2 - totalWorkTime;
-  if(extra > 0){ for(let i=durations.length-1;i>=0&&extra>0;i--){ if(durations[i]>5){durations[i]--;extra--;} } }
-  if(extra < 0){ for(let i=0;i<durations.length&&extra<0;i++){ if(durations[i]<9){durations[i]++;extra++;} } }
+  // Segunda pasada para ajustar suma — múltiples ciclos hasta converger
+  for(let pass=0; pass<3; pass++){
+    let sum2 = durations.reduce((a,b)=>a+b,0);
+    let extra = sum2 - totalWorkTime;
+    if(extra === 0) break;
+    if(extra > 0){ for(let i=durations.length-1;i>=0&&extra>0;i--){ if(durations[i]>5){durations[i]--;extra--;} } }
+    if(extra < 0){ for(let i=0;i<durations.length&&extra<0;i++){ if(durations[i]<9){durations[i]++;extra++;} } }
+  }
   return durations;
 }
 
@@ -1171,6 +1174,14 @@ function buildClass(mode){
   // Distribuir duraciones según la curva del perfil
   const blockDurations = distributeBlockDurations(totalWorkTime, blockCount, phases);
 
+  // Usar la suma REAL de los bloques (puede diferir de totalWorkTime por el clampeo 5-9)
+  const realWorkTime = blockDurations.reduce((a,b)=>a+b, 0);
+
+  // Recalcular el cierre real a partir del tiempo de trabajo efectivo
+  // 10:00 + 20 (warmup) + realWorkTime + coolDown = cierre real en minutos desde 10:00
+  const realCloseMin = 20 + realWorkTime + coolDown;
+  const realCloseTime = `${10 + Math.floor(realCloseMin/60)}:${String(realCloseMin%60).padStart(2,'0')}`;
+
   const blocks = bTypes.map((t,i)=>buildBlock(t, i+1, blockDurations[i], phases[i]));
 
   // B — Repetición de bloque completo: marcar 1 bloque (del medio) con "Hacer × N"
@@ -1185,7 +1196,7 @@ function buildClass(mode){
     }
   }
 
-  return{blocks, totalWorkTime, mode, closeTime, profile: profile.name, phases};
+  return{blocks, totalWorkTime: realWorkTime, mode, closeTime: realCloseTime, profile: profile.name, phases};
 }
 
 // ═══════════════════════════════════════════════════════
