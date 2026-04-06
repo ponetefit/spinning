@@ -2024,6 +2024,647 @@
             }
         }
 
+        /* ══════════════════════════════════════════
+           ARMAR RECORRIDO — SECCIÓN RAFA
+        ══════════════════════════════════════════ */
+
+        .armar-accordion {
+            margin-bottom: 24px;
+        }
+
+        .armar-toggle {
+            width: 100%;
+            background: var(--card);
+            border: 1.5px solid var(--accent);
+            border-radius: var(--rad);
+            padding: 16px 18px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: all .18s;
+            text-align: left;
+        }
+
+        .armar-toggle:hover {
+            background: #191926;
+        }
+
+        .armar-toggle.open {
+            border-radius: var(--rad) var(--rad) 0 0;
+            border-bottom-color: var(--border);
+        }
+
+        .armar-icon {
+            font-size: 20px;
+        }
+
+        .armar-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(18px, 4.5vw, 24px);
+            letter-spacing: 2px;
+            color: var(--accent);
+        }
+
+        .armar-sub {
+            font-family: 'Space Mono', monospace;
+            font-size: var(--fs-xs);
+            color: var(--muted);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-left: auto;
+        }
+
+        .armar-arrow {
+            font-size: 18px;
+            color: var(--accent);
+            transition: transform .2s;
+            flex-shrink: 0;
+        }
+
+        .armar-arrow.open {
+            transform: rotate(180deg);
+        }
+
+        .armar-panel {
+            display: none;
+            background: var(--surface);
+            border: 1.5px solid var(--accent);
+            border-top: none;
+            border-radius: 0 0 var(--rad) var(--rad);
+            padding: 20px 18px 24px;
+        }
+
+        .armar-panel.open {
+            display: block;
+        }
+
+        /* Config row — tiempo total */
+        .armar-config-row {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            flex-wrap: wrap;
+            margin-bottom: 18px;
+        }
+
+        .armar-config-lbl {
+            font-family: 'Space Mono', monospace;
+            font-size: var(--fs-xs);
+            color: var(--muted);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            white-space: nowrap;
+        }
+
+        .armar-dur-btns {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+
+        .armar-dur-btn {
+            background: var(--card);
+            border: 1.5px solid var(--border);
+            color: var(--text);
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(18px, 4vw, 22px);
+            letter-spacing: 1px;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all .15s;
+        }
+
+        .armar-dur-btn:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        .armar-dur-btn.sel {
+            background: rgba(232,216,64,.12);
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        /* Barra de progreso del recorrido armado */
+        .armar-progress-wrap {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 14px 16px;
+            margin-bottom: 18px;
+        }
+
+        .armar-progress-labels {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .armar-progress-used {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(20px, 4.5vw, 26px);
+            color: var(--accent);
+            letter-spacing: 1px;
+        }
+
+        .armar-progress-status {
+            font-family: 'Space Mono', monospace;
+            font-size: var(--fs-xs);
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            padding: 4px 10px;
+            border-radius: 4px;
+        }
+
+        .armar-progress-status.ok {
+            background: rgba(34,197,94,.15);
+            color: var(--green);
+        }
+
+        .armar-progress-status.under {
+            background: rgba(0,212,255,.1);
+            color: var(--plano);
+        }
+
+        .armar-progress-status.over {
+            background: rgba(255,61,90,.15);
+            color: var(--accent2);
+        }
+
+        .armar-progress-bar-track {
+            height: 8px;
+            background: var(--border);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .armar-progress-bar-fill {
+            height: 100%;
+            border-radius: 4px;
+            transition: width .3s, background .3s;
+        }
+
+        /* Botones agregar bloque */
+        .armar-add-btns {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 18px;
+        }
+
+        .btn-add-bloque {
+            flex: 1;
+            min-width: 100px;
+            background: var(--card);
+            border: 1.5px solid var(--border);
+            border-radius: 8px;
+            padding: 12px 10px;
+            cursor: pointer;
+            transition: all .15s;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .btn-add-bloque:hover {
+            transform: translateY(-2px);
+        }
+
+        .btn-add-bloque.btn-add-plano { border-color: rgba(0,212,255,.4); }
+        .btn-add-bloque.btn-add-plano:hover { border-color: var(--plano); background: rgba(0,212,255,.06); }
+        .btn-add-bloque.btn-add-montana { border-color: rgba(255,101,32,.4); }
+        .btn-add-bloque.btn-add-montana:hover { border-color: var(--montana); background: rgba(255,101,32,.06); }
+        .btn-add-bloque.btn-add-hibrido { border-color: rgba(168,85,247,.4); }
+        .btn-add-bloque.btn-add-hibrido:hover { border-color: var(--hibrido); background: rgba(168,85,247,.06); }
+
+        .btn-add-bloque-icon {
+            font-size: 22px;
+        }
+
+        .btn-add-bloque-label {
+            font-family: 'Space Mono', monospace;
+            font-size: var(--fs-xs);
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            font-weight: 700;
+        }
+
+        .btn-add-bloque.btn-add-plano .btn-add-bloque-label { color: var(--plano); }
+        .btn-add-bloque.btn-add-montana .btn-add-bloque-label { color: var(--montana); }
+        .btn-add-bloque.btn-add-hibrido .btn-add-bloque-label { color: var(--hibrido); }
+
+        /* Lista de bloques armados */
+        .armar-bloques-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 18px;
+        }
+
+        .armar-bloque-card {
+            background: var(--card);
+            border: 1.5px solid var(--border);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .armar-bloque-card.bloque-plano { border-left: 4px solid var(--plano); }
+        .armar-bloque-card.bloque-montana { border-left: 4px solid var(--montana); }
+        .armar-bloque-card.bloque-hibrido { border-left: 4px solid var(--hibrido); }
+
+        .armar-bloque-hdr {
+            padding: 12px 14px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            background: rgba(255,255,255,.02);
+        }
+
+        .armar-bloque-badge {
+            font-family: 'Space Mono', monospace;
+            font-size: var(--fs-xs);
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            padding: 4px 10px;
+            border-radius: 4px;
+        }
+
+        .badge-plano { background: rgba(0,212,255,.1); color: var(--plano); }
+        .badge-montana { background: rgba(255,101,32,.1); color: var(--montana); }
+        .badge-hibrido { background: rgba(168,85,247,.12); color: var(--hibrido); }
+
+        .armar-bloque-dur-wrap {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-left: auto;
+        }
+
+        .armar-bloque-dur-lbl {
+            font-family: 'Space Mono', monospace;
+            font-size: var(--fs-xs);
+            color: var(--muted);
+            letter-spacing: 1px;
+            white-space: nowrap;
+        }
+
+        .armar-bloque-dur-sel {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 5px;
+            color: var(--text);
+            font-family: 'Space Mono', monospace;
+            font-size: var(--fs-xs);
+            padding: 5px 8px;
+            cursor: pointer;
+        }
+
+        .armar-bloque-dur-sel:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+
+        .armar-bloque-del {
+            background: transparent;
+            border: none;
+            color: var(--muted);
+            font-size: 18px;
+            cursor: pointer;
+            padding: 4px 6px;
+            border-radius: 4px;
+            line-height: 1;
+            transition: color .15s;
+        }
+
+        .armar-bloque-del:hover {
+            color: var(--accent2);
+        }
+
+        /* Intervalos dentro del bloque */
+        .armar-ivs-list {
+            padding: 0 14px 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .armar-iv-row {
+            background: rgba(255,255,255,.03);
+            border: 1px solid var(--border);
+            border-radius: 7px;
+            padding: 8px 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+            cursor: grab;
+            user-select: none;
+            transition: all .15s;
+            position: relative;
+        }
+
+        .armar-iv-row:active {
+            cursor: grabbing;
+            opacity: .75;
+        }
+
+        .armar-iv-row.dragging {
+            opacity: .4;
+        }
+
+        .armar-iv-row.drag-over {
+            border-color: var(--accent);
+            background: rgba(232,216,64,.06);
+        }
+
+        .armar-iv-row.hyd-row {
+            background: rgba(0,212,255,.04);
+            border-color: rgba(0,212,255,.2);
+        }
+
+        .iv-drag-handle {
+            color: var(--muted);
+            font-size: 14px;
+            cursor: grab;
+            flex-shrink: 0;
+        }
+
+        .iv-terrain-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        .iv-terrain-dot.dot-plano { background: var(--plano); }
+        .iv-terrain-dot.dot-montana { background: var(--montana); }
+        .iv-terrain-dot.dot-hyd { background: var(--accent3); }
+
+        .iv-terrain-sel {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            color: var(--text);
+            font-family: 'Space Mono', monospace;
+            font-size: clamp(10px, 2.5vw, 11px);
+            padding: 4px 6px;
+            cursor: pointer;
+        }
+
+        .iv-terrain-sel:focus { outline: none; border-color: var(--accent); }
+
+        .iv-ex-sel {
+            flex: 1;
+            min-width: 120px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            color: var(--text);
+            font-family: 'DM Sans', sans-serif;
+            font-size: var(--fs-xs);
+            padding: 4px 6px;
+            cursor: pointer;
+        }
+
+        .iv-ex-sel:focus { outline: none; border-color: var(--accent); }
+
+        .iv-dur-sel {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            color: var(--accent);
+            font-family: 'Space Mono', monospace;
+            font-size: var(--fs-xs);
+            padding: 4px 6px;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+
+        .iv-dur-sel:focus { outline: none; border-color: var(--accent); }
+
+        .iv-del-btn {
+            background: transparent;
+            border: none;
+            color: var(--muted);
+            font-size: 15px;
+            cursor: pointer;
+            padding: 2px 5px;
+            border-radius: 3px;
+            transition: color .12s;
+            flex-shrink: 0;
+        }
+
+        .iv-del-btn:hover { color: var(--accent2); }
+
+        .iv-hyd-lbl {
+            font-family: 'Space Mono', monospace;
+            font-size: var(--fs-xs);
+            color: var(--accent3);
+            letter-spacing: 1px;
+            flex: 1;
+        }
+
+        /* Botones agregar intervalo / hidratación */
+        .armar-iv-add-row {
+            display: flex;
+            gap: 8px;
+            padding: 0 14px 14px;
+            flex-wrap: wrap;
+        }
+
+        .btn-add-iv {
+            flex: 1;
+            min-width: 120px;
+            background: transparent;
+            border: 1px dashed var(--border);
+            border-radius: 6px;
+            color: var(--muted);
+            font-family: 'Space Mono', monospace;
+            font-size: var(--fs-xs);
+            letter-spacing: 1px;
+            padding: 8px 12px;
+            cursor: pointer;
+            transition: all .15s;
+            text-transform: uppercase;
+        }
+
+        .btn-add-iv:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+            background: rgba(232,216,64,.04);
+        }
+
+        .btn-add-hyd {
+            background: transparent;
+            border: 1px dashed rgba(0,212,255,.4);
+            border-radius: 6px;
+            color: var(--accent3);
+            font-family: 'Space Mono', monospace;
+            font-size: var(--fs-xs);
+            letter-spacing: 1px;
+            padding: 8px 12px;
+            cursor: pointer;
+            transition: all .15s;
+            text-transform: uppercase;
+            white-space: nowrap;
+        }
+
+        .btn-add-hyd:hover {
+            background: rgba(0,212,255,.06);
+            border-color: var(--accent3);
+        }
+
+        .armar-bloque-error {
+            font-family: 'Space Mono', monospace;
+            font-size: var(--fs-xs);
+            color: var(--accent2);
+            letter-spacing: 1px;
+            padding: 6px 14px 8px;
+            display: none;
+        }
+
+        /* Botones finales Guardar y Timer */
+        .armar-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 4px;
+        }
+
+        .btn-armar-guardar {
+            width: 100%;
+            background: transparent;
+            color: var(--green);
+            border: 1.5px solid var(--green);
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(20px, 4.5vw, 26px);
+            letter-spacing: 3px;
+            padding: 15px;
+            border-radius: var(--rad);
+            cursor: pointer;
+            transition: all .18s;
+            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .btn-armar-guardar:hover:not(:disabled) {
+            background: rgba(34,197,94,.08);
+        }
+
+        .btn-armar-guardar:disabled {
+            opacity: .3;
+            cursor: not-allowed;
+        }
+
+        .btn-armar-timer {
+            width: 100%;
+            background: transparent;
+            color: var(--accent3);
+            border: 1.5px solid var(--accent3);
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(20px, 4.5vw, 26px);
+            letter-spacing: 3px;
+            padding: 15px;
+            border-radius: var(--rad);
+            cursor: pointer;
+            transition: all .18s;
+            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .btn-armar-timer:hover:not(:disabled) {
+            background: rgba(0,212,255,.08);
+        }
+
+        .btn-armar-timer:disabled {
+            opacity: .3;
+            cursor: not-allowed;
+        }
+
+        /* Lista guardados Rafa */
+        .armar-saved-section {
+            margin-top: 28px;
+        }
+
+        .armar-saved-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .armar-saved-card {
+            background: var(--card);
+            border: 1.5px solid var(--border);
+            border-radius: var(--rad);
+            padding: 14px 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            transition: all .18s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .armar-saved-card::before {
+            content: '';
+            position: absolute;
+            left: 0; top: 0; bottom: 0;
+            width: 3px;
+            background: var(--accent);
+        }
+
+        .armar-saved-card:hover {
+            border-color: var(--accent);
+        }
+
+        .armar-saved-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .armar-saved-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(16px, 3.8vw, 20px);
+            color: var(--accent);
+            letter-spacing: 1.5px;
+            margin-bottom: 3px;
+        }
+
+        .armar-saved-meta {
+            font-family: 'Space Mono', monospace;
+            font-size: var(--fs-xs);
+            color: var(--muted);
+            letter-spacing: 1px;
+        }
+
+        .armar-saved-summary {
+            font-size: var(--fs-xs);
+            color: var(--muted);
+            margin-top: 4px;
+        }
+
+        .armar-saved-actions {
+            display: flex;
+            gap: 8px;
+            flex-shrink: 0;
+        }
+
         /* ── REPETITIVA TOGGLE ── */
 
         .repetitiva-toggle {
@@ -2106,6 +2747,76 @@
         </header>
         <div class="div-line"></div>
 
+        <!-- ══ ARMAR RECORRIDO · RAFA LÓPEZ ══ -->
+        <div class="armar-accordion" id="armarAccordion">
+            <button class="armar-toggle" id="armarToggleBtn" onclick="toggleArmarPanel()">
+                <span class="armar-icon">✏️</span>
+                <span class="armar-title">Armar Recorrido · Rafa López</span>
+                <span class="armar-sub" id="armarSubLabel">Diseñá tu clase</span>
+                <span class="armar-arrow" id="armarArrow">▾</span>
+            </button>
+            <div class="armar-panel" id="armarPanel">
+
+                <!-- Tiempo total -->
+                <div class="armar-config-row">
+                    <span class="armar-config-lbl">Tiempo total:</span>
+                    <div class="armar-dur-btns" id="armarTotalBtns">
+                        <button class="armar-dur-btn" data-min="33" onclick="selectTotalMin(33)">33'</button>
+                        <button class="armar-dur-btn" data-min="34" onclick="selectTotalMin(34)">34'</button>
+                        <button class="armar-dur-btn" data-min="35" onclick="selectTotalMin(35)">35'</button>
+                        <button class="armar-dur-btn" data-min="36" onclick="selectTotalMin(36)">36'</button>
+                    </div>
+                </div>
+
+                <!-- Barra de progreso -->
+                <div class="armar-progress-wrap" id="armarProgressWrap">
+                    <div class="armar-progress-labels">
+                        <span class="armar-progress-used" id="armarUsedLabel">0' usados</span>
+                        <span class="armar-progress-status under" id="armarStatusBadge">Elegí el tiempo total</span>
+                    </div>
+                    <div class="armar-progress-bar-track">
+                        <div class="armar-progress-bar-fill" id="armarProgressFill" style="width:0%;background:var(--plano)"></div>
+                    </div>
+                </div>
+
+                <!-- Botones agregar bloque -->
+                <div class="armar-add-btns">
+                    <button class="btn-add-bloque btn-add-plano" onclick="addArmarBloque('plano')">
+                        <span class="btn-add-bloque-icon">🔵</span>
+                        <span class="btn-add-bloque-label">+ Plano</span>
+                    </button>
+                    <button class="btn-add-bloque btn-add-montana" onclick="addArmarBloque('montana')">
+                        <span class="btn-add-bloque-icon">🟠</span>
+                        <span class="btn-add-bloque-label">+ Montaña</span>
+                    </button>
+                    <button class="btn-add-bloque btn-add-hibrido" onclick="addArmarBloque('hibrido')">
+                        <span class="btn-add-bloque-icon">⚡</span>
+                        <span class="btn-add-bloque-label">+ Híbrido</span>
+                    </button>
+                </div>
+
+                <!-- Lista de bloques -->
+                <div class="armar-bloques-list" id="armarBloquesList"></div>
+
+                <!-- Botones guardar / timer -->
+                <div class="armar-actions">
+                    <button class="btn-armar-guardar" id="btnArmarGuardar" onclick="guardarArmarRecorrido()" disabled>
+                        <span>💾</span><span>Guardar Recorrido</span>
+                    </button>
+                    <button class="btn-armar-timer" id="btnArmarTimer" onclick="iniciarArmarTimer()" disabled>
+                        <span>▶</span><span>Iniciar</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Lista recorridos armados por Rafa -->
+        <div class="armar-saved-section" id="armarSavedSection" style="display:none">
+            <div class="sec-lbl">Recorridos Armados por Rafa</div>
+            <div class="armar-saved-list" id="armarSavedList"></div>
+        </div>
+
+        <div class="div-line" style="margin-top:0"></div>
         <div class="sec-lbl">01 · Elegí el modo de recorrido</div>
         <div class="mode-grid" id="modeGrid"></div>
 
@@ -4367,6 +5078,521 @@
 
         // Inicializar lista de guardados al cargar
         renderSavedRoutes();
+
+        /* ══════════════════════════════════════════
+           ARMAR RECORRIDO · RAFA LÓPEZ
+        ══════════════════════════════════════════ */
+
+        const ARMAR_STORAGE_KEY = 'pfs_armar_routes_rafa';
+        const ARMAR_DUR_OPTS = [5, 6, 7, 8, 9];
+        const ARMAR_IV_DURS = [15, 20, 30, 40, 45, 50, 60];
+
+        let armarTotalMin = null;
+        let armarBloques = []; // [{id, tipo, durMin, intervalos:[{id,terrain,ex,durSec,isHyd}]}]
+        let armarIdCounter = 1;
+
+        // Exercises per terrain for the builder
+        const ARMAR_EX_PLANO = [
+            { key: '90p',     label: '90 RPM Parado' },
+            { key: '100p',    label: '100 RPM Parado' },
+            { key: '100s',    label: '100 RPM Sentado' },
+            { key: '110s',    label: '110 RPM Sentado' },
+            { key: 'sprint_p',label: 'Sprint · Máx. Vel.' },
+        ];
+        const ARMAR_EX_MONTANA = [
+            { key: '60rs',    label: '60 RPM Sentado' },
+            { key: '60rp',    label: '60 RPM Parado' },
+            { key: 'acel_s',  label: 'Acelerado Sentado' },
+            { key: 'acel_p',  label: 'Acelerado Parado' },
+            { key: '80rs',    label: '80 RPM Sentado' },
+            { key: '80rp',    label: '80 RPM Parado' },
+            { key: 'fm_s',    label: 'Fuerza Máxima Sentado' },
+            { key: 'fm_p',    label: 'Fuerza Máxima Parado' },
+            { key: 'sprint_m',label: 'Sprint Montaña' },
+            { key: '80vc_s',  label: '80v Viento en Contra Sentado' },
+            { key: '80vc_p',  label: '80v Viento en Contra Parado' },
+        ];
+
+        function toggleArmarPanel() {
+            const panel = document.getElementById('armarPanel');
+            const arrow = document.getElementById('armarArrow');
+            const btn = document.getElementById('armarToggleBtn');
+            const isOpen = panel.classList.contains('open');
+            panel.classList.toggle('open', !isOpen);
+            arrow.classList.toggle('open', !isOpen);
+            btn.classList.toggle('open', !isOpen);
+        }
+
+        function selectTotalMin(min) {
+            armarTotalMin = min;
+            document.querySelectorAll('.armar-dur-btn').forEach(b => {
+                b.classList.toggle('sel', parseInt(b.dataset.min) === min);
+            });
+            updateArmarProgress();
+            updateArmarActions();
+        }
+
+        function armarUsedMin() {
+            return armarBloques.reduce((sum, b) => sum + b.durMin, 0);
+        }
+
+        function updateArmarProgress() {
+            const used = armarUsedMin();
+            const total = armarTotalMin;
+            const fill = document.getElementById('armarProgressFill');
+            const badge = document.getElementById('armarStatusBadge');
+            const usedLabel = document.getElementById('armarUsedLabel');
+
+            usedLabel.textContent = `${used}' usados`;
+
+            if (!total) {
+                fill.style.width = '0%';
+                badge.className = 'armar-progress-status under';
+                badge.textContent = 'Elegí el tiempo total';
+                return;
+            }
+
+            const pct = Math.min((used / total) * 100, 100);
+            fill.style.width = `${pct}%`;
+
+            const remaining = total - used;
+            if (used === total) {
+                fill.style.background = 'var(--green)';
+                badge.className = 'armar-progress-status ok';
+                badge.textContent = '✓ Tiempo exacto · Listo para guardar';
+            } else if (used < total) {
+                fill.style.background = 'var(--plano)';
+                badge.className = 'armar-progress-status under';
+                badge.textContent = `Faltan ${remaining}' para completar`;
+            } else {
+                fill.style.background = 'var(--accent2)';
+                badge.className = 'armar-progress-status over';
+                badge.textContent = `¡Te pasaste ${Math.abs(remaining)}' del total!`;
+            }
+        }
+
+        function updateArmarActions() {
+            const used = armarUsedMin();
+            const ok = armarTotalMin && used === armarTotalMin && armarBloques.length > 0;
+            document.getElementById('btnArmarGuardar').disabled = !ok;
+            // Timer enabled if there's at least one bloque with intervals
+            const hasContent = armarBloques.some(b => b.intervalos.length > 0);
+            document.getElementById('btnArmarTimer').disabled = !hasContent;
+        }
+
+        function addArmarBloque(tipo) {
+            const id = armarIdCounter++;
+            armarBloques.push({ id, tipo, durMin: 5, intervalos: [] });
+            renderArmarBloques();
+            updateArmarProgress();
+            updateArmarActions();
+        }
+
+        function removeArmarBloque(id) {
+            armarBloques = armarBloques.filter(b => b.id !== id);
+            renderArmarBloques();
+            updateArmarProgress();
+            updateArmarActions();
+        }
+
+        function setArmarBloqueDur(id, newDur) {
+            const blk = armarBloques.find(b => b.id === id);
+            if (!blk) return;
+            const currentIvTotal = blk.intervalos.reduce((s, iv) => s + (iv.isHyd ? 60 : iv.durSec), 0);
+            const currentIvMin = Math.ceil(currentIvTotal / 60);
+            if (newDur < currentIvMin) {
+                showArmarBloqueError(id, `No podés reducir a ${newDur}': ya tenés ${currentIvMin}' en intervalos.`);
+                // Revert select
+                const sel = document.querySelector(`[data-bloque-dur="${id}"]`);
+                if (sel) sel.value = blk.durMin;
+                return;
+            }
+            clearArmarBloqueError(id);
+            blk.durMin = newDur;
+            updateArmarProgress();
+            updateArmarActions();
+            renderArmarBloques();
+        }
+
+        function showArmarBloqueError(id, msg) {
+            const el = document.getElementById(`armar-blk-err-${id}`);
+            if (el) { el.textContent = msg; el.style.display = 'block'; }
+        }
+
+        function clearArmarBloqueError(id) {
+            const el = document.getElementById(`armar-blk-err-${id}`);
+            if (el) { el.style.display = 'none'; }
+        }
+
+        function addArmarIv(blkId) {
+            const blk = armarBloques.find(b => b.id === blkId);
+            if (!blk) return;
+            const defaultTerrain = blk.tipo === 'hibrido' ? 'plano' : blk.tipo;
+            const exPool = defaultTerrain === 'plano' ? ARMAR_EX_PLANO : ARMAR_EX_MONTANA;
+            blk.intervalos.push({
+                id: armarIdCounter++,
+                terrain: defaultTerrain,
+                ex: exPool[0].key,
+                durSec: 30,
+                isHyd: false
+            });
+            checkArmarBloqueOverflow(blkId);
+            renderArmarBloques();
+            updateArmarActions();
+        }
+
+        function addArmarHyd(blkId) {
+            const blk = armarBloques.find(b => b.id === blkId);
+            if (!blk) return;
+            blk.intervalos.push({ id: armarIdCounter++, isHyd: true, durSec: 60 });
+            checkArmarBloqueOverflow(blkId);
+            renderArmarBloques();
+            updateArmarActions();
+        }
+
+        function removeArmarIv(blkId, ivId) {
+            const blk = armarBloques.find(b => b.id === blkId);
+            if (!blk) return;
+            blk.intervalos = blk.intervalos.filter(iv => iv.id !== ivId);
+            clearArmarBloqueError(blkId);
+            checkArmarBloqueOverflow(blkId);
+            renderArmarBloques();
+            updateArmarActions();
+        }
+
+        function setArmarIvField(blkId, ivId, field, value) {
+            const blk = armarBloques.find(b => b.id === blkId);
+            if (!blk) return;
+            const iv = blk.intervalos.find(i => i.id === ivId);
+            if (!iv) return;
+            if (field === 'durSec') {
+                iv.durSec = parseInt(value);
+            } else if (field === 'terrain') {
+                iv.terrain = value;
+                // Reset ex to first of new terrain
+                const pool = value === 'plano' ? ARMAR_EX_PLANO : ARMAR_EX_MONTANA;
+                iv.ex = pool[0].key;
+            } else if (field === 'ex') {
+                iv.ex = value;
+            }
+            checkArmarBloqueOverflow(blkId);
+            renderArmarBloques();
+            updateArmarActions();
+        }
+
+        function checkArmarBloqueOverflow(blkId) {
+            const blk = armarBloques.find(b => b.id === blkId);
+            if (!blk) return;
+            const totalSec = blk.intervalos.reduce((s, iv) => s + (iv.isHyd ? 60 : iv.durSec), 0);
+            const totalMin = totalSec / 60;
+            if (totalMin > blk.durMin) {
+                showArmarBloqueError(blkId, `⚠️ Los intervalos suman ${totalMin.toFixed(1)}' pero el bloque es de ${blk.durMin}'. Reducí algún intervalo o aumentá la duración del bloque.`);
+            } else {
+                clearArmarBloqueError(blkId);
+            }
+        }
+
+        // Drag & drop reordering
+        let armarDragSrc = null; // {blkId, ivId, index}
+
+        function onIvDragStart(e, blkId, ivId) {
+            armarDragSrc = { blkId, ivId };
+            e.dataTransfer.effectAllowed = 'move';
+            const row = e.currentTarget;
+            setTimeout(() => row.classList.add('dragging'), 0);
+        }
+
+        function onIvDragOver(e, blkId, ivId) {
+            e.preventDefault();
+            e.dataTransfer.dropEffect = 'move';
+            document.querySelectorAll('.armar-iv-row').forEach(r => r.classList.remove('drag-over'));
+            e.currentTarget.classList.add('drag-over');
+        }
+
+        function onIvDrop(e, blkId, ivId) {
+            e.preventDefault();
+            document.querySelectorAll('.armar-iv-row').forEach(r => r.classList.remove('drag-over', 'dragging'));
+            if (!armarDragSrc || armarDragSrc.blkId !== blkId || armarDragSrc.ivId === ivId) return;
+            const blk = armarBloques.find(b => b.id === blkId);
+            if (!blk) return;
+            const fromIdx = blk.intervalos.findIndex(iv => iv.id === armarDragSrc.ivId);
+            const toIdx = blk.intervalos.findIndex(iv => iv.id === ivId);
+            if (fromIdx < 0 || toIdx < 0) return;
+            const [moved] = blk.intervalos.splice(fromIdx, 1);
+            blk.intervalos.splice(toIdx, 0, moved);
+            armarDragSrc = null;
+            renderArmarBloques();
+        }
+
+        function onIvDragEnd(e) {
+            document.querySelectorAll('.armar-iv-row').forEach(r => r.classList.remove('dragging', 'drag-over'));
+            armarDragSrc = null;
+        }
+
+        function renderArmarBloques() {
+            const container = document.getElementById('armarBloquesList');
+            if (armarBloques.length === 0) {
+                container.innerHTML = `<div style="text-align:center;padding:20px;color:var(--muted);font-family:'Space Mono',monospace;font-size:var(--fs-xs);letter-spacing:2px;border:1px dashed var(--border);border-radius:8px">AGREGÁ BLOQUES CON LOS BOTONES DE ARRIBA</div>`;
+                return;
+            }
+
+            container.innerHTML = armarBloques.map((blk, bi) => {
+                const tipoCls = blk.tipo === 'plano' ? 'bloque-plano' : blk.tipo === 'montana' ? 'bloque-montana' : 'bloque-hibrido';
+                const badgeCls = blk.tipo === 'plano' ? 'badge-plano' : blk.tipo === 'montana' ? 'badge-montana' : 'badge-hibrido';
+                const tipoLabel = blk.tipo === 'plano' ? '🔵 Plano' : blk.tipo === 'montana' ? '🟠 Montaña' : '⚡ Híbrido';
+                const isHibrido = blk.tipo === 'hibrido';
+
+                // Duration selector
+                const durOpts = ARMAR_DUR_OPTS.map(d =>
+                    `<option value="${d}" ${d === blk.durMin ? 'selected' : ''}>${d}'</option>`
+                ).join('');
+
+                // Intervals
+                const totalIvSec = blk.intervalos.reduce((s, iv) => s + (iv.isHyd ? 60 : iv.durSec), 0);
+                const ivRows = blk.intervalos.map(iv => {
+                    if (iv.isHyd) {
+                        return `<div class="armar-iv-row hyd-row"
+                            draggable="true"
+                            ondragstart="onIvDragStart(event, ${blk.id}, ${iv.id})"
+                            ondragover="onIvDragOver(event, ${blk.id}, ${iv.id})"
+                            ondrop="onIvDrop(event, ${blk.id}, ${iv.id})"
+                            ondragend="onIvDragEnd(event)">
+                            <span class="iv-drag-handle">⠿</span>
+                            <span class="iv-terrain-dot dot-hyd"></span>
+                            <span class="iv-hyd-lbl">💧 Hidratación · 1'</span>
+                            <button class="iv-del-btn" onclick="removeArmarIv(${blk.id}, ${iv.id})">✕</button>
+                        </div>`;
+                    }
+
+                    // Terrain selector (only for hybrid)
+                    const terrainSel = isHibrido ? `<select class="iv-terrain-sel" onchange="setArmarIvField(${blk.id}, ${iv.id}, 'terrain', this.value)">
+                        <option value="plano" ${iv.terrain === 'plano' ? 'selected' : ''}>🔵 Plano</option>
+                        <option value="montana" ${iv.terrain === 'montana' ? 'selected' : ''}>🟠 Montaña</option>
+                    </select>` : '';
+
+                    const exPool = iv.terrain === 'plano' ? ARMAR_EX_PLANO : ARMAR_EX_MONTANA;
+                    const exOpts = exPool.map(ex =>
+                        `<option value="${ex.key}" ${ex.key === iv.ex ? 'selected' : ''}>${ex.label}</option>`
+                    ).join('');
+
+                    const durOpts2 = ARMAR_IV_DURS.map(d =>
+                        `<option value="${d}" ${d === iv.durSec ? 'selected' : ''}>${d}"</option>`
+                    ).join('');
+
+                    const dotCls = iv.terrain === 'plano' ? 'dot-plano' : 'dot-montana';
+
+                    return `<div class="armar-iv-row"
+                        draggable="true"
+                        ondragstart="onIvDragStart(event, ${blk.id}, ${iv.id})"
+                        ondragover="onIvDragOver(event, ${blk.id}, ${iv.id})"
+                        ondrop="onIvDrop(event, ${blk.id}, ${iv.id})"
+                        ondragend="onIvDragEnd(event)">
+                        <span class="iv-drag-handle">⠿</span>
+                        <span class="iv-terrain-dot ${dotCls}"></span>
+                        ${terrainSel}
+                        <select class="iv-ex-sel" onchange="setArmarIvField(${blk.id}, ${iv.id}, 'ex', this.value)">${exOpts}</select>
+                        <select class="iv-dur-sel" onchange="setArmarIvField(${blk.id}, ${iv.id}, 'durSec', this.value)">${durOpts2}</select>
+                        <button class="iv-del-btn" onclick="removeArmarIv(${blk.id}, ${iv.id})">✕</button>
+                    </div>`;
+                }).join('');
+
+                return `<div class="armar-bloque-card ${tipoCls}" id="armar-blk-${blk.id}">
+                    <div class="armar-bloque-hdr">
+                        <span style="font-family:'Bebas Neue',sans-serif;font-size:clamp(20px,4.5vw,24px);color:var(--muted);width:30px">${String(bi+1).padStart(2,'0')}</span>
+                        <span class="armar-bloque-badge ${badgeCls}">${tipoLabel}</span>
+                        <span style="font-family:'Space Mono',monospace;font-size:var(--fs-xs);color:var(--muted)">${Math.round(totalIvSec/60*10)/10}' / ${blk.durMin}' usados</span>
+                        <div class="armar-bloque-dur-wrap">
+                            <span class="armar-bloque-dur-lbl">Duración:</span>
+                            <select class="armar-bloque-dur-sel" data-bloque-dur="${blk.id}" onchange="setArmarBloqueDur(${blk.id}, parseInt(this.value))">${durOpts}</select>
+                        </div>
+                        <button class="armar-bloque-del" onclick="removeArmarBloque(${blk.id})">🗑</button>
+                    </div>
+                    <div class="armar-ivs-list">${ivRows || '<div style="padding:4px 0;color:var(--muted);font-family:\'Space Mono\',monospace;font-size:10px;letter-spacing:1px">SIN INTERVALOS AÚN</div>'}</div>
+                    <div class="armar-iv-add-row">
+                        <button class="btn-add-iv" onclick="addArmarIv(${blk.id})">+ Intervalo</button>
+                        <button class="btn-add-hyd" onclick="addArmarHyd(${blk.id})">💧 +1' Hidratación</button>
+                    </div>
+                    <div class="armar-bloque-error" id="armar-blk-err-${blk.id}"></div>
+                </div>`;
+            }).join('');
+        }
+
+        /* ── Guardar recorrido armado por Rafa ── */
+        function getArmarSavedRoutes() {
+            try { return JSON.parse(localStorage.getItem(ARMAR_STORAGE_KEY) || '[]'); } catch(e) { return []; }
+        }
+
+        function guardarArmarRecorrido() {
+            const used = armarUsedMin();
+            if (!armarTotalMin || used !== armarTotalMin) return;
+            const now = new Date();
+            const dateStr = now.toLocaleDateString('es-AR', { day:'2-digit', month:'2-digit', year:'numeric' });
+            const timeStr = now.toLocaleTimeString('es-AR', { hour:'2-digit', minute:'2-digit' });
+            const saved = {
+                id: Date.now(),
+                savedAt: `${dateStr} ${timeStr}`,
+                totalMin: armarTotalMin,
+                bloques: JSON.parse(JSON.stringify(armarBloques)),
+            };
+            const routes = getArmarSavedRoutes();
+            routes.unshift(saved);
+            if (routes.length > 20) routes.length = 20;
+            try {
+                localStorage.setItem(ARMAR_STORAGE_KEY, JSON.stringify(routes));
+                showToast('✅ Recorrido armado guardado');
+                renderArmarSavedRoutes();
+            } catch(e) { showToast('⚠️ No se pudo guardar'); }
+        }
+
+        function deleteArmarRoute(id) {
+            const routes = getArmarSavedRoutes().filter(r => r.id !== id);
+            localStorage.setItem(ARMAR_STORAGE_KEY, JSON.stringify(routes));
+            renderArmarSavedRoutes();
+        }
+
+        function loadArmarRoute(id) {
+            const saved = getArmarSavedRoutes().find(r => r.id === id);
+            if (!saved) return;
+            armarTotalMin = saved.totalMin;
+            armarBloques = JSON.parse(JSON.stringify(saved.bloques));
+            // Ensure IDs don't collide
+            armarBloques.forEach(b => {
+                if (b.id >= armarIdCounter) armarIdCounter = b.id + 1;
+                b.intervalos.forEach(iv => { if (iv.id >= armarIdCounter) armarIdCounter = iv.id + 1; });
+            });
+            // Update total buttons
+            document.querySelectorAll('.armar-dur-btn').forEach(b => {
+                b.classList.toggle('sel', parseInt(b.dataset.min) === armarTotalMin);
+            });
+            renderArmarBloques();
+            updateArmarProgress();
+            updateArmarActions();
+            // Open accordion
+            const panel = document.getElementById('armarPanel');
+            const arrow = document.getElementById('armarArrow');
+            const btn = document.getElementById('armarToggleBtn');
+            panel.classList.add('open');
+            arrow.classList.add('open');
+            btn.classList.add('open');
+            showToast('📂 Recorrido armado cargado');
+            document.getElementById('armarAccordion').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        function renderArmarSavedRoutes() {
+            const routes = getArmarSavedRoutes();
+            const section = document.getElementById('armarSavedSection');
+            const list = document.getElementById('armarSavedList');
+            section.style.display = routes.length ? 'block' : 'none';
+            if (!routes.length) return;
+            list.innerHTML = routes.map(r => {
+                const blkSummary = r.bloques.map(b => {
+                    const icon = b.tipo === 'plano' ? '🔵' : b.tipo === 'montana' ? '🟠' : '⚡';
+                    return `${icon} ${b.durMin}'`;
+                }).join(' · ');
+                const terrainCount = { plano: 0, montana: 0, hibrido: 0 };
+                r.bloques.forEach(b => terrainCount[b.tipo] = (terrainCount[b.tipo]||0)+1);
+                const caminos = [
+                    terrainCount.plano ? `${terrainCount.plano} Plano` : '',
+                    terrainCount.montana ? `${terrainCount.montana} Montaña` : '',
+                    terrainCount.hibrido ? `${terrainCount.hibrido} Híbrido` : '',
+                ].filter(Boolean).join(' · ');
+
+                return `<div class="armar-saved-card">
+                    <div class="armar-saved-info">
+                        <div class="armar-saved-title">${r.totalMin}' · ${r.bloques.length} bloques</div>
+                        <div class="armar-saved-meta">${r.savedAt} &nbsp;·&nbsp; ${caminos}</div>
+                        <div class="armar-saved-summary" style="margin-top:5px;font-size:var(--fs-xs);color:var(--muted)">${blkSummary}</div>
+                    </div>
+                    <div class="armar-saved-actions">
+                        <button class="btn-load" onclick="loadArmarRoute(${r.id})">▶ Cargar</button>
+                        <button class="btn-del" onclick="deleteArmarRoute(${r.id})" title="Eliminar">🗑</button>
+                    </div>
+                </div>`;
+            }).join('');
+        }
+
+        /* ── Timer para recorrido armado por Rafa ── */
+        function iniciarArmarTimer() {
+            // Build a flatList from armarBloques for the existing timer engine
+            const flatList = [];
+            let accumTime = 20; // after warmup
+
+            // Warmup
+            flatList.push({
+                d: 300,
+                desc: 'Pedaleo progresivo',
+                shortLabel: 'Calentamiento',
+                pos: 'Sentado',
+                intensity: 'Media Baja',
+                terrain: 'warmup',
+                isWarmup: true,
+                blockRef: { num: 0, name: 'Entrada en Calor', dur: 5, endHour: '10:20' }
+            });
+
+            armarBloques.forEach((blk, bi) => {
+                accumTime += blk.durMin;
+                const endHourStr = addMin(BASE, accumTime);
+                const bName = blk.tipo === 'plano' ? 'Plano' : blk.tipo === 'montana' ? 'Montaña' : 'Híbrido';
+
+                blk.intervalos.forEach(iv => {
+                    if (iv.isHyd) {
+                        flatList.push({
+                            d: 60,
+                            desc: 'Hidratación',
+                            shortLabel: '💧 Hidratación',
+                            pos: 'Sentado',
+                            intensity: 'Muy Baja',
+                            terrain: 'recovery',
+                            isHydration: true,
+                            blockRef: { num: bi+1, name: bName, dur: blk.durMin, endHour: endHourStr }
+                        });
+                    } else {
+                        const exPool = iv.terrain === 'plano' ? ARMAR_EX_PLANO : ARMAR_EX_MONTANA;
+                        const exDef = exPool.find(e => e.key === iv.ex) || exPool[0];
+                        flatList.push({
+                            d: iv.durSec,
+                            desc: exDef.label,
+                            shortLabel: exDef.label,
+                            pos: iv.terrain === 'plano' ? 'Parado' : 'Sentado',
+                            intensity: 'Media',
+                            terrain: iv.terrain,
+                            blockRef: { num: bi+1, name: bName, dur: blk.durMin, endHour: endHourStr }
+                        });
+                    }
+                });
+            });
+
+            if (flatList.length <= 1) { showToast('⚠️ Agregá intervalos a los bloques primero'); return; }
+
+            const totalSec = flatList.reduce((s, iv) => s + iv.d, 0);
+            timerState.flatList = flatList;
+            timerState.idx = 0;
+            timerState.remaining = flatList[0].d;
+            timerState.totalSec = totalSec;
+            timerState.elapsedSec = 0;
+            timerState.paused = false;
+
+            document.getElementById('tmrModeLabel').textContent = 'Recorrido · Rafa López';
+            document.getElementById('tmrSchedList').innerHTML = flatList.map((iv, i) =>
+                `<div class="sched-item" id="sched_${i}">
+                    <span class="si-num">${i+1}</span>
+                    <span class="si-desc">${iv.shortLabel}</span>
+                    <span class="si-dur">${fmtSec(iv.d)}</span>
+                </div>`
+            ).join('');
+
+            clearInterval(timerState.interval);
+            timerState.interval = setInterval(tick, 1000);
+            updateTimerUI();
+
+            document.getElementById('timerOverlay').classList.add('active');
+            document.getElementById('btnPlayPause').textContent = '⏸ Pausar';
+            requestWakeLock();
+        }
+
+        // Init
+        renderArmarBloques();
+        renderArmarSavedRoutes();
 
         /* ══════════════════════════════════════════
            PWA — manifest + service worker
