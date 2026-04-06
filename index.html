@@ -732,6 +732,21 @@
             background: rgba(100, 220, 100, .08);
             color: #86efac;
         }
+        
+        .int-mm {
+            background: rgba(245, 200, 66, .1);
+            color: #f5c842;
+        }
+        
+        .int-mca {
+            background: rgba(255, 170, 48, .1);
+            color: #ffaa30;
+        }
+        
+        .int-ca {
+            background: rgba(255, 96, 48, .1);
+            color: #ff6030;
+        }
         /* rango de intensidades — tres etapas */
         
         .iv-range {
@@ -2271,7 +2286,7 @@
             blocks: ['HM', 'HM', 'HM', 'HM']
         }, ];
 
-        const CLOSE = ['10:52', '10:53', '10:54', '10:55'];
+        const CLOSE = ['10:53', '10:54', '10:55', '10:56'];
         const DUR_POOL = [15, 20, 30, 40, 45, 50, 60]; // máximo 60s por intervalo
 
         // ═══════════════════════════════════════════════════════
@@ -2318,20 +2333,16 @@
         }, {
             pos: 'Parado',
             type: '100p',
-            label: '100 RPM',
+            label: '100 RPM Parado',
             opener: true,
             intScore: 2
         }, {
             pos: 'Sentado',
             type: '100s',
-            label: '100 RPM',
+            label: '100 RPM Sentado',
             opener: true,
-            intScore: 2
-        }, {
-            pos: 'Parado',
-            type: '100p2',
-            label: '100 RPM (Var. 2)',
-            intScore: 2
+            intScore: 2,
+            rare: true
         }, {
             pos: 'Sentado',
             type: '110s',
@@ -2357,21 +2368,23 @@
         // 80vc: rare → aparece máximo 1 vez por clase y con baja probabilidad
         // ─────────────────────────────────────────────────────────────────────────────
         const MONT_EX = [
-            // Acelerado — aparece menos frecuente (una entrada por posición)
+            // 60 RPM Sentado — opener suave de montaña, aparece cada tanto
             {
-                pos: 'Parado',
-                type: 'acel',
-                label: 'Acelerado',
+                pos: 'Sentado',
+                type: '60rs',
+                label: '60 RPM Sentado',
                 opener: true,
-                intScore: 2
+                intScore: 1,
+                rare: true
             }, {
                 pos: 'Sentado',
-                type: 'acel',
-                label: 'Acelerado',
+                type: '60rs',
+                label: '60 RPM Sentado',
                 opener: true,
-                intScore: 2
+                intScore: 1,
+                rare: true
             },
-            // 60 RPM Parado (Montaña) — nuevo, mayor peso (3 entradas para mayor frecuencia)
+            // 60 RPM Parado (Montaña) — mayor peso (3 entradas para mayor frecuencia)
             {
                 pos: 'Parado',
                 type: '60rp',
@@ -2388,6 +2401,60 @@
                 type: '60rp',
                 label: '60 RPM Parado',
                 intScore: 3
+            },
+            // 80 RPM Sentado — aparece cada tanto en el recorrido
+            {
+                pos: 'Sentado',
+                type: '80rs',
+                label: '80 RPM Sentado',
+                opener: true,
+                intScore: 1,
+                rare: true
+            }, {
+                pos: 'Sentado',
+                type: '80rs',
+                label: '80 RPM Sentado',
+                intScore: 2,
+                rare: true
+            },
+            // 80 RPM Parado — aparece cada tanto en el recorrido
+            {
+                pos: 'Parado',
+                type: '80rp',
+                label: '80 RPM Parado',
+                opener: true,
+                intScore: 2,
+                rare: true
+            }, {
+                pos: 'Parado',
+                type: '80rp',
+                label: '80 RPM Parado',
+                intScore: 2,
+                rare: true
+            },
+            // Acelerado Sentado
+            {
+                pos: 'Sentado',
+                type: 'acel_s',
+                label: 'Acelerado Sentado',
+                intScore: 3
+            }, {
+                pos: 'Sentado',
+                type: 'acel_s',
+                label: 'Acelerado Sentado',
+                intScore: 3
+            },
+            // Acelerado Parado
+            {
+                pos: 'Parado',
+                type: 'acel_p',
+                label: 'Acelerado Parado',
+                intScore: 3
+            }, {
+                pos: 'Parado',
+                type: 'acel_p',
+                label: 'Acelerado Parado',
+                intScore: 4
             },
             // Sprint libre — aparece a lo largo del bloque (no solo al final)
             {
@@ -2439,22 +2506,6 @@
                 peak: true,
                 intScore: 4
             },
-            // 80v Viento en contra — aparece muy poco (rare = máx. 1 vez por clase)
-            {
-                pos: 'Parado',
-                type: '80vc',
-                label: '80v Viento en contra',
-                opener: true,
-                intScore: 1,
-                rare: true
-            }, {
-                pos: 'Sentado',
-                type: '80vc',
-                label: '80v Viento en contra',
-                opener: true,
-                intScore: 1,
-                rare: true
-            },
         ];
 
         // ─────────────────────────────────────────────────────────────────────────────
@@ -2462,37 +2513,43 @@
         // Índices: [0]=15-30s  [1]=30-45s  [2]=45-60s
         // ─────────────────────────────────────────────────────────────────────────────
         const INT_MAP = {
-            // PLANO — 5 técnicas exactas de la tabla
-            '90p': ['Media Baja', 'Media', 'Media Alta'], // 90 RPM
-            '90s_w': ['Media Baja', 'Media', 'Media Alta'], // 90 RPM (hidratación)
-            '100p': ['Media Baja', 'Media', 'Alta'], // 100 RPM Parado
-            '100s': ['Media Baja', 'Media', 'Alta'], // 100 RPM Sentado
-            '100p2': ['Media', 'Media Alta', 'Alta'], // 100 RPM (Var. 2)
-            '110s': ['Media', 'Media Alta', 'Alta'], // 110 RPM (Velocidad)
-            'sprint_p': ['Media Alta', 'Alta', 'Muy Alta'], // Sprint (Máx. Vel.)
-            // MONTAÑA — técnicas reales (tipo compartido por posición)
-            'acel': ['Media', 'Media Alta', 'Alta'], // Acelerado (Parado o Sentado)
-            '60rp': ['Media', 'Media Alta', 'Media Alta'], // 60 RPM Parado (Montaña) — 0-30s: Media, 30-45s: Media Alta, 45-60s: Media Alta
-            '80vc': ['Media Baja', 'Media', 'Media Alta'], // 80v Viento en contra (Parado o Sentado)
-            'fm': ['Media Alta', 'Alta', 'Muy Alta'], // Fuerza Máxima (60v)
-            'sprint_m': ['Media Alta', 'Alta', 'Muy Alta'], // Sprint (Montaña)
+            // PLANO
+            '90p':      ['Media Baja', 'Media', 'Media Alta'],       // 90 RPM Parado
+            '90s_w':    ['Media Baja', 'Media', 'Media Alta'],       // 90 RPM (hidratación)
+            '100p':     ['Media', 'Media Alta', 'Alta'],             // 100 RPM Parado (ex Var.2)
+            '100s':     ['Media Baja', 'Media', 'Media Alta'],       // 100 RPM Sentado (rare)
+            '110s':     ['Media', 'Media Alta', 'Alta'],             // 110 RPM (Velocidad)
+            'sprint_p': ['Media Alta', 'Alta', 'Muy Alta'],          // Sprint (Máx. Vel.)
+            // MONTAÑA
+            '60rs':     ['Media Baja', 'Media', 'Media Alta'],       // 60 RPM Sentado
+            '60rp':     ['Media', 'Media casi Alta', 'Media Alta'],  // 60 RPM Parado
+            '80rs':     ['Media Baja', 'Media', 'Media Alta'],       // 80 RPM Sentado
+            '80rp':     ['Media', 'Media Media', 'Media Alta'],      // 80 RPM Parado
+            'acel_s':   ['Media casi Alta', 'Media Alta', 'Alta'],   // Acelerado Sentado
+            'acel_p':   ['Media Alta', 'casi Alta', 'Alta'],         // Acelerado Parado
+            'fm':       ['Media Alta', 'Alta', 'Muy Alta'],          // Fuerza Máxima (60v)
+            'sprint_m': ['Media Alta', 'Alta', 'Muy Alta'],          // Sprint (Montaña)
             // Recuperación
-            'rest_hands': ['Media Baja', 'Media Baja', 'Media Baja'],
-            'rec': ['Media Baja', 'Media Baja', 'Media Baja'],
-            'rec_plano': ['Muy Baja', 'Muy Baja', 'Muy Baja'],   // Recuperación plano: 90 RPM Parado
-            'rec_montana': ['Muy Baja', 'Muy Baja', 'Muy Baja'], // Recuperación montaña: 60 RPM Sentado
+            'rest_hands':  ['Media Baja', 'Media Baja', 'Media Baja'],
+            'rec':         ['Media Baja', 'Media Baja', 'Media Baja'],
+            'rec_plano':   ['Muy Baja', 'Muy Baja', 'Muy Baja'],    // Recuperación plano: 90 RPM Parado
+            'rec_montana': ['Muy Baja', 'Muy Baja', 'Muy Baja'],    // Recuperación montaña: 60 RPM Sentado
         };
 
         // Grupos de 100 RPM: ninguno puede ir junto al otro
-        const GRUPO_100 = new Set(['100p', '100s', '100p2']);
+        const GRUPO_100 = new Set(['100p', '100s']);
+        const GRUPO_ACEL = new Set(['acel_s', 'acel_p']);
 
         const INT_SCORE = {
+            'Muy Baja': 0,
             'Media Baja': 1,
             'Media': 2,
-            'Media Alta': 3,
-            'Alta': 4,
-            'Muy Alta': 5,
-            'Muy Baja': 0
+            'Media Media': 3,
+            'Media casi Alta': 4,
+            'Media Alta': 5,
+            'casi Alta': 6,
+            'Alta': 7,
+            'Muy Alta': 8
         };
 
         function getInt(type, sec) {
@@ -2503,23 +2560,29 @@
 
         function intCls(l) {
             return ({
+                'Muy Baja': 'int-vmb',
                 'Media Baja': 'int-mb',
                 'Media': 'int-m',
+                'Media Media': 'int-mm',
+                'Media casi Alta': 'int-mca',
                 'Media Alta': 'int-ma',
+                'casi Alta': 'int-ca',
                 'Alta': 'int-a',
                 'Muy Alta': 'int-va',
-                'Muy Baja': 'int-vmb'
             }[l] || 'int-m');
         }
 
         function intColor(l) {
             return ({
+                'Muy Baja': '#86efac',
                 'Media Baja': '#4ade80',
                 'Media': '#e8d840',
+                'Media Media': '#f5c842',
+                'Media casi Alta': '#ffaa30',
                 'Media Alta': '#ff9040',
+                'casi Alta': '#ff6030',
                 'Alta': '#ff3d5a',
                 'Muy Alta': '#ff2050',
-                'Muy Baja': '#86efac'
             }[l] || '#e8d840');
         }
 
@@ -2875,9 +2938,11 @@
 
         function pickEx(pool, lastType, preferHigher, minScore, maxScore) {
             const last100 = GRUPO_100.has(lastType);
+            const lastAcel = GRUPO_ACEL.has(lastType);
             let candidates = pool.filter(e => {
                 if (e.type === lastType) return false;
                 if (last100 && GRUPO_100.has(e.type)) return false;
+                if (lastAcel && GRUPO_ACEL.has(e.type)) return false;
                 if (minScore !== undefined && e.intScore < minScore) return false;
                 if (maxScore !== undefined && e.intScore > maxScore) return false;
                 return true;
@@ -2894,7 +2959,7 @@
         function decidePos(pool, lastPos, consecSec, d, lastType) {
             const mustSwitch = lastPos && (consecSec + d > MAX_CONSEC_SEC);
             const oppositePos = lastPos === 'Parado' ? 'Sentado' : 'Parado';
-            const no100adj = e => !(GRUPO_100.has(lastType) && GRUPO_100.has(e.type));
+            const no100adj = e => !(GRUPO_100.has(lastType) && GRUPO_100.has(e.type)) && !(GRUPO_ACEL.has(lastType) && GRUPO_ACEL.has(e.type));
 
             if (mustSwitch) {
                 const switchPool = pool.filter(e => e.pos === oppositePos && e.type !== lastType && no100adj(e));
@@ -2919,7 +2984,7 @@
         // intLevel 1: bloques de valle/bajada → sin peaks, máximo intScore 3
         // intLevel 2: bloques de desarrollo   → sin peaks, máximo intScore 3-4
         // intLevel 3: bloques de pico         → peaks habilitados al final
-        function buildIntervals(terrain, durs, blockNum, intLevel) {
+        function buildIntervals(terrain, durs, blockNum, intLevel, blockDurMin) {
             const lvl = intLevel || 2;
             const isP = terrain === 'plano';
             const fullPool = [...(isP ? PLANO_EX : MONT_EX)];
@@ -2932,24 +2997,51 @@
             // En bloques conservadores (valle/bajada), excluir peaks del pool de partida
             const workingPool = lvl === 1 ? fullPool.filter(e => !e.peak) : fullPool;
 
+            // Tipos "cada tanto": pueden reaparecer en la clase (no bloqueados tras 1ª vez)
+            const CADA_TANTO = new Set(['60rs', '100s']);
+            // 80rs / 80rp: ~1 vez cada 5 clases — se habilitan al inicio de clase con prob 0.20
+            // El flag 'allowedThisClass' se inicializa en buildClass via usedRareThisClass
+            const allow80rs = !!usedRareThisClass['__allow80rs'];
+            const allow80rp = !!usedRareThisClass['__allow80rp'];
+
             function filterRare(pool) {
                 return pool.filter(e => {
                     if (!e.rare) return true;
+                    // 80 RPM: solo aparece si fue habilitado para esta clase
+                    if (e.type === '80rs') return allow80rs && !usedRareThisClass['80rs'];
+                    if (e.type === '80rp') return allow80rp && !usedRareThisClass['80rp'];
+                    // "Cada tanto": puede reaparecer, solo se filtra por probabilidad
+                    if (CADA_TANTO.has(e.type)) {
+                        return Math.random() < (lvl === 3 ? 0.45 : 0.28);
+                    }
+                    // Clásico rare: máx. 1 vez por clase
                     if (usedRareThisClass[e.type]) return false;
-                    // Raro: probabilidad de aparición varía con el nivel del bloque
                     return Math.random() < (lvl === 3 ? 0.5 : 0.3);
                 });
             }
 
             function no100(e) {
-                return !(GRUPO_100.has(lastType) && GRUPO_100.has(e.type));
+                return !(GRUPO_100.has(lastType) && GRUPO_100.has(e.type)) && !(GRUPO_ACEL.has(lastType) && GRUPO_ACEL.has(e.type));
             }
 
-            for (let i = 0; i < n; i++) {
+            // No permitir 15s en el último intervalo antes de hidratación
+            if (n > 1 && durs[n - 1] === 15) {
+                if (n >= 2 && durs[n - 2] >= 30) {
+                    // Absorber los 15s en el anterior
+                    durs[n - 2] += 15;
+                    durs.splice(n - 1, 1);
+                } else {
+                    // Subir a 20s mínimo
+                    durs[n - 1] = 20;
+                }
+            }
+            const nFinal = durs.length;
+
+            for (let i = 0; i < nFinal; i++) {
                 let d = durs[i];
                 const isFirst = i === 0;
-                const isLast = i === n - 1;
-                const isSecondToLast = i === n - 2 && n >= 4;
+                const isLast = i === nFinal - 1;
+                const isSecondToLast = i === nFinal - 2 && nFinal >= 4;
 
                 let pool = filterRare(workingPool).filter(e => no100(e) && e.type !== lastType);
                 if (!pool.length) pool = workingPool.filter(e => e.type !== lastType);
@@ -3048,11 +3140,12 @@
 
                 // El primer bloque de la clase siempre es más suave
                 if (blockNum === 1 && intensity === 'Muy Alta') intensity = 'Alta';
-                if (blockNum === 1 && intensity === 'Alta') intensity = 'Media Alta';
+                if (blockNum === 1 && intensity === 'Alta') intensity = 'casi Alta';
+                if (blockNum === 1 && intensity === 'casi Alta') intensity = 'Media Alta';
                 // El primer intervalo del bloque nunca supera Media Alta
-                if (isFirst && INT_SCORE[intensity] > 3) intensity = 'Media Alta';
+                if (isFirst && INT_SCORE[intensity] > 5) intensity = 'Media Alta';
                 // En bloques de valle o bajada, capping de intensidad
-                if (lvl === 1 && INT_SCORE[intensity] > 3) intensity = 'Media Alta';
+                if (lvl === 1 && INT_SCORE[intensity] > 5) intensity = 'Media Alta';
                 if (lvl === 1 && INT_SCORE[intensity] > 2 && isFirst) intensity = 'Media';
 
                 out.push({
@@ -3065,10 +3158,13 @@
                 lastType = ex.type;
 
                 // Recuperación específica por terreno tras Muy Alta (≥30s)
-                // NO se inserta si es el último intervalo de trabajo del bloque
-                // (el penúltimo slot total, ya que el último siempre es hidratación)
-                const isLastWorkingInterval = (i === n - 1);
-                if (intensity === 'Muy Alta' && d >= 30 && !isLastWorkingInterval) {
+                // Solo en bloques de 8+ min; no en los últimos 2 min antes de hidratación
+                const isLastWorkingInterval = (i === nFinal - 1);
+                const totalWorkSec = durs.reduce((a, b) => a + b, 0);
+                const elapsedSec = durs.slice(0, i + 1).reduce((a, b) => a + b, 0);
+                const remainingWorkSec = totalWorkSec - elapsedSec;
+                const allowRecovery = (blockDurMin || 0) >= 8 && remainingWorkSec > 120;
+                if (intensity === 'Muy Alta' && d >= 30 && !isLastWorkingInterval && allowRecovery) {
                     const isPlano = terrain === 'plano';
                     out.push({
                         d: 20,
@@ -3140,7 +3236,7 @@
             if (bType === 'P' || bType === 'M') {
                 const terrain = bType === 'P' ? 'plano' : 'montana';
                 const durs = genDurs(baseWorkSec, blkStyle);
-                const baseIvs = buildIntervals(terrain, durs, num, intLevel);
+                const baseIvs = buildIntervals(terrain, durs, num, intLevel, durMin);
                 const singleRepeatIvCount = baseIvs.length;
                 // Expandir la secuencia para el timer (cada rep es copia exacta)
                 let allIvs = [];
@@ -3164,91 +3260,123 @@
             }
 
             // ── BLOQUE HÍBRIDO ──────────────────────────────────────────────────────────
+            // ══════════════════════════════════════════════════════════════
+            // BLOQUE HÍBRIDO — arquitectura por tramos
+            // Reglas:
+            //   • Cada tramo del mismo terreno: mínimo 120s, máximo 240s continuos
+            //   • El bloque tiene entre 2 y 4 tramos en total
+            //   • Terrenos se alternan por tramo (no por intervalo)
+            // ══════════════════════════════════════════════════════════════
             const firstT = bType === 'HP' ? 'plano' : 'montana';
             const secondT = bType === 'HP' ? 'montana' : 'plano';
-            const allDurs = genDurs(workSec, blkStyle);
-            const n = allDurs.length;
 
-            // Secuencia de terrenos variada: no mecánicamente alternada
-            // En bloques de pico: mayor presencia del terreno principal (más carga acumulada)
-            // En bloques de valle/bajada: alternancia más rápida para alivio
-            const maxSameByPhase = {
-                peak: 2,
-                build: 2,
-                valley: 1,
-                descent: 1
-            };
-            const maxSame = maxSameByPhase[phase || 'build'] || 2;
+            const MIN_TRAMO = 120; // 2 min mínimo por tramo
+            const MAX_TRAMO = 240; // 4 min máximo por tramo
 
-            const terrainSeq = [];
-            let lastT = null;
-            let sameCount = 0;
-            for (let i = 0; i < n; i++) {
-                let t;
-                if (sameCount >= maxSame) {
-                    t = (lastT === firstT) ? secondT : firstT;
-                } else if (lastT === null) {
-                    t = firstT;
-                } else {
-                    // Probabilidad de cambio adaptada a la fase:
-                    //   pico: menor probabilidad de cambio → más estrés acumulado
-                    //   valle: mayor probabilidad de cambio → variedad como alivio
-                    const switchBase = {
-                        peak: 0.35,
-                        build: 0.45,
-                        valley: 0.65,
-                        descent: 0.60
-                    }[phase || 'build'] || 0.45;
-                    const switchP = sameCount === 1 ? switchBase : switchBase + 0.3;
-                    t = Math.random() < switchP ?
-                        (lastT === firstT ? secondT : firstT) :
-                        lastT;
+            // Decidir cuántos tramos y su duración
+            // workSec = tiempo total sin la hidratación
+            // Necesitamos al menos 2 tramos (1 de cada terreno), máximo 4
+            function buildTramos(totalSec) {
+                // Elegir número de tramos: 2 o 4 (siempre par para que ambos terrenos queden equilibrados)
+                // Con 2 tramos: firstT luego secondT
+                // Con 4 tramos: firstT · secondT · firstT · secondT
+                const canFour = totalSec >= 4 * MIN_TRAMO; // >=480s = 8min de trabajo
+                const numTramos = canFour && Math.random() < 0.5 ? 4 : 2;
+                const tramoSec = Math.floor(totalSec / numTramos);
+
+                const tramos = [];
+                for (let t = 0; t < numTramos; t++) {
+                    const terrain = t % 2 === 0 ? firstT : secondT;
+                    // Duración del tramo: entre MIN y MAX, con variación ±20s
+                    let sec = tramoSec + (Math.random() < 0.5 ? 1 : -1) * rnd([0, 10, 20]);
+                    sec = Math.max(MIN_TRAMO, Math.min(MAX_TRAMO, sec));
+                    tramos.push({ terrain, sec });
                 }
-                terrainSeq.push(t);
-                if (t === lastT) {
-                    sameCount++;
-                } else {
-                    sameCount = 1;
-                }
-                lastT = t;
+
+                // Ajustar suma para que sea exactamente totalSec
+                const sumT = tramos.reduce((a, b) => a + b.sec, 0);
+                const diff = totalSec - sumT;
+                // Distribuir el diff en el primer tramo (clampeado)
+                tramos[0].sec = Math.max(MIN_TRAMO, Math.min(MAX_TRAMO, tramos[0].sec + diff));
+                return tramos;
             }
 
-            const d1 = [],
-                d2 = [];
-            terrainSeq.forEach((t, i) => {
-                if (t === firstT) d1.push(allDurs[i]);
-                else d2.push(allDurs[i]);
+            const tramos = buildTramos(workSec);
+
+            // ── Variante especial ~15%: montaña muy alta (60RPM+FM) → sprint plano ──
+            // Se inserta como tramo especial ANTES del último tramo de plano
+            const doSpecialVariant = intLevel >= 2 && Math.random() < 0.15;
+            const montanaT = firstT === 'montana' ? firstT : secondT;
+            const planoT   = firstT === 'plano'   ? firstT : secondT;
+
+            // Construir intervalos de cada tramo y concatenar
+            const allIntervals = [];
+            const terrainSeqFlat = []; // para compatibilidad con el render
+
+            tramos.forEach((tramo, ti) => {
+                // En el último tramo de plano, si aplica la variante especial, añadir secuencia al final
+                const isLastPlano = tramo.terrain === planoT && ti === tramos.length - 1;
+
+                let tramoDurs;
+                let tramoSec = tramo.sec;
+
+                if (doSpecialVariant && isLastPlano) {
+                    // Reservar ~120s al final para: 60RPM(40s) + FM(45s) + Sprint(30-35s) = ~115-120s
+                    const specialSec = 120;
+                    const normalSec = Math.max(MIN_TRAMO, tramoSec - specialSec);
+                    // Intervalos normales de plano
+                    if (normalSec >= 20) {
+                        const nd = genDurs(normalSec, blkStyle);
+                        buildIntervals(planoT, nd, num, intLevel, durMin)
+                            .filter(v => !v.isHydration)
+                            .forEach(iv => { allIntervals.push(iv); terrainSeqFlat.push(planoT); });
+                    }
+                    // Secuencia especial montaña muy alta
+                    allIntervals.push({
+                        d: 40, ex: { type: '60rp', label: '60 RPM Parado', pos: 'Parado' },
+                        pos: 'Parado', intensity: getInt('60rp', 40), terrain: montanaT
+                    });
+                    terrainSeqFlat.push(montanaT);
+                    const fmDur = rnd([40, 45]);
+                    allIntervals.push({
+                        d: fmDur, ex: { type: 'fm', label: 'Fuerza Máxima (60v)', pos: 'Parado', peak: true },
+                        pos: 'Parado', intensity: 'Muy Alta', terrain: montanaT
+                    });
+                    terrainSeqFlat.push(montanaT);
+                    // Sprint plano de bajada
+                    const spDur = rnd([30, 35]);
+                    allIntervals.push({
+                        d: spDur, ex: { type: 'sprint_p', label: 'Sprint (Máx. Vel.)', pos: 'Sentado', peak: true },
+                        pos: 'Sentado', intensity: getInt('sprint_p', spDur), terrain: planoT
+                    });
+                    terrainSeqFlat.push(planoT);
+                } else {
+                    // Tramo normal: generar intervalos del terreno correspondiente
+                    tramoDurs = genDurs(tramoSec, blkStyle);
+                    buildIntervals(tramo.terrain, tramoDurs, num, intLevel, durMin)
+                        .filter(v => !v.isHydration)
+                        .forEach(iv => { allIntervals.push(iv); terrainSeqFlat.push(tramo.terrain); });
+                }
             });
 
-            const iv1Raw = buildIntervals(firstT, d1.length ? d1 : [30], num, intLevel);
-            const iv2Raw = buildIntervals(secondT, d2.length ? d2 : [30], num, intLevel);
+            allIntervals.push(hydration);
 
-            const iv1Q = [...iv1Raw.filter(v => !v.isRecovery && !v.isHydration)];
-            const iv2Q = [...iv2Raw.filter(v => !v.isRecovery && !v.isHydration)];
-            const recs = [...iv1Raw.filter(v => v.isRecovery), ...iv2Raw.filter(v => v.isRecovery)];
-
-            const mixedIv = [];
-            terrainSeq.forEach(t => {
-                const q = t === firstT ? iv1Q : iv2Q;
-                if (q.length) mixedIv.push(q.shift());
-            });
-            recs.forEach(r => mixedIv.push(r));
-
-            const intervals = [...mixedIv, hydration];
             return {
                 bType,
                 num,
                 durMin,
-                intervals,
+                intervals: allIntervals,
                 isHybrid: true,
                 firstTerrain: firstT,
                 secondTerrain: secondT,
-                terrainSeq,
+                terrainSeq: terrainSeqFlat,
+                tramos,
                 phase,
                 intLevel,
                 style: blkStyle,
                 microRepeat: 1,
-                singleRepeatIvCount: 0
+                singleRepeatIvCount: 0,
+                specialVariant: doSpecialVariant
             };
         }
 
@@ -3259,6 +3387,9 @@
 
         function buildClass(mode) {
             usedRareThisClass = {};
+            // 80 RPM: habilitar con probabilidad ~0.20 por clase (≈1 cada 5 clases)
+            if (Math.random() < 0.20) usedRareThisClass['__allow80rs'] = true;
+            if (Math.random() < 0.20) usedRareThisClass['__allow80rp'] = true;
             const bTypes = [...mode.blocks];
             const blockCount = bTypes.length;
 
@@ -3267,7 +3398,10 @@
             const closeParts = closeTime.split(':');
             const closeMin = (parseInt(closeParts[0]) - 10) * 60 + parseInt(closeParts[1]);
             const coolDown = 2 + Math.floor(Math.random() * 3);
-            const totalWorkTime = Math.max(5 * blockCount, closeMin - 20 - coolDown);
+            // Mínimo 33 min totales de clase: 5 warmup + bloques + cooldown(mín 2)
+            // → bloques deben ser al menos 26 min
+            const MIN_WORK_TIME = 26;
+            const totalWorkTime = Math.max(5 * blockCount, MIN_WORK_TIME, closeMin - 20 - coolDown);
 
             // ── Resolver perfil para cada terreno ──────────────────────────────
             function resolveProfile(profileId) {
@@ -3312,7 +3446,7 @@
 
             // El cierre SIEMPRE debe ser 10:52, 10:53, 10:54 o 10:55
             // Calculamos cuántos minutos desde las 10:00 son 10:52..10:55
-            const targetCloseMins = [52, 53, 54, 55]; // minutos desde 10:00
+            const targetCloseMins = [53, 54, 55, 56]; // minutos desde 10:00
             // 10:00 + 20 (warmup) + realWorkTime + coolDown = cierre
             // coolDown = cierre - 20 - realWorkTime
             // Elegimos el cierre objetivo más cercano que dé coolDown >= 1
