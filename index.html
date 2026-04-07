@@ -1671,6 +1671,109 @@
             background: rgba(232, 216, 64, .12);
         }
         /* ══════════════════════════════════════════
+   CLASS PROFILE GRAPH — Equalizer / Mountain
+══════════════════════════════════════════ */
+
+        #class-profile-graph {
+            display: none;
+            width: 100%;
+            padding: 0 16px;
+            margin-bottom: 10px;
+        }
+
+        #timerOverlay.active #class-profile-graph {
+            display: block;
+        }
+
+        .cpg-container {
+            display: flex;
+            align-items: flex-end;
+            gap: 1px;
+            width: 100%;
+            height: 70px;
+            position: relative;
+        }
+
+        .cpg-bar {
+            flex: none;
+            min-width: 2px;
+            border-radius: 2px 2px 0 0;
+            transition: opacity 0.3s, filter 0.3s;
+            position: relative;
+            opacity: 0.75;
+        }
+
+        .cpg-bar.cpg-done {
+            opacity: 0.3;
+            filter: saturate(0.5) brightness(0.7);
+        }
+
+        .cpg-bar.cpg-active {
+            opacity: 1;
+            filter: brightness(1.25);
+            animation: cpg-pulse 1.2s ease-in-out infinite alternate;
+            z-index: 2;
+            box-shadow: 0 0 14px var(--cpg-glow, rgba(232,216,64,.7));
+        }
+
+        .cpg-bar.cpg-future {
+            opacity: 0.75;
+        }
+
+        @keyframes cpg-pulse {
+            0% { filter: brightness(1.1); transform: scaleY(1); }
+            100% { filter: brightness(1.5); transform: scaleY(1.05); }
+        }
+
+        .cpg-bar.cpg-active::after {
+            content: '';
+            position: absolute;
+            top: -3px;
+            left: 0;
+            right: 0;
+            height: 3px;
+            border-radius: 2px;
+            background: inherit;
+            filter: brightness(2);
+        }
+
+        .cpg-position-marker {
+            position: absolute;
+            bottom: -6px;
+            left: 0;
+            width: 0;
+            height: 0;
+            border-left: 4px solid transparent;
+            border-right: 4px solid transparent;
+            border-bottom: 5px solid var(--accent);
+            z-index: 3;
+            transition: left 0.5s linear;
+        }
+
+        .cpg-labels {
+            display: flex;
+            width: 100%;
+            margin-top: 5px;
+            gap: 2px;
+            overflow: hidden;
+        }
+
+        .cpg-label {
+            font-family: 'Space Mono', monospace;
+            font-size: clamp(8px, 1.8vw, 10px);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            text-align: center;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            padding: 0 2px;
+            opacity: 0.85;
+            line-height: 1.2;
+            min-width: 0;
+        }
+
+        /* ══════════════════════════════════════════
    MODO FULLSCREEN — layout garantizado
    Los controles SIEMPRE se ven al fondo.
    Usamos dvh (dynamic viewport height) con
@@ -1686,8 +1789,8 @@
             max-width: 100%;
             padding: 0;
             display: grid;
-            /* top-bar | progress | AHORA(flex) | SIGUIENTE(fijo) | controles(fijo) */
-            grid-template-rows: auto 5px minmax(0, 1fr) auto auto;
+            /* top-bar | progress | GRAPH | AHORA(flex) | SIGUIENTE(fijo) | controles(fijo) */
+            grid-template-rows: auto 5px auto minmax(0, 1fr) auto auto;
             height: 100dvh;
             /* dynamic viewport height — respeta la barra del nav */
             height: 100vh;
@@ -1730,8 +1833,19 @@
         }
         /* ── ZONA AHORA — ocupa espacio disponible, no más ── */
         
-        #timerOverlay.fs-mode .tmr-curr {
+        #timerOverlay.fs-mode #class-profile-graph {
             grid-row: 3;
+            display: block;
+            padding: 4px 12px;
+            margin-bottom: 0;
+        }
+
+        #timerOverlay.fs-mode .cpg-container {
+            height: clamp(50px, 10vh, 90px);
+        }
+
+        #timerOverlay.fs-mode .tmr-curr {
+            grid-row: 4;
             margin: 0;
             border-radius: 0;
             border: none;
@@ -1812,7 +1926,7 @@
         /* ── ZONA SIGUIENTE — más arriba, más grande, menos padding ── */
         
         #timerOverlay.fs-mode .tmr-next {
-            grid-row: 4;
+            grid-row: 5;
             border-radius: 0;
             border-left: none;
             border-right: none;
@@ -1859,7 +1973,7 @@
         /* ── CONTROLES — más visibles, más espacio ── */
         
         #timerOverlay.fs-mode .tmr-controls {
-            grid-row: 5;
+            grid-row: 6;
             gap: 0;
             margin: 0;
             flex-shrink: 0;
@@ -2875,6 +2989,11 @@
             </div>
             <div class="tmr-progress-wrap">
                 <div class="tmr-progress" id="tmrProgress"></div>
+            </div>
+
+            <div id="class-profile-graph">
+                <div class="cpg-container" id="cpgContainer"></div>
+                <div class="cpg-labels" id="cpgLabels"></div>
             </div>
 
             <div class="tmr-block-context">
@@ -4682,6 +4801,122 @@
             }
         });
 
+        function buildClassProfileGraph(flatList) {
+            const container = document.getElementById('cpgContainer');
+            const labelsEl  = document.getElementById('cpgLabels');
+            if (!container) return;
+            container.innerHTML = '';
+            if (labelsEl) labelsEl.innerHTML = '';
+
+            const totalDuration = flatList.reduce((a, v) => a + v.d, 0);
+            if (totalDuration === 0) return;
+
+            const containerWidth = container.offsetWidth || 500;
+            const gapPx = 1;
+            const availableWidth = containerWidth - (Math.max(0, flatList.length - 1) * gapPx);
+
+            // ── Agrupar intervalos por bloque para las etiquetas ──────────────
+            const blockGroups = [];
+            let curGroup = null;
+            flatList.forEach((iv, i) => {
+                const bNum = iv.blockRef ? iv.blockRef.num : -1;
+                if (!curGroup || curGroup.bNum !== bNum) {
+                    curGroup = { bNum, totalD: 0, name: iv.blockRef ? iv.blockRef.name : '', terrain: iv.terrain, isWarmup: iv.isWarmup };
+                    blockGroups.push(curGroup);
+                }
+                curGroup.totalD += iv.d;
+            });
+
+            // ── Dibujar barras ─────────────────────────────────────────────────
+            flatList.forEach((iv, i) => {
+                const bar = document.createElement('div');
+                bar.className = 'cpg-bar cpg-future';
+                bar.id = `cpg-bar-${i}`;
+
+                const widthPx = Math.max(2, Math.round((iv.d / totalDuration) * availableWidth));
+                bar.style.width = `${widthPx}px`;
+
+                const score = INT_SCORE[iv.intensity] !== undefined ? INT_SCORE[iv.intensity] : 2;
+                const heightPct = 8 + (score / 8) * 92;
+                bar.style.height = `${heightPct}%`;
+
+                // ── Color: púrpura para eventos especiales, intensidad para el resto
+                let hexColor;
+                if (iv.isWarmup || iv.terrain === 'warmup') {
+                    hexColor = '#a855f7'; // calentamiento — arranca la clase
+                } else if (iv.isHydration) {
+                    hexColor = '#a855f7'; // hidratación
+                } else if (iv.isRecovery) {
+                    hexColor = '#a855f7'; // vuelta a la calma / recuperación
+                } else {
+                    hexColor = intColor(iv.intensity); // color de intensidad
+                }
+
+                bar.style.background = hexColor;
+                bar.style.setProperty('--cpg-glow', hexColor + 'bb');
+                bar.title = `${iv.shortLabel} · ${fmtSec(iv.d)} · ${iv.intensity}`;
+                container.appendChild(bar);
+            });
+
+            // Marcador de posición actual
+            const marker = document.createElement('div');
+            marker.className = 'cpg-position-marker';
+            marker.id = 'cpgMarker';
+            container.appendChild(marker);
+
+            // ── Dibujar etiquetas de bloque ────────────────────────────────────
+            if (labelsEl) {
+                blockGroups.forEach(g => {
+                    const lbl = document.createElement('div');
+                    lbl.className = 'cpg-label';
+                    lbl.style.flex = g.totalD; // proporcional a la duración
+
+                    let txt, color;
+                    if (g.isWarmup || g.terrain === 'warmup') {
+                        txt = 'Calent.'; color = '#a855f7';
+                    } else if (g.name === 'Plano' || g.terrain === 'plano') {
+                        txt = 'Plano';   color = '#00d4ff';
+                    } else if (g.name === 'Montaña' || g.terrain === 'montana') {
+                        txt = 'Montaña'; color = '#ff6520';
+                    } else if (g.name === 'Híbrido') {
+                        txt = 'Híbrido'; color = '#a855f7';
+                    } else {
+                        txt = g.name || '—'; color = 'var(--muted)';
+                    }
+
+                    lbl.textContent = txt;
+                    lbl.style.color = color;
+                    labelsEl.appendChild(lbl);
+                });
+            }
+        }
+
+        function updateClassProfileGraph() {
+            const flatList = timerState.flatList;
+            if (!flatList || !flatList.length) return;
+
+            const idx = timerState.idx;
+            const totalDuration = timerState.totalSec;
+            const elapsed = timerState.elapsedSec;
+
+            flatList.forEach((iv, i) => {
+                const bar = document.getElementById(`cpg-bar-${i}`);
+                if (!bar) return;
+                bar.classList.remove('cpg-done', 'cpg-active', 'cpg-future');
+                if (i < idx) bar.classList.add('cpg-done');
+                else if (i === idx) bar.classList.add('cpg-active');
+                else bar.classList.add('cpg-future');
+            });
+
+            const marker = document.getElementById('cpgMarker');
+            if (marker) {
+                const container = document.getElementById('cpgContainer');
+                const containerWidth = container ? container.offsetWidth : 500;
+                const pct = totalDuration > 0 ? (elapsed / totalDuration) : 0;
+                marker.style.left = `${Math.min(pct * containerWidth, containerWidth - 8)}px`;
+            }
+        }
+
         function openTimer() {
             if (!currentClass) return;
             const list = flattenClass(currentClass);
@@ -4695,6 +4930,7 @@
             document.getElementById('timerOverlay').classList.add('active');
             document.body.style.overflow = 'hidden';
             requestWakeLock();
+            requestAnimationFrame(() => buildClassProfileGraph(list));
             startInterval();
         }
 
@@ -4810,6 +5046,8 @@
 
             document.getElementById('tmrProgress').style.width = `${(timerState.elapsedSec/timerState.totalSec*100).toFixed(1)}%`;
 
+            updateClassProfileGraph();
+
             document.querySelectorAll('.sched-item').forEach((el, i) => {
                 el.classList.toggle('done', i < timerState.idx);
                 el.classList.toggle('current', i === timerState.idx);
@@ -4892,7 +5130,12 @@
                 _isFs = false;
             }
             // Actualizar UI para reflejar el nuevo modo (reloj integrado en AHORA)
-            if (timerState.flatList && timerState.flatList.length) updateTimerUI();
+            if (timerState.flatList && timerState.flatList.length) {
+                requestAnimationFrame(() => {
+                    buildClassProfileGraph(timerState.flatList);
+                    updateTimerUI();
+                });
+            }
         }
 
         // si el usuario sale con Escape, sincronizar estado
@@ -4902,8 +5145,22 @@
                     document.getElementById('timerOverlay').classList.remove('fs-mode');
                     document.getElementById('btnFs').textContent = '⛶ Pantalla completa';
                     _isFs = false;
+                    if (timerState.flatList && timerState.flatList.length) {
+                        requestAnimationFrame(() => buildClassProfileGraph(timerState.flatList));
+                    }
                 }
             });
+        });
+
+        let _cpgResizeTimer = null;
+        window.addEventListener('resize', () => {
+            clearTimeout(_cpgResizeTimer);
+            _cpgResizeTimer = setTimeout(() => {
+                if (timerState.flatList && timerState.flatList.length) {
+                    buildClassProfileGraph(timerState.flatList);
+                    updateClassProfileGraph();
+                }
+            }, 200);
         });
 
         /* ══════════════════════════════════════════
@@ -5588,6 +5845,7 @@
             document.getElementById('timerOverlay').classList.add('active');
             document.getElementById('btnPlayPause').textContent = '⏸ Pausar';
             requestWakeLock();
+            requestAnimationFrame(() => buildClassProfileGraph(flatList));
         }
 
         // Init
