@@ -1232,6 +1232,7 @@
             background: var(--bg);
             z-index: 100;
             flex-direction: column;
+            align-items: center;
             overflow-y: auto;
         }
         
@@ -1240,13 +1241,13 @@
         }
         
         .timer-shell {
-            max-width: 560px;
-            margin: 0 auto;
+            max-width: 600px;
             width: 100%;
+            margin: 0 auto;
             padding: 0 16px 48px;
             display: flex;
             flex-direction: column;
-            min-height: 100vh;
+            box-sizing: border-box;
         }
         
         .tmr-top {
@@ -1941,18 +1942,27 @@
         
         #timerOverlay.fs-mode {
             overflow: hidden;
+            justify-content: stretch;
+            align-items: stretch;
         }
         
         #timerOverlay.fs-mode .timer-shell {
             max-width: 100%;
+            width: 100%;
             padding: 0;
+            margin: 0;
             display: grid;
-            /* top-bar | progress | GRAPH | AHORA(flex) | SIGUIENTE(fijo) | controles(fijo) */
-            grid-template-rows: auto 5px auto minmax(0, 1fr) auto auto;
+            grid-template-columns: 1fr;
+            grid-template-rows:
+                auto   /* 1 top bar      */
+                auto   /* 2 bici+barra   */
+                auto   /* 3 graph        */
+                minmax(0,1fr) /* 4 AHORA */
+                auto   /* 5 SIGUIENTE    */
+                auto   /* 6 controles    */
+                auto;  /* 7 beep         */
             height: 100dvh;
-            /* dynamic viewport height — respeta la barra del nav */
             height: 100vh;
-            /* fallback */
             overflow: hidden;
         }
         
@@ -1961,53 +1971,49 @@
                 height: 100dvh;
             }
         }
-        /* barra superior */
-        
+
+        /* ── top bar ── */
         #timerOverlay.fs-mode .tmr-top {
-            padding: 10px 16px 8px;
-            margin-bottom: 0;
-            border-bottom: none;
             grid-row: 1;
-        }
-        
-        #timerOverlay.fs-mode .tmr-progress-wrap {
-            height: 36px;
+            padding: 8px 16px;
             margin-bottom: 0;
-            border-radius: 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        /* ── bici + barra ── */
+        #timerOverlay.fs-mode .tmr-progress-wrap {
             grid-row: 2;
+            height: 44px;
+            margin: 0;
+            padding: 0 12px;
+            border-radius: 0;
+            background: var(--surface);
+            border-bottom: 1px solid var(--border);
         }
-        /* ocultar elementos no necesarios */
-        
-        #timerOverlay.fs-mode .tmr-block-context {
-            display: none;
-        }
-        
-        #timerOverlay.fs-mode .tmr-circle-wrap {
-            display: none;
-        }
-        
-        #timerOverlay.fs-mode .tmr-schedule {
-            display: none;
-        }
-        /* ── ZONA AHORA — ocupa espacio disponible, no más ── */
-        
+
+        /* ── ocultar elementos no usados en fs ── */
+        #timerOverlay.fs-mode .tmr-block-context { display: none; }
+        #timerOverlay.fs-mode .tmr-circle-wrap   { display: none; }
+        #timerOverlay.fs-mode .tmr-schedule      { display: none; }
+
+        /* ── graph ── */
         #timerOverlay.fs-mode #class-profile-graph {
             grid-row: 3;
             display: block;
-            padding: 4px 12px;
+            padding: 4px 12px 0;
             margin-bottom: 0;
         }
-
         #timerOverlay.fs-mode .cpg-container {
-            height: clamp(50px, 10vh, 90px);
+            height: clamp(44px, 9vh, 80px);
         }
 
+        /* ── AHORA — ocupa todo el espacio restante, centrado ── */
         #timerOverlay.fs-mode .tmr-curr {
             grid-row: 4;
             margin: 0;
             border-radius: 0;
             border: none;
-            padding: 8px 24px 4px;
+            padding: clamp(8px,2vh,20px) clamp(16px,5vw,40px);
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -2020,77 +2026,38 @@
         }
         
         #timerOverlay.fs-mode .tmr-curr::before {
-            width: 100%;
-            height: 4px;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: auto;
+            width: 100%; height: 4px;
+            top: 0; left: 0; right: 0; bottom: auto;
         }
-        
-        #timerOverlay.fs-mode .tmr-curr-row {
-            justify-content: center;
-        }
-        /* label con solo el reloj */
-        
-        #timerOverlay.fs-mode .tmr-curr-label {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 6px;
-        }
-        
-        #timerOverlay.fs-mode .tmr-curr-label .fs-ahora-txt {
-            display: none;
-        }
-        /* reloj — más grande */
-        
+        #timerOverlay.fs-mode .tmr-curr-row    { justify-content: center; gap: 8px; margin-bottom: 6px; }
+        #timerOverlay.fs-mode .tmr-curr-label  { display: flex; align-items: center; justify-content: center; margin-bottom: 4px; }
+        #timerOverlay.fs-mode .tmr-curr-label .fs-ahora-txt { display: none; }
+
         #timerOverlay.fs-mode .fs-clock {
             font-family: 'Bebas Neue', sans-serif;
-            font-size: clamp(88px, 22vw, 150px);
+            font-size: clamp(72px, 18vw, 150px);
             line-height: 1;
             letter-spacing: 4px;
         }
-        /* nombre del ejercicio actual — igual que SIGUIENTE */
-        
         #timerOverlay.fs-mode .tmr-curr-desc {
-            font-size: clamp(28px, 7vw, 52px);
+            font-size: clamp(22px, 5.5vw, 52px);
             line-height: 1.05;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
             font-weight: 800;
             max-width: 100%;
             word-break: break-word;
         }
-        
-        #timerOverlay.fs-mode .tmr-curr-row {
-            gap: 8px;
-            margin-bottom: 6px;
-        }
-        
-        #timerOverlay.fs-mode .tmr-curr-pos {
-            font-size: clamp(14px, 3.5vw, 20px);
-            padding: 6px 14px;
-        }
-        
-        #timerOverlay.fs-mode .tmr-curr-int {
-            font-size: clamp(12px, 3vw, 17px);
-            padding: 6px 12px;
-        }
-        
-        #timerOverlay.fs-mode .tmr-curr-dur {
-            font-size: clamp(11px, 2.5vw, 14px);
-            margin-top: 0;
-        }
-        /* ── ZONA SIGUIENTE — más arriba, más grande, menos padding ── */
-        
+        #timerOverlay.fs-mode .tmr-curr-pos  { font-size: clamp(13px, 3vw, 20px);  padding: 5px 12px; }
+        #timerOverlay.fs-mode .tmr-curr-int  { font-size: clamp(11px, 2.5vw, 17px); padding: 5px 10px; }
+        #timerOverlay.fs-mode .tmr-curr-dur  { font-size: clamp(10px, 2vw, 14px); margin-top: 0; }
+
+        /* ── SIGUIENTE ── */
         #timerOverlay.fs-mode .tmr-next {
             grid-row: 5;
             border-radius: 0;
-            border-left: none;
-            border-right: none;
-            border-bottom: none;
-            border-top: 2px solid rgba(0, 212, 255, .3);
-            background: rgba(0, 212, 255, .07);
+            border-left: none; border-right: none; border-bottom: none;
+            border-top: 2px solid rgba(0,212,255,.3);
+            background: rgba(0,212,255,.07);
             margin: 0;
             padding: 6px 20px;
             display: flex;
@@ -2099,57 +2066,56 @@
             gap: 16px;
             flex-shrink: 0;
         }
-        
         #timerOverlay.fs-mode .tmr-next-top {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            gap: 1px;
-            flex-shrink: 0;
-            border-right: 1px solid rgba(0, 212, 255, .2);
+            display: flex; flex-direction: column; align-items: flex-start;
+            gap: 1px; flex-shrink: 0;
+            border-right: 1px solid rgba(0,212,255,.2);
             padding-right: 16px;
         }
-        
-        #timerOverlay.fs-mode .tmr-next-lbl {
-            font-size: clamp(9px, 2vw, 11px);
-            letter-spacing: 3px;
-        }
-        
-        #timerOverlay.fs-mode .tmr-next-time {
-            font-size: clamp(42px, 10.5vw, 66px);
-            line-height: 1;
-        }
-        /* mismo tamaño que curr-desc */
-        
+        #timerOverlay.fs-mode .tmr-next-lbl  { font-size: clamp(9px, 2vw, 11px); letter-spacing: 3px; }
+        #timerOverlay.fs-mode .tmr-next-time { font-size: clamp(32px, 8vw, 66px); line-height: 1; }
         #timerOverlay.fs-mode .tmr-next-desc {
-            font-size: clamp(28px, 7vw, 52px);
-            line-height: 1.1;
-            flex: 1;
-            word-break: break-word;
-            font-weight: 800;
+            font-size: clamp(20px, 5vw, 52px);
+            line-height: 1.1; flex: 1;
+            word-break: break-word; font-weight: 800;
         }
-        /* ── CONTROLES — más visibles, más espacio ── */
-        
+
+        /* ── CONTROLES ── */
         #timerOverlay.fs-mode .tmr-controls {
             grid-row: 6;
-            gap: 0;
-            margin: 0;
-            flex-shrink: 0;
+            gap: 0; margin: 0; flex-shrink: 0;
             border-top: 2px solid var(--border);
-            min-height: 52px;
+            min-height: 48px;
         }
-        
         #timerOverlay.fs-mode .btn-ctrl {
+            border-radius: 0; border: none;
+            border-right: 1px solid var(--border);
+            font-size: clamp(13px, 3vw, 18px);
+            padding: clamp(10px, 2.5vh, 18px) 8px;
+        }
+        #timerOverlay.fs-mode .btn-ctrl:last-child { border-right: none; }
+
+        /* ── BEEP CONTROLS en fs ── */
+        #timerOverlay.fs-mode .beep-controls {
+            grid-row: 7;
+            margin: 0;
             border-radius: 0;
             border: none;
-            border-right: 1px solid var(--border);
-            font-size: clamp(14px, 3.5vw, 18px);
-            padding: clamp(12px, 2.8vh, 18px) 8px;
+            border-top: 1px solid var(--border);
+            background: var(--surface);
+            padding: 6px 14px;
+            flex-wrap: nowrap;
+            gap: 8px;
         }
-        
-        #timerOverlay.fs-mode .btn-ctrl:last-child {
-            border-right: none;
+        #timerOverlay.fs-mode .btn-beep-mute {
+            padding: 6px 10px;
+            font-size: clamp(10px, 2.2vw, 12px);
         }
+        #timerOverlay.fs-mode .btn-sound {
+            padding: 5px 8px;
+            font-size: clamp(9px, 2vw, 11px);
+        }
+        #timerOverlay.fs-mode .beep-vol-slider { min-width: 60px; }
         /* ── PROFILE ACCORDION ── */
         
         .profile-accordion {
