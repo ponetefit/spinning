@@ -1227,7 +1227,7 @@
             z-index: 100;
             flex-direction: column;
             align-items: center;
-            overflow-y: auto;
+            overflow: hidden;
         }
         
         #timerOverlay.active {
@@ -1242,6 +1242,9 @@
             display: flex;
             flex-direction: column;
             box-sizing: border-box;
+            height: 100%;
+            overflow-y: auto;
+            overflow-x: hidden;
         }
         
         .tmr-top {
@@ -1392,7 +1395,7 @@
             z-index: 100;
             flex-direction: column;
             align-items: center;
-            overflow-y: auto;
+            overflow: hidden;
         }
         #timerOverlay.active { display: flex; }
 
@@ -1404,6 +1407,9 @@
             display: flex;
             flex-direction: column;
             box-sizing: border-box;
+            height: 100%;
+            overflow-y: auto;
+            overflow-x: hidden;
         }
 
         /* ── TOP BAR ── */
@@ -1596,8 +1602,8 @@
         }
         .tmr-circle {
             position: relative;
-            width: clamp(120px, 36vw, 170px);
-            height: clamp(120px, 36vw, 170px);
+            width: clamp(160px, 46vw, 220px);
+            height: clamp(160px, 46vw, 220px);
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -1614,14 +1620,14 @@
         .tmr-circle-prog { fill: none; stroke-width: 7; stroke-linecap: round; transition: stroke-dashoffset .8s linear, stroke .3s; }
         .tmr-digits {
             font-family: 'Bebas Neue', sans-serif;
-            font-size: clamp(48px, 14vw, 80px);
+            font-size: clamp(64px, 18vw, 100px);
             line-height: 1;
             letter-spacing: 2px;
             z-index: 1;
         }
         .tmr-digits-lbl {
             font-family: 'Space Mono', monospace;
-            font-size: clamp(11px, 3vw, 14px);
+            font-size: clamp(13px, 3.5vw, 17px);
             color: var(--muted);
             letter-spacing: 3px;
             z-index: 1;
@@ -1644,18 +1650,18 @@
             background: var(--card);
             border: 1px solid var(--border);
             border-radius: var(--rad);
-            padding: 14px 18px;
+            padding: 16px 18px 14px;
             position: relative;
             overflow: hidden;
             display: flex;
             flex-direction: column;
-            gap: 8px;
+            gap: 10px;
         }
         .tmr-curr::before {
             content: '';
             position: absolute;
             top: 0; left: 0; right: 0;
-            height: 4px;
+            height: 5px;
         }
         .tmr-curr.tc-p::before { background: var(--plano); }
         .tmr-curr.tc-m::before { background: var(--montana); }
@@ -1668,31 +1674,37 @@
         }
         .tmr-curr-lbl-txt {
             font-family: 'Space Mono', monospace;
-            font-size: clamp(11px, 3vw, 14px);
+            font-size: clamp(12px, 3vw, 15px);
             color: var(--muted);
             letter-spacing: 4px;
             text-transform: uppercase;
         }
         .tmr-curr-body {
             display: flex;
-            flex-direction: row;
-            align-items: center;
-            gap: 12px;
-            flex-wrap: wrap;
+            flex-direction: column;
+            gap: 10px;
         }
         .tmr-curr-top {
             display: flex;
             align-items: center;
             gap: 10px;
-            flex: 1;
+            width: 100%;
+        }
+        /* Fila dedicada para posición + intensidad */
+        .tmr-curr-badges {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            width: 100%;
+            flex-wrap: wrap;
         }
         .tmr-curr-bike-icon {
-            font-size: clamp(28px, 7vw, 38px);
+            font-size: clamp(36px, 9vw, 50px);
             flex-shrink: 0;
         }
         .tmr-curr-rpm {
             font-family: 'Bebas Neue', sans-serif;
-            font-size: clamp(28px, 7.5vw, 44px);
+            font-size: clamp(36px, 9.5vw, 58px);
             line-height: 1;
             letter-spacing: 1px;
             color: var(--text);
@@ -1700,10 +1712,10 @@
         }
         .tmr-curr-pos {
             display: inline-block;
-            font-size: clamp(14px, 3.8vw, 19px);
+            font-size: clamp(18px, 4.5vw, 24px);
             font-weight: 700;
             font-family: 'Space Mono', monospace;
-            padding: 6px 14px;
+            padding: 8px 16px;
             border-radius: 4px;
             text-transform: uppercase;
             letter-spacing: .5px;
@@ -1711,15 +1723,16 @@
         }
         .tmr-curr-int {
             display: inline-block;
-            font-size: clamp(13px, 3.5vw, 17px);
+            font-size: clamp(17px, 4.2vw, 22px);
             font-family: 'Space Mono', monospace;
-            padding: 5px 12px;
+            padding: 7px 14px;
             border-radius: 4px;
             letter-spacing: .5px;
             flex-shrink: 0;
+            font-weight: 700;
         }
         .tmr-curr-blk {
-            font-size: clamp(12px, 3vw, 15px);
+            font-size: clamp(14px, 3.5vw, 18px);
             color: var(--muted);
             font-family: 'Space Mono', monospace;
             text-transform: uppercase;
@@ -1728,7 +1741,7 @@
         }
         .tmr-curr-dur {
             font-family: 'Space Mono', monospace;
-            font-size: clamp(12px, 3vw, 15px);
+            font-size: clamp(14px, 3.5vw, 18px);
             color: var(--muted);
             width: 100%;
         }
@@ -1764,7 +1777,7 @@
         .tmr-next-pos-icon { font-size: clamp(24px, 6vw, 32px); }
         .tmr-next-center { flex: 1; min-width: 0; }
         .tmr-next-desc {
-            font-size: clamp(18px, 5vw, 26px);
+            font-size: clamp(22px, 5.8vw, 32px);
             color: var(--text);
             font-weight: 700;
             line-height: 1.2;
@@ -1780,7 +1793,7 @@
         }
         .tmr-next-time {
             font-family: 'Bebas Neue', sans-serif;
-            font-size: clamp(30px, 8vw, 44px);
+            font-size: clamp(38px, 10vw, 56px);
             color: var(--accent3);
             letter-spacing: 2px;
             line-height: 1;
@@ -2297,13 +2310,13 @@
             width: 100%; height: 4px;
         }
         #timerOverlay.fs-mode .tmr-curr-rpm {
-            font-size: clamp(26px, 7vw, 48px);
+            font-size: clamp(32px, 8.5vw, 56px);
         }
-        #timerOverlay.fs-mode .tmr-curr-bike-icon { font-size: clamp(28px,7vw,40px); }
-        #timerOverlay.fs-mode .tmr-curr-pos  { font-size: clamp(14px, 3.5vw, 20px); padding: 6px 14px; }
-        #timerOverlay.fs-mode .tmr-curr-int  { font-size: clamp(13px, 3.2vw, 18px); padding: 5px 12px; }
-        #timerOverlay.fs-mode .tmr-curr-blk  { font-size: clamp(11px, 2.5vw, 15px); }
-        #timerOverlay.fs-mode .tmr-curr-dur  { font-size: clamp(11px, 2.5vw, 15px); }
+        #timerOverlay.fs-mode .tmr-curr-bike-icon { font-size: clamp(34px,8.5vw,48px); }
+        #timerOverlay.fs-mode .tmr-curr-pos  { font-size: clamp(16px, 4vw, 22px); padding: 8px 16px; }
+        #timerOverlay.fs-mode .tmr-curr-int  { font-size: clamp(16px, 4vw, 22px); padding: 8px 14px; }
+        #timerOverlay.fs-mode .tmr-curr-blk  { font-size: clamp(12px, 2.8vw, 16px); }
+        #timerOverlay.fs-mode .tmr-curr-dur  { font-size: clamp(12px, 2.8vw, 16px); }
 
         /* ── LO SIGUIENTE en fs ── */
         #timerOverlay.fs-mode .tmr-next {
@@ -3479,30 +3492,28 @@
                                     stroke-dasharray="276.46" stroke-dashoffset="0" stroke="var(--accent)"/>
                             </svg>
                             <div class="tmr-digits" id="tmrDigits">0:00</div>
-                            <div class="tmr-digits-lbl">MIN</div>
                         </div>
                     </div>
                     <div class="tmr-interval-num" id="tmrIvNum">Intervalo 1</div>
                 </div>
 
-                <!-- Columna derecha: card AHORA -->
+                <!-- Card AHORA -->
                 <div class="tmr-curr" id="tmrCurrCard">
                     <div class="tmr-curr-label">
                         <span class="tmr-curr-lbl-txt">AHORA</span>
+                        <div class="tmr-curr-dur" id="tmrCurrDurLabel" style="margin-left:auto"></div>
                     </div>
                     <div class="tmr-curr-body">
-                        <!-- ícono bici + RPM grande -->
+                        <!-- ícono bici + ejercicio grande -->
                         <div class="tmr-curr-top">
                             <span class="tmr-curr-bike-icon" id="tmrCurrIcon">🚴</span>
                             <div class="tmr-curr-rpm" id="tmrCurrDesc">—</div>
                         </div>
-                        <!-- posición -->
-                        <span class="tmr-curr-pos" id="tmrCurrPos">Sentado</span>
-                        <!-- badge intensidad -->
-                        <span class="tmr-curr-int" id="tmrCurrInt">—</span>
-                        <!-- nombre completo del bloque -->
+                        <!-- posición e intensidad ocultos — info ya está en el nombre del ejercicio -->
+                        <span class="tmr-curr-pos" id="tmrCurrPos" style="display:none"></span>
+                        <span class="tmr-curr-int" id="tmrCurrInt" style="display:none"></span>
+                        <!-- nombre del bloque -->
                         <div class="tmr-curr-blk" id="ctxBlockName">—</div>
-                        <div class="tmr-curr-dur" id="tmrCurrDurLabel"></div>
                     </div>
                 </div>
             </div>
