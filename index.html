@@ -1198,6 +1198,12 @@
                 page-break-inside: avoid;
             }
         }
+
+        .btn-timer {
+            width: 100%;
+            background: transparent;
+            color: var(--accent3);
+            border: 1.5px solid var(--accent3);
             font-family: 'Bebas Neue', sans-serif;
             font-size: clamp(22px, 5vw, 28px);
             letter-spacing: 3px;
@@ -1708,8 +1714,8 @@
         }
         .tmr-curr-rpm {
             font-family: 'Bebas Neue', sans-serif;
-            font-size: clamp(24px, 6vw, 36px);
-            line-height: 1.2;
+            font-size: clamp(36px, 9vw, 56px);
+            line-height: 1.15;
             letter-spacing: 1px;
             color: var(--text);
             word-break: break-word;
@@ -5158,7 +5164,7 @@
 
                     list.push({
                         d: iv.d,
-                        desc: iv.ex.desc,
+                        desc: (iv.ex && iv.ex.desc) ? iv.ex.desc : (iv.ex && iv.ex.label ? iv.ex.label : fullActionLabel),
                         shortLabel: fullActionLabel,
                         pos: iv.pos || 'Sentado',
                         intensity: iv.intensity,
