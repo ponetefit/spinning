@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
     <meta name="theme-color" content="#e8d840">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -29,11 +29,11 @@
             --hibrido: #a855f7;
             --rad: 10px;
             /* ── ESCALA DE FUENTES GLOBAL ── */
-            --fs-xs: clamp(14px, 3.5vw, 17px);
-            --fs-sm: clamp(16px, 4vw, 19px);
-            --fs-md: clamp(18px, 4.5vw, 22px);
-            --fs-lg: clamp(20px, 5vw, 25px);
-            --fs-xl: clamp(24px, 6vw, 30px);
+            --fs-xs: clamp(16px, 4.2vw, 20px);
+            --fs-sm: clamp(18px, 4.8vw, 23px);
+            --fs-md: clamp(20px, 5.2vw, 26px);
+            --fs-lg: clamp(23px, 5.8vw, 30px);
+            --fs-xl: clamp(27px, 6.8vw, 36px);
         }
         
         * {
@@ -107,7 +107,7 @@
         
         .clock-row {
             font-family: 'Bebas Neue', sans-serif;
-            font-size: clamp(30px, 7vw, 44px);
+            font-size: clamp(38px, 9vw, 56px);
             letter-spacing: 2px;
             line-height: 1;
         }
@@ -628,7 +628,7 @@
         
         .iv-time {
             font-family: 'Space Mono', monospace;
-            font-size: clamp(22px, 5.5vw, 30px);
+            font-size: clamp(26px, 6.5vw, 36px);
             font-weight: 700;
             min-width: 60px;
             flex-shrink: 0;
@@ -678,7 +678,7 @@
         /* descripción — protagonista */
         
         .iv-desc {
-            font-size: clamp(20px, 5vw, 26px);
+            font-size: clamp(22px, 5.5vw, 30px);
             color: var(--text);
             flex: 1;
             min-width: 0;
@@ -1052,7 +1052,7 @@
         
         .saved-card-title {
             font-family: 'Bebas Neue', sans-serif;
-            font-size: clamp(18px, 4vw, 22px);
+            font-size: clamp(22px, 5vw, 28px);
             color: var(--accent);
             letter-spacing: 1.5px;
             margin-bottom: 4px;
@@ -1060,7 +1060,7 @@
         
         .saved-card-meta {
             font-family: 'Space Mono', monospace;
-            font-size: var(--fs-xs);
+            font-size: var(--fs-sm);
             color: var(--muted);
             letter-spacing: 1px;
         }
@@ -1083,9 +1083,9 @@
             color: #08080d;
             border: none;
             font-family: 'Bebas Neue', sans-serif;
-            font-size: clamp(14px, 3.5vw, 16px);
+            font-size: clamp(17px, 4.2vw, 20px);
             letter-spacing: 2px;
-            padding: 10px 16px;
+            padding: 13px 18px;
             border-radius: 5px;
             cursor: pointer;
             transition: all .15s;
@@ -1100,8 +1100,8 @@
             background: transparent;
             color: var(--muted);
             border: 1px solid var(--border);
-            font-size: clamp(14px, 3.5vw, 16px);
-            padding: 10px 14px;
+            font-size: clamp(17px, 4.2vw, 20px);
+            padding: 13px 16px;
             border-radius: 5px;
             cursor: pointer;
             transition: all .15s;
@@ -1461,7 +1461,7 @@
         /* Reloj en vivo */
         .tmr-live-clock {
             font-family: 'Bebas Neue', sans-serif;
-            font-size: clamp(18px, 4.5vw, 24px);
+            font-size: clamp(22px, 5.5vw, 30px);
             color: var(--text);
             letter-spacing: 2px;
             flex-shrink: 0;
@@ -1570,32 +1570,34 @@
         .tmr-bike.terrain-warmup  { transform: translateX(-50%) rotate(0deg); }
 
         /* ══════════════════════════════════════════
-           LAYOUT DOS COLUMNAS
+           TIMER — LAYOUT UNA SOLA COLUMNA CENTRADA
+           Diseñado para usar arriba de la bici
         ══════════════════════════════════════════ */
         .tmr-main-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 0;
             margin-bottom: 10px;
-            align-items: stretch;
         }
 
-        /* ── COLUMNA IZQUIERDA: reloj ── */
+        /* ── RELOJ CIRCULAR — centrado y grande ── */
         .tmr-circle-col {
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 6px;
+            justify-content: center;
+            gap: 10px;
+            padding: 14px 0 8px;
         }
         .tmr-circle-wrap {
-            width: 100%;
             display: flex;
             justify-content: center;
+            width: 100%;
         }
         .tmr-circle {
             position: relative;
-            width: clamp(130px, 42vw, 200px);
-            height: clamp(130px, 42vw, 200px);
+            width: clamp(120px, 36vw, 170px);
+            height: clamp(120px, 36vw, 170px);
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -1612,48 +1614,48 @@
         .tmr-circle-prog { fill: none; stroke-width: 7; stroke-linecap: round; transition: stroke-dashoffset .8s linear, stroke .3s; }
         .tmr-digits {
             font-family: 'Bebas Neue', sans-serif;
-            font-size: clamp(44px, 12vw, 72px);
+            font-size: clamp(48px, 14vw, 80px);
             line-height: 1;
             letter-spacing: 2px;
             z-index: 1;
         }
         .tmr-digits-lbl {
             font-family: 'Space Mono', monospace;
-            font-size: clamp(9px, 2.2vw, 12px);
+            font-size: clamp(11px, 3vw, 14px);
             color: var(--muted);
             letter-spacing: 3px;
             z-index: 1;
             margin-top: 2px;
         }
+        /* texto del intervalo debajo del reloj */
         .tmr-interval-num {
             font-family: 'Space Mono', monospace;
-            font-size: clamp(10px, 2.5vw, 13px);
+            font-size: clamp(13px, 3.5vw, 17px);
             color: var(--muted);
             letter-spacing: 1px;
             text-align: center;
             text-transform: uppercase;
-            line-height: 1.4;
+            line-height: 1.6;
             word-break: break-word;
-            padding: 0 4px;
         }
 
-        /* ── COLUMNA DERECHA: card AHORA ── */
+        /* ── CARD AHORA — ancho completo ── */
         .tmr-curr {
             background: var(--card);
             border: 1px solid var(--border);
             border-radius: var(--rad);
-            padding: 12px 14px;
+            padding: 14px 18px;
             position: relative;
             overflow: hidden;
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
+            gap: 8px;
         }
         .tmr-curr::before {
             content: '';
             position: absolute;
             top: 0; left: 0; right: 0;
-            height: 3px;
+            height: 4px;
         }
         .tmr-curr.tc-p::before { background: var(--plano); }
         .tmr-curr.tc-m::before { background: var(--montana); }
@@ -1663,29 +1665,34 @@
             display: flex;
             align-items: center;
             gap: 6px;
-            margin-bottom: 6px;
         }
         .tmr-curr-lbl-txt {
             font-family: 'Space Mono', monospace;
-            font-size: var(--fs-xs);
+            font-size: clamp(11px, 3vw, 14px);
             color: var(--muted);
             letter-spacing: 4px;
             text-transform: uppercase;
         }
-        .tmr-curr-body { display: flex; flex-direction: column; gap: 5px; }
-
+        .tmr-curr-body {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
         .tmr-curr-top {
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
+            flex: 1;
         }
         .tmr-curr-bike-icon {
-            font-size: clamp(22px, 6vw, 30px);
+            font-size: clamp(28px, 7vw, 38px);
             flex-shrink: 0;
         }
         .tmr-curr-rpm {
             font-family: 'Bebas Neue', sans-serif;
-            font-size: clamp(22px, 6vw, 34px);
+            font-size: clamp(28px, 7.5vw, 44px);
             line-height: 1;
             letter-spacing: 1px;
             color: var(--text);
@@ -1693,35 +1700,37 @@
         }
         .tmr-curr-pos {
             display: inline-block;
-            font-size: clamp(11px, 2.8vw, 14px);
+            font-size: clamp(14px, 3.8vw, 19px);
             font-weight: 700;
             font-family: 'Space Mono', monospace;
-            padding: 4px 10px;
+            padding: 6px 14px;
             border-radius: 4px;
             text-transform: uppercase;
             letter-spacing: .5px;
-            align-self: flex-start;
+            flex-shrink: 0;
         }
         .tmr-curr-int {
             display: inline-block;
-            font-size: clamp(11px, 2.8vw, 14px);
+            font-size: clamp(13px, 3.5vw, 17px);
             font-family: 'Space Mono', monospace;
-            padding: 4px 10px;
+            padding: 5px 12px;
             border-radius: 4px;
             letter-spacing: .5px;
-            align-self: flex-start;
+            flex-shrink: 0;
         }
         .tmr-curr-blk {
-            font-size: clamp(11px, 2.8vw, 13px);
+            font-size: clamp(12px, 3vw, 15px);
             color: var(--muted);
             font-family: 'Space Mono', monospace;
             text-transform: uppercase;
             letter-spacing: 1px;
+            width: 100%;
         }
         .tmr-curr-dur {
             font-family: 'Space Mono', monospace;
-            font-size: clamp(10px, 2.5vw, 13px);
+            font-size: clamp(12px, 3vw, 15px);
             color: var(--muted);
+            width: 100%;
         }
 
         /* ── LO SIGUIENTE ── */
@@ -1730,11 +1739,11 @@
             border: 1px solid rgba(0,212,255,.18);
             border-left: 4px solid var(--accent3);
             border-radius: var(--rad);
-            padding: 10px 14px;
+            padding: 12px 16px;
             margin-bottom: 10px;
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 14px;
         }
         .tmr-next-left {
             display: flex;
@@ -1742,27 +1751,27 @@
             align-items: center;
             gap: 4px;
             flex-shrink: 0;
-            min-width: 42px;
+            min-width: 44px;
         }
         .tmr-next-lbl {
             font-family: 'Space Mono', monospace;
-            font-size: clamp(7px, 1.8vw, 9px);
+            font-size: clamp(9px, 2.2vw, 12px);
             color: var(--accent3);
             letter-spacing: 2px;
             text-transform: uppercase;
             text-align: center;
         }
-        .tmr-next-pos-icon { font-size: clamp(20px, 5.5vw, 28px); }
+        .tmr-next-pos-icon { font-size: clamp(24px, 6vw, 32px); }
         .tmr-next-center { flex: 1; min-width: 0; }
         .tmr-next-desc {
-            font-size: clamp(14px, 3.8vw, 18px);
+            font-size: clamp(18px, 5vw, 26px);
             color: var(--text);
             font-weight: 700;
             line-height: 1.2;
             word-break: break-word;
         }
         .tmr-next-blk {
-            font-size: clamp(10px, 2.5vw, 12px);
+            font-size: clamp(12px, 3vw, 15px);
             color: var(--muted);
             font-family: 'Space Mono', monospace;
             text-transform: uppercase;
@@ -1771,7 +1780,7 @@
         }
         .tmr-next-time {
             font-family: 'Bebas Neue', sans-serif;
-            font-size: clamp(22px, 6vw, 32px);
+            font-size: clamp(30px, 8vw, 44px);
             color: var(--accent3);
             letter-spacing: 2px;
             line-height: 1;
@@ -1790,9 +1799,9 @@
             border: 1px solid var(--border);
             color: var(--text);
             font-family: 'Bebas Neue', sans-serif;
-            font-size: clamp(16px, 4vw, 20px);
+            font-size: clamp(20px, 5vw, 26px);
             letter-spacing: 2px;
-            padding: 14px 8px;
+            padding: 18px 8px;
             border-radius: var(--rad);
             cursor: pointer;
             transition: all .15s;
@@ -1837,13 +1846,13 @@
         }
         .sched-item.current { background: rgba(232,216,64,.07); }
         .sched-item.done    { opacity: .4; }
-        .si-num  { font-family:'Space Mono',monospace; font-size:var(--fs-xs); color:var(--muted); min-width:22px; }
-        .si-desc { flex:1; font-size:var(--fs-sm); color:var(--text); }
-        .si-dur  { font-family:'Space Mono',monospace; font-size:var(--fs-xs); color:var(--muted); }
-        .sched-dot { width:8px; height:8px; border-radius:50%; flex-shrink:0; }
-        .sched-t   { font-family:'Space Mono',monospace; font-size:var(--fs-xs); color:var(--muted); min-width:36px; }
-        .sched-d   { flex:1; font-size:var(--fs-sm); }
-        .sched-pos { font-size:var(--fs-xs); color:var(--muted); }
+        .si-num  { font-family:'Space Mono',monospace; font-size:var(--fs-sm); color:var(--muted); min-width:22px; }
+        .si-desc { flex:1; font-size:var(--fs-md); color:var(--text); }
+        .si-dur  { font-family:'Space Mono',monospace; font-size:var(--fs-sm); color:var(--muted); }
+        .sched-dot { width:10px; height:10px; border-radius:50%; flex-shrink:0; }
+        .sched-t   { font-family:'Space Mono',monospace; font-size:var(--fs-sm); color:var(--muted); min-width:36px; }
+        .sched-d   { flex:1; font-size:var(--fs-md); }
+        .sched-pos { font-size:var(--fs-sm); color:var(--muted); }
 
         /* ── BEEP CONTROLS ── */
         .beep-controls {
@@ -2037,47 +2046,40 @@
             background: var(--border);
             border-radius: 2px;
         }
-        /* ── BOTÓN PANTALLA COMPLETA ── */
-        
-        .btn-fs {
+        /* ── BOTÓN PANTALLA COMPLETA inline en top bar ── */
+        /* ── BOTÓN PANTALLA COMPLETA — fijo abajo a la derecha, siempre visible ── */
+        .btn-fs-inline {
             position: fixed;
             bottom: 20px;
             right: 16px;
-            z-index: 200;
+            z-index: 300;
             background: var(--card);
-            border: 1px solid var(--accent);
+            border: 1.5px solid var(--accent);
             color: var(--accent);
             font-family: 'Bebas Neue', sans-serif;
-            font-size: clamp(13px, 3.5vw, 16px);
+            font-size: clamp(14px, 3.8vw, 18px);
             letter-spacing: 2px;
-            padding: 10px 16px;
+            padding: 12px 18px;
             border-radius: 8px;
             cursor: pointer;
             transition: all .15s;
             white-space: nowrap;
-            flex-shrink: 0;
-            box-shadow: 0 4px 16px rgba(0,0,0,.5);
+            box-shadow: 0 4px 16px rgba(0,0,0,.6);
             display: none;
         }
+        .btn-fs-inline:hover { background: rgba(232,216,64,.12); }
 
-        #timerOverlay.active .btn-fs {
-            display: block;
-        }
-        
-        .btn-fs:hover {
-            background: rgba(232, 216, 64, .12);
-        }
+        /* Visible fijo solo cuando el timer está activo Y no en fs */
+        #timerOverlay.active:not(.fs-mode) .btn-fs-inline { display: block; }
 
-        /* En fs-mode: el botón queda visible en esquina superior derecha */
-        #timerOverlay.fs-mode .btn-fs {
-            bottom: auto;
-            top: 8px;
-            right: 12px;
-            font-size: clamp(11px, 2.5vw, 14px);
-            padding: 7px 12px;
-            box-shadow: none;
-            background: rgba(20,20,32,.85);
+        /* Botón Salir: en tmr-top, oculto por defecto */
+        #btnSalirFs {
+            display: none;
         }
+        /* En fs: mostrar Salir en el top bar, ocultar Volver y botón fijo */
+        #timerOverlay.fs-mode #btnVolver    { display: none; }
+        #timerOverlay.fs-mode #btnSalirFs   { display: block; }
+        #timerOverlay.fs-mode .btn-fs-inline { display: none !important; }
         /* ══════════════════════════════════════════
    CLASS PROFILE GRAPH — Equalizer / Mountain
 ══════════════════════════════════════════ */
@@ -2257,31 +2259,37 @@
             min-height: 0;
             margin: 0;
             gap: 0;
-            grid-template-columns: 1fr 1fr;
+            flex-direction: column;
             align-items: stretch;
             overflow: hidden;
         }
 
         #timerOverlay.fs-mode .tmr-circle-col {
-            border-right: 1px solid var(--border);
-            padding: clamp(8px,2vh,20px);
+            flex-direction: column;
+            align-items: center;
             justify-content: center;
+            border-bottom: 1px solid var(--border);
+            padding: clamp(6px,1.5vh,14px) 16px;
+            gap: 8px;
         }
         #timerOverlay.fs-mode .tmr-circle {
-            width: clamp(120px, 28vw, 220px);
-            height: clamp(120px, 28vw, 220px);
+            width: clamp(100px, 28vw, 160px);
+            height: clamp(100px, 28vw, 160px);
         }
         #timerOverlay.fs-mode .tmr-digits {
-            font-size: clamp(56px, 14vw, 110px);
+            font-size: clamp(46px, 13vw, 80px);
         }
         #timerOverlay.fs-mode .tmr-interval-num {
-            font-size: clamp(11px, 2.2vw, 15px);
+            font-size: clamp(13px, 3.2vw, 18px);
+            text-align: center;
         }
 
         #timerOverlay.fs-mode .tmr-curr {
             border-radius: 0;
             border: none;
-            padding: clamp(10px,2.5vh,24px) clamp(14px,3vw,28px);
+            border-bottom: 1px solid var(--border);
+            padding: clamp(10px,2vh,18px) clamp(14px,3vw,24px);
+            flex: 1;
             justify-content: center;
         }
         #timerOverlay.fs-mode .tmr-curr::before {
@@ -2289,13 +2297,13 @@
             width: 100%; height: 4px;
         }
         #timerOverlay.fs-mode .tmr-curr-rpm {
-            font-size: clamp(22px, 5.5vw, 44px);
+            font-size: clamp(26px, 7vw, 48px);
         }
-        #timerOverlay.fs-mode .tmr-curr-bike-icon { font-size: clamp(24px,6vw,36px); }
-        #timerOverlay.fs-mode .tmr-curr-pos  { font-size: clamp(12px, 2.5vw, 18px); padding: 5px 12px; }
-        #timerOverlay.fs-mode .tmr-curr-int  { font-size: clamp(11px, 2.2vw, 16px); padding: 5px 10px; }
-        #timerOverlay.fs-mode .tmr-curr-blk  { font-size: clamp(9px, 1.8vw, 13px); }
-        #timerOverlay.fs-mode .tmr-curr-dur  { font-size: clamp(10px, 2vw, 14px); }
+        #timerOverlay.fs-mode .tmr-curr-bike-icon { font-size: clamp(28px,7vw,40px); }
+        #timerOverlay.fs-mode .tmr-curr-pos  { font-size: clamp(14px, 3.5vw, 20px); padding: 6px 14px; }
+        #timerOverlay.fs-mode .tmr-curr-int  { font-size: clamp(13px, 3.2vw, 18px); padding: 5px 12px; }
+        #timerOverlay.fs-mode .tmr-curr-blk  { font-size: clamp(11px, 2.5vw, 15px); }
+        #timerOverlay.fs-mode .tmr-curr-dur  { font-size: clamp(11px, 2.5vw, 15px); }
 
         /* ── LO SIGUIENTE en fs ── */
         #timerOverlay.fs-mode .tmr-next {
@@ -3399,12 +3407,12 @@
     <div id="toast">✅ Recorrido guardado</div>
 
     <div id="timerOverlay">
-        <button class="btn-fs" id="btnFs" onclick="toggleFullscreen()">⛶ Pantalla completa</button>
         <div class="timer-shell">
 
             <!-- ── HEADER: logo + hora ── -->
             <div class="tmr-top">
-                <button class="tmr-close" onclick="closeTimer()">← Volver</button>
+                <button class="tmr-close" id="btnVolver" onclick="closeTimer()">← Volver</button>
+                <button class="tmr-close" id="btnSalirFs" onclick="toggleFullscreen()">✕ Salir</button>
                 <div class="tmr-logo">
                     <span class="tmr-logo-icon">🚴</span>
                     <div class="tmr-logo-text">
@@ -3414,6 +3422,8 @@
                 </div>
                 <div class="tmr-live-clock" id="tmrLiveClock">--:--</div>
             </div>
+            <!-- Botón fijo pantalla completa — visible al hacer scroll -->
+            <button class="btn-fs-inline" id="btnFs" onclick="toggleFullscreen()">⛶ Pantalla completa</button>
 
             <!-- ── BARRA DE PROGRESO TOTAL ── -->
             <div class="tmr-progress-wrap">
@@ -5921,17 +5931,14 @@
                 const req = el.requestFullscreen || el.webkitRequestFullscreen || el.mozRequestFullScreen || el.msRequestFullscreen;
                 if (req) req.call(el).catch(() => {});
                 overlay.classList.add('fs-mode');
-                document.getElementById('btnFs').textContent = '✕ Salir';
                 _isFs = true;
-                requestWakeLock(); // asegurar pantalla encendida al entrar a fullscreen
+                requestWakeLock();
             } else {
                 const ex = document.exitFullscreen || document.webkitExitFullscreen || document.mozCancelFullScreen || document.msExitFullscreen;
                 if (ex) ex.call(document).catch(() => {});
                 overlay.classList.remove('fs-mode');
-                document.getElementById('btnFs').textContent = '⛶ Pantalla completa';
                 _isFs = false;
             }
-            // Actualizar UI para reflejar el nuevo modo (reloj integrado en AHORA)
             if (timerState.flatList && timerState.flatList.length) {
                 requestAnimationFrame(() => {
                     buildClassProfileGraph(timerState.flatList);
@@ -5945,7 +5952,6 @@
             document.addEventListener(ev, () => {
                 if (!document.fullscreenElement && !document.webkitFullscreenElement) {
                     document.getElementById('timerOverlay').classList.remove('fs-mode');
-                    document.getElementById('btnFs').textContent = '⛶ Pantalla completa';
                     _isFs = false;
                     if (timerState.flatList && timerState.flatList.length) {
                         requestAnimationFrame(() => buildClassProfileGraph(timerState.flatList));
