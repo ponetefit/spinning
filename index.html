@@ -5099,7 +5099,7 @@
           <span>⏱</span><span>INICIAR TIMER DE CLASE</span>
         </button>
       </div>
-      <button class="btn-save" onclick="saveCurrentRoute()">
+      <button class="btn-save" onclick="_autoSaveSource='rafa';saveCurrentRoute()">
         <span>💾</span><span>GUARDAR RECORRIDO</span>
       </button>
       <button class="btn-pdf" onclick="exportToPDF()">
@@ -5877,6 +5877,8 @@
             }
         }
 
+        let _autoSaveSource = null;
+
         function saveCurrentRoute() {
             if (!currentClass) return;
             const routes = getSavedRoutes();
@@ -5896,6 +5898,7 @@
             const saved = {
                 id: Date.now(),
                 savedAt: `${dateStr} ${timeStr}`,
+                source: _autoSaveSource || 'manual',
                 modeId: currentClass.mode.id,
                 modeCat: currentClass.mode.cat,
                 modeDesc: currentClass.mode.desc,
@@ -5908,6 +5911,7 @@
                 closeTime: currentClass.closeTime,
                 classData: JSON.parse(JSON.stringify(currentClass))
             };
+            _autoSaveSource = null;
 
             routes.unshift(saved);
             // Guardar máximo 20 recorridos
@@ -5944,7 +5948,9 @@
             selectedMode = MODES.find(m => m.id === saved.modeId);
             if (selectedMode) {
                 document.querySelectorAll('.mc').forEach(c => {
-                    c.classList.toggle('sel', parseInt(c.querySelector('.mc-num').textContent) === saved.modeId);
+                    const numEl = c.querySelector('.mc-num');
+                    const modeNum = numEl ? parseInt(numEl.textContent) : NaN;
+                    c.classList.toggle('sel', modeNum === saved.modeId);
                 });
                 document.getElementById('btnStart').disabled = false;
             }
@@ -5959,7 +5965,7 @@
           <span>⏱</span><span>INICIAR TIMER DE CLASE</span>
         </button>
       </div>
-      <button class="btn-save" onclick="saveCurrentRoute()">
+      <button class="btn-save" onclick="_autoSaveSource='rafa';saveCurrentRoute()">
         <span>💾</span><span>GUARDAR RECORRIDO</span>
       </button>
       <button class="btn-pdf" onclick="exportToPDF()">
@@ -6010,8 +6016,12 @@
                 const profLabel = (r.profileMontana && r.profileMontana !== r.profilePlano)
                     ? `🔵 ${pP} · 🟠 ${pM}`
                     : pP;
+                const rafaBadge = r.source === 'rafa'
+                    ? `<span style="display:inline-block;background:rgba(232,216,64,.15);color:var(--accent);font-family:'Space Mono',monospace;font-size:clamp(9px,2.2vw,11px);font-weight:700;letter-spacing:1.5px;padding:3px 8px;border-radius:3px;border:1px solid rgba(232,216,64,.3);text-transform:uppercase;margin-bottom:6px">✦ Recorrido armado por Rafa López</span><br>`
+                    : '';
                 return `<div class="saved-card">
   <div class="saved-card-info">
+    <div style="margin-bottom:2px">${rafaBadge}</div>
     <div class="saved-card-title">MODO ${String(r.modeId).padStart(2,'0')} · ${r.modeCat.toUpperCase()} — ${r.modeDesc}</div>
     <div class="saved-card-meta">${r.savedAt} &nbsp;·&nbsp; ${r.totalWorkTime} min bloques &nbsp;·&nbsp; Cierre ${r.closeTime} &nbsp;·&nbsp; ${profLabel}${r.repetitiva ? ' · 🔁 Repetitiva' : ''}</div>
     <div class="saved-card-tags">${tagHtml}</div>
