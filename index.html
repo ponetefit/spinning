@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="theme-color" content="#e8d840">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -29,11 +29,11 @@
             --hibrido: #a855f7;
             --rad: 10px;
             /* ── ESCALA DE FUENTES GLOBAL ── */
-            --fs-xs: clamp(16px, 4.2vw, 20px);
-            --fs-sm: clamp(18px, 4.8vw, 23px);
-            --fs-md: clamp(20px, 5.2vw, 26px);
-            --fs-lg: clamp(23px, 5.8vw, 30px);
-            --fs-xl: clamp(27px, 6.8vw, 36px);
+            --fs-xs: clamp(14px, 3.5vw, 17px);
+            --fs-sm: clamp(16px, 4vw, 19px);
+            --fs-md: clamp(18px, 4.5vw, 22px);
+            --fs-lg: clamp(20px, 5vw, 25px);
+            --fs-xl: clamp(24px, 6vw, 30px);
         }
         
         * {
@@ -107,7 +107,7 @@
         
         .clock-row {
             font-family: 'Bebas Neue', sans-serif;
-            font-size: clamp(38px, 9vw, 56px);
+            font-size: clamp(30px, 7vw, 44px);
             letter-spacing: 2px;
             line-height: 1;
         }
@@ -628,7 +628,7 @@
         
         .iv-time {
             font-family: 'Space Mono', monospace;
-            font-size: clamp(26px, 6.5vw, 36px);
+            font-size: clamp(22px, 5.5vw, 30px);
             font-weight: 700;
             min-width: 60px;
             flex-shrink: 0;
@@ -678,7 +678,7 @@
         /* descripción — protagonista */
         
         .iv-desc {
-            font-size: clamp(22px, 5.5vw, 30px);
+            font-size: clamp(20px, 5vw, 26px);
             color: var(--text);
             flex: 1;
             min-width: 0;
@@ -1052,7 +1052,7 @@
         
         .saved-card-title {
             font-family: 'Bebas Neue', sans-serif;
-            font-size: clamp(22px, 5vw, 28px);
+            font-size: clamp(18px, 4vw, 22px);
             color: var(--accent);
             letter-spacing: 1.5px;
             margin-bottom: 4px;
@@ -1060,7 +1060,7 @@
         
         .saved-card-meta {
             font-family: 'Space Mono', monospace;
-            font-size: var(--fs-sm);
+            font-size: var(--fs-xs);
             color: var(--muted);
             letter-spacing: 1px;
         }
@@ -1083,9 +1083,9 @@
             color: #08080d;
             border: none;
             font-family: 'Bebas Neue', sans-serif;
-            font-size: clamp(17px, 4.2vw, 20px);
+            font-size: clamp(14px, 3.5vw, 16px);
             letter-spacing: 2px;
-            padding: 13px 18px;
+            padding: 10px 16px;
             border-radius: 5px;
             cursor: pointer;
             transition: all .15s;
@@ -1100,8 +1100,8 @@
             background: transparent;
             color: var(--muted);
             border: 1px solid var(--border);
-            font-size: clamp(17px, 4.2vw, 20px);
-            padding: 13px 16px;
+            font-size: clamp(14px, 3.5vw, 16px);
+            padding: 10px 14px;
             border-radius: 5px;
             cursor: pointer;
             transition: all .15s;
@@ -1227,7 +1227,7 @@
             z-index: 100;
             flex-direction: column;
             align-items: center;
-            overflow: hidden;
+            overflow-y: auto;
         }
         
         #timerOverlay.active {
@@ -1242,9 +1242,6 @@
             display: flex;
             flex-direction: column;
             box-sizing: border-box;
-            height: 100%;
-            overflow-y: auto;
-            overflow-x: hidden;
         }
         
         .tmr-top {
@@ -1395,7 +1392,7 @@
             z-index: 100;
             flex-direction: column;
             align-items: center;
-            overflow: hidden;
+            overflow-y: auto;
         }
         #timerOverlay.active { display: flex; }
 
@@ -1407,9 +1404,6 @@
             display: flex;
             flex-direction: column;
             box-sizing: border-box;
-            height: 100%;
-            overflow-y: auto;
-            overflow-x: hidden;
         }
 
         /* ── TOP BAR ── */
@@ -1467,7 +1461,7 @@
         /* Reloj en vivo */
         .tmr-live-clock {
             font-family: 'Bebas Neue', sans-serif;
-            font-size: clamp(22px, 5.5vw, 30px);
+            font-size: clamp(18px, 4.5vw, 24px);
             color: var(--text);
             letter-spacing: 2px;
             flex-shrink: 0;
@@ -1571,39 +1565,37 @@
             from { transform: rotate(0deg); }
             to   { transform: rotate(360deg); }
         }
-        .tmr-bike.terrain-montana { transform: translateX(-50%) rotate(-12deg); filter: drop-shadow(0 0 7px #ff2020); }
-        .tmr-bike.terrain-plano   { transform: translateX(-50%) rotate(0deg);   filter: drop-shadow(0 0 7px #00d4ff); }
-        .tmr-bike.terrain-warmup  { transform: translateX(-50%) rotate(0deg);   filter: drop-shadow(0 0 5px #a855f7); }
+        .tmr-bike.terrain-montana { transform: translateX(-50%) rotate(-12deg); }
+        .tmr-bike.terrain-plano   { transform: translateX(-50%) rotate(0deg); }
+        .tmr-bike.terrain-warmup  { transform: translateX(-50%) rotate(0deg); }
 
         /* ══════════════════════════════════════════
-           TIMER — LAYOUT UNA SOLA COLUMNA CENTRADA
-           Diseñado para usar arriba de la bici
+           LAYOUT DOS COLUMNAS
         ══════════════════════════════════════════ */
         .tmr-main-row {
-            display: flex;
-            flex-direction: column;
-            gap: 0;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
             margin-bottom: 10px;
+            align-items: stretch;
         }
 
-        /* ── RELOJ CIRCULAR — centrado y grande ── */
+        /* ── COLUMNA IZQUIERDA: reloj ── */
         .tmr-circle-col {
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
-            gap: 10px;
-            padding: 14px 0 8px;
+            gap: 6px;
         }
         .tmr-circle-wrap {
+            width: 100%;
             display: flex;
             justify-content: center;
-            width: 100%;
         }
         .tmr-circle {
             position: relative;
-            width: clamp(160px, 46vw, 220px);
-            height: clamp(160px, 46vw, 220px);
+            width: clamp(130px, 42vw, 200px);
+            height: clamp(130px, 42vw, 200px);
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -1620,48 +1612,48 @@
         .tmr-circle-prog { fill: none; stroke-width: 7; stroke-linecap: round; transition: stroke-dashoffset .8s linear, stroke .3s; }
         .tmr-digits {
             font-family: 'Bebas Neue', sans-serif;
-            font-size: clamp(64px, 18vw, 100px);
+            font-size: clamp(44px, 12vw, 72px);
             line-height: 1;
             letter-spacing: 2px;
             z-index: 1;
         }
         .tmr-digits-lbl {
             font-family: 'Space Mono', monospace;
-            font-size: clamp(13px, 3.5vw, 17px);
+            font-size: clamp(9px, 2.2vw, 12px);
             color: var(--muted);
             letter-spacing: 3px;
             z-index: 1;
             margin-top: 2px;
         }
-        /* texto del intervalo debajo del reloj */
         .tmr-interval-num {
             font-family: 'Space Mono', monospace;
-            font-size: clamp(13px, 3.5vw, 17px);
+            font-size: clamp(10px, 2.5vw, 13px);
             color: var(--muted);
             letter-spacing: 1px;
             text-align: center;
             text-transform: uppercase;
-            line-height: 1.6;
+            line-height: 1.4;
             word-break: break-word;
+            padding: 0 4px;
         }
 
-        /* ── CARD AHORA — ancho completo ── */
+        /* ── COLUMNA DERECHA: card AHORA ── */
         .tmr-curr {
             background: var(--card);
             border: 1px solid var(--border);
             border-radius: var(--rad);
-            padding: 16px 18px 14px;
+            padding: 12px 14px;
             position: relative;
             overflow: hidden;
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            justify-content: space-between;
         }
         .tmr-curr::before {
             content: '';
             position: absolute;
             top: 0; left: 0; right: 0;
-            height: 5px;
+            height: 3px;
         }
         .tmr-curr.tc-p::before { background: var(--plano); }
         .tmr-curr.tc-m::before { background: var(--montana); }
@@ -1671,40 +1663,29 @@
             display: flex;
             align-items: center;
             gap: 6px;
+            margin-bottom: 6px;
         }
         .tmr-curr-lbl-txt {
             font-family: 'Space Mono', monospace;
-            font-size: clamp(12px, 3vw, 15px);
+            font-size: var(--fs-xs);
             color: var(--muted);
             letter-spacing: 4px;
             text-transform: uppercase;
         }
-        .tmr-curr-body {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
+        .tmr-curr-body { display: flex; flex-direction: column; gap: 5px; }
+
         .tmr-curr-top {
             display: flex;
             align-items: center;
-            gap: 10px;
-            width: 100%;
-        }
-        /* Fila dedicada para posición + intensidad */
-        .tmr-curr-badges {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            width: 100%;
-            flex-wrap: wrap;
+            gap: 8px;
         }
         .tmr-curr-bike-icon {
-            font-size: clamp(36px, 9vw, 50px);
+            font-size: clamp(22px, 6vw, 30px);
             flex-shrink: 0;
         }
         .tmr-curr-rpm {
             font-family: 'Bebas Neue', sans-serif;
-            font-size: clamp(36px, 9.5vw, 58px);
+            font-size: clamp(22px, 6vw, 34px);
             line-height: 1;
             letter-spacing: 1px;
             color: var(--text);
@@ -1712,38 +1693,35 @@
         }
         .tmr-curr-pos {
             display: inline-block;
-            font-size: clamp(18px, 4.5vw, 24px);
+            font-size: clamp(11px, 2.8vw, 14px);
             font-weight: 700;
             font-family: 'Space Mono', monospace;
-            padding: 8px 16px;
+            padding: 4px 10px;
             border-radius: 4px;
             text-transform: uppercase;
             letter-spacing: .5px;
-            flex-shrink: 0;
+            align-self: flex-start;
         }
         .tmr-curr-int {
             display: inline-block;
-            font-size: clamp(17px, 4.2vw, 22px);
+            font-size: clamp(11px, 2.8vw, 14px);
             font-family: 'Space Mono', monospace;
-            padding: 7px 14px;
+            padding: 4px 10px;
             border-radius: 4px;
             letter-spacing: .5px;
-            flex-shrink: 0;
-            font-weight: 700;
+            align-self: flex-start;
         }
         .tmr-curr-blk {
-            font-size: clamp(14px, 3.5vw, 18px);
+            font-size: clamp(11px, 2.8vw, 13px);
             color: var(--muted);
             font-family: 'Space Mono', monospace;
             text-transform: uppercase;
             letter-spacing: 1px;
-            width: 100%;
         }
         .tmr-curr-dur {
             font-family: 'Space Mono', monospace;
-            font-size: clamp(14px, 3.5vw, 18px);
+            font-size: clamp(10px, 2.5vw, 13px);
             color: var(--muted);
-            width: 100%;
         }
 
         /* ── LO SIGUIENTE ── */
@@ -1752,11 +1730,11 @@
             border: 1px solid rgba(0,212,255,.18);
             border-left: 4px solid var(--accent3);
             border-radius: var(--rad);
-            padding: 12px 16px;
+            padding: 10px 14px;
             margin-bottom: 10px;
             display: flex;
             align-items: center;
-            gap: 14px;
+            gap: 12px;
         }
         .tmr-next-left {
             display: flex;
@@ -1764,27 +1742,27 @@
             align-items: center;
             gap: 4px;
             flex-shrink: 0;
-            min-width: 44px;
+            min-width: 42px;
         }
         .tmr-next-lbl {
             font-family: 'Space Mono', monospace;
-            font-size: clamp(9px, 2.2vw, 12px);
+            font-size: clamp(7px, 1.8vw, 9px);
             color: var(--accent3);
             letter-spacing: 2px;
             text-transform: uppercase;
             text-align: center;
         }
-        .tmr-next-pos-icon { font-size: clamp(24px, 6vw, 32px); }
+        .tmr-next-pos-icon { font-size: clamp(20px, 5.5vw, 28px); }
         .tmr-next-center { flex: 1; min-width: 0; }
         .tmr-next-desc {
-            font-size: clamp(22px, 5.8vw, 32px);
+            font-size: clamp(14px, 3.8vw, 18px);
             color: var(--text);
             font-weight: 700;
             line-height: 1.2;
             word-break: break-word;
         }
         .tmr-next-blk {
-            font-size: clamp(12px, 3vw, 15px);
+            font-size: clamp(10px, 2.5vw, 12px);
             color: var(--muted);
             font-family: 'Space Mono', monospace;
             text-transform: uppercase;
@@ -1793,7 +1771,7 @@
         }
         .tmr-next-time {
             font-family: 'Bebas Neue', sans-serif;
-            font-size: clamp(38px, 10vw, 56px);
+            font-size: clamp(22px, 6vw, 32px);
             color: var(--accent3);
             letter-spacing: 2px;
             line-height: 1;
@@ -1812,9 +1790,9 @@
             border: 1px solid var(--border);
             color: var(--text);
             font-family: 'Bebas Neue', sans-serif;
-            font-size: clamp(20px, 5vw, 26px);
+            font-size: clamp(16px, 4vw, 20px);
             letter-spacing: 2px;
-            padding: 18px 8px;
+            padding: 14px 8px;
             border-radius: var(--rad);
             cursor: pointer;
             transition: all .15s;
@@ -1859,13 +1837,13 @@
         }
         .sched-item.current { background: rgba(232,216,64,.07); }
         .sched-item.done    { opacity: .4; }
-        .si-num  { font-family:'Space Mono',monospace; font-size:var(--fs-sm); color:var(--muted); min-width:22px; }
-        .si-desc { flex:1; font-size:var(--fs-md); color:var(--text); }
-        .si-dur  { font-family:'Space Mono',monospace; font-size:var(--fs-sm); color:var(--muted); }
-        .sched-dot { width:10px; height:10px; border-radius:50%; flex-shrink:0; }
-        .sched-t   { font-family:'Space Mono',monospace; font-size:var(--fs-sm); color:var(--muted); min-width:36px; }
-        .sched-d   { flex:1; font-size:var(--fs-md); }
-        .sched-pos { font-size:var(--fs-sm); color:var(--muted); }
+        .si-num  { font-family:'Space Mono',monospace; font-size:var(--fs-xs); color:var(--muted); min-width:22px; }
+        .si-desc { flex:1; font-size:var(--fs-sm); color:var(--text); }
+        .si-dur  { font-family:'Space Mono',monospace; font-size:var(--fs-xs); color:var(--muted); }
+        .sched-dot { width:8px; height:8px; border-radius:50%; flex-shrink:0; }
+        .sched-t   { font-family:'Space Mono',monospace; font-size:var(--fs-xs); color:var(--muted); min-width:36px; }
+        .sched-d   { flex:1; font-size:var(--fs-sm); }
+        .sched-pos { font-size:var(--fs-xs); color:var(--muted); }
 
         /* ── BEEP CONTROLS ── */
         .beep-controls {
@@ -2059,40 +2037,47 @@
             background: var(--border);
             border-radius: 2px;
         }
-        /* ── BOTÓN PANTALLA COMPLETA inline en top bar ── */
-        /* ── BOTÓN PANTALLA COMPLETA — fijo abajo a la derecha, siempre visible ── */
-        .btn-fs-inline {
+        /* ── BOTÓN PANTALLA COMPLETA ── */
+        
+        .btn-fs {
             position: fixed;
             bottom: 20px;
             right: 16px;
-            z-index: 300;
+            z-index: 200;
             background: var(--card);
-            border: 1.5px solid var(--accent);
+            border: 1px solid var(--accent);
             color: var(--accent);
             font-family: 'Bebas Neue', sans-serif;
-            font-size: clamp(14px, 3.8vw, 18px);
+            font-size: clamp(13px, 3.5vw, 16px);
             letter-spacing: 2px;
-            padding: 12px 18px;
+            padding: 10px 16px;
             border-radius: 8px;
             cursor: pointer;
             transition: all .15s;
             white-space: nowrap;
-            box-shadow: 0 4px 16px rgba(0,0,0,.6);
+            flex-shrink: 0;
+            box-shadow: 0 4px 16px rgba(0,0,0,.5);
             display: none;
         }
-        .btn-fs-inline:hover { background: rgba(232,216,64,.12); }
 
-        /* Visible fijo solo cuando el timer está activo Y no en fs */
-        #timerOverlay.active:not(.fs-mode) .btn-fs-inline { display: block; }
-
-        /* Botón Salir: en tmr-top, oculto por defecto */
-        #btnSalirFs {
-            display: none;
+        #timerOverlay.active .btn-fs {
+            display: block;
         }
-        /* En fs: mostrar Salir en el top bar, ocultar Volver y botón fijo */
-        #timerOverlay.fs-mode #btnVolver    { display: none; }
-        #timerOverlay.fs-mode #btnSalirFs   { display: block; }
-        #timerOverlay.fs-mode .btn-fs-inline { display: none !important; }
+        
+        .btn-fs:hover {
+            background: rgba(232, 216, 64, .12);
+        }
+
+        /* En fs-mode: el botón queda visible en esquina superior derecha */
+        #timerOverlay.fs-mode .btn-fs {
+            bottom: auto;
+            top: 8px;
+            right: 12px;
+            font-size: clamp(11px, 2.5vw, 14px);
+            padding: 7px 12px;
+            box-shadow: none;
+            background: rgba(20,20,32,.85);
+        }
         /* ══════════════════════════════════════════
    CLASS PROFILE GRAPH — Equalizer / Mountain
 ══════════════════════════════════════════ */
@@ -2198,55 +2183,150 @@
         }
 
         /* ══════════════════════════════════════════
-           MODO FULLSCREEN — mismo layout que normal,
-           más ancho y sin lista de clase ni beep controls
-        ══════════════════════════════════════════ */
-
+   MODO FULLSCREEN — layout garantizado
+   Los controles SIEMPRE se ven al fondo.
+   Usamos dvh (dynamic viewport height) con
+   fallback a vh para cubrir la barra del nav
+   del celular.
+══════════════════════════════════════════ */
+        
         #timerOverlay.fs-mode {
             overflow: hidden;
+            justify-content: stretch;
+            align-items: stretch;
         }
-
+        
         #timerOverlay.fs-mode .timer-shell {
             max-width: 100%;
-            padding: 0 20px 16px;
-            height: 100%;
-            overflow-y: auto;
+            width: 100%;
+            padding: 0;
+            margin: 0;
+            display: grid;
+            grid-template-columns: 1fr;
+            grid-template-rows:
+                auto              /* 1 top bar    */
+                6px               /* 2 progreso   */
+                auto              /* 3 graph      */
+                minmax(0,1fr)     /* 4 main-row   */
+                auto              /* 5 siguiente  */
+                auto;             /* 6 controles  */
+            height: 100dvh;
+            height: 100vh;
+            overflow: hidden;
+        }
+        
+        @supports(height:100dvh) {
+            #timerOverlay.fs-mode .timer-shell { height: 100dvh; }
         }
 
-        /* Ocultar elementos secundarios en fs */
+        /* ── top bar ── */
+        #timerOverlay.fs-mode .tmr-top {
+            grid-row: 1;
+            padding: 6px 14px;
+            margin-bottom: 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        /* ── barra progreso ── */
+        #timerOverlay.fs-mode .tmr-progress-wrap {
+            grid-row: 2;
+            height: 6px;
+            margin: 0;
+            border-radius: 0;
+        }
+
+        /* ── ocultar en fs ── */
         #timerOverlay.fs-mode .tmr-schedule  { display: none; }
         #timerOverlay.fs-mode .beep-controls { display: none; }
 
-        /* Reloj aún más grande en fs */
+        /* ── graph + bici ── */
+        #timerOverlay.fs-mode #class-profile-graph {
+            grid-row: 3;
+            display: block;
+            padding: 2px 10px 0;
+            margin-bottom: 0;
+        }
+        #timerOverlay.fs-mode .cpg-container {
+            height: clamp(48px, 10vh, 80px);
+            overflow: visible;
+        }
+
+        /* ── dos columnas en fs: ocupa el espacio restante ── */
+        #timerOverlay.fs-mode .tmr-main-row {
+            grid-row: 4;
+            min-height: 0;
+            margin: 0;
+            gap: 0;
+            grid-template-columns: 1fr 1fr;
+            align-items: stretch;
+            overflow: hidden;
+        }
+
+        #timerOverlay.fs-mode .tmr-circle-col {
+            border-right: 1px solid var(--border);
+            padding: clamp(8px,2vh,20px);
+            justify-content: center;
+        }
         #timerOverlay.fs-mode .tmr-circle {
-            width: clamp(180px, 50vw, 260px);
-            height: clamp(180px, 50vw, 260px);
+            width: clamp(120px, 28vw, 220px);
+            height: clamp(120px, 28vw, 220px);
         }
         #timerOverlay.fs-mode .tmr-digits {
-            font-size: clamp(76px, 20vw, 120px);
+            font-size: clamp(56px, 14vw, 110px);
         }
         #timerOverlay.fs-mode .tmr-interval-num {
-            font-size: clamp(15px, 4vw, 20px);
+            font-size: clamp(11px, 2.2vw, 15px);
         }
 
-        /* Ejercicio más grande en fs */
+        #timerOverlay.fs-mode .tmr-curr {
+            border-radius: 0;
+            border: none;
+            padding: clamp(10px,2.5vh,24px) clamp(14px,3vw,28px);
+            justify-content: center;
+        }
+        #timerOverlay.fs-mode .tmr-curr::before {
+            top: 0; left: 0; right: 0; bottom: auto;
+            width: 100%; height: 4px;
+        }
         #timerOverlay.fs-mode .tmr-curr-rpm {
-            font-size: clamp(40px, 10vw, 66px);
+            font-size: clamp(22px, 5.5vw, 44px);
         }
-        #timerOverlay.fs-mode .tmr-curr-bike-icon { font-size: clamp(40px, 10vw, 56px); }
-        #timerOverlay.fs-mode .tmr-curr-blk  { font-size: clamp(15px, 3.5vw, 20px); }
-        #timerOverlay.fs-mode .tmr-curr-dur  { font-size: clamp(15px, 3.5vw, 20px); }
+        #timerOverlay.fs-mode .tmr-curr-bike-icon { font-size: clamp(24px,6vw,36px); }
+        #timerOverlay.fs-mode .tmr-curr-pos  { font-size: clamp(12px, 2.5vw, 18px); padding: 5px 12px; }
+        #timerOverlay.fs-mode .tmr-curr-int  { font-size: clamp(11px, 2.2vw, 16px); padding: 5px 10px; }
+        #timerOverlay.fs-mode .tmr-curr-blk  { font-size: clamp(9px, 1.8vw, 13px); }
+        #timerOverlay.fs-mode .tmr-curr-dur  { font-size: clamp(10px, 2vw, 14px); }
 
-        /* Lo siguiente más grande en fs */
-        #timerOverlay.fs-mode .tmr-next-desc { font-size: clamp(24px, 6vw, 36px); }
-        #timerOverlay.fs-mode .tmr-next-time { font-size: clamp(40px, 10vw, 56px); }
-        #timerOverlay.fs-mode .tmr-next-pos-icon { font-size: clamp(28px, 7vw, 38px); }
+        /* ── LO SIGUIENTE en fs ── */
+        #timerOverlay.fs-mode .tmr-next {
+            grid-row: 5;
+            border-radius: 0;
+            border-left: none; border-right: none; border-bottom: none;
+            border-top: 2px solid rgba(0,212,255,.3);
+            background: rgba(0,212,255,.07);
+            margin: 0;
+            padding: 6px 16px;
+            flex-shrink: 0;
+        }
+        #timerOverlay.fs-mode .tmr-next-desc { font-size: clamp(16px, 4vw, 32px); }
+        #timerOverlay.fs-mode .tmr-next-time { font-size: clamp(24px, 6vw, 48px); }
+        #timerOverlay.fs-mode .tmr-next-pos-icon { font-size: clamp(20px, 5vw, 32px); }
+        #timerOverlay.fs-mode .tmr-next-blk { font-size: clamp(9px, 1.8vw, 12px); }
 
-        /* Controles más altos en fs */
+        /* ── CONTROLES en fs ── */
+        #timerOverlay.fs-mode .tmr-controls {
+            grid-row: 6;
+            gap: 0; margin: 0; flex-shrink: 0;
+            border-top: 2px solid var(--border);
+            min-height: 44px;
+        }
         #timerOverlay.fs-mode .btn-ctrl {
-            font-size: clamp(20px, 5vw, 28px);
-            padding: 20px 8px;
+            border-radius: 0; border: none;
+            border-right: 1px solid var(--border);
+            font-size: clamp(13px, 3vw, 18px);
+            padding: clamp(10px, 2.5vh, 16px) 8px;
         }
+        #timerOverlay.fs-mode .btn-ctrl:last-child { border-right: none; }
         /* ── PROFILE ACCORDION ── */
         
         .profile-accordion {
@@ -3193,8 +3273,8 @@
                 <div class="logo-sub">Profe Rafa López · Metodología Spinning</div>
             </div>
             <div class="hdr-clock">
-                <div class="clock-row"><span class="c1">10:15</span><span class="cs">→</span><span class="c2">10:53–56</span></div>
-                <div class="clock-sub">Calentamiento · Cuerpo principal 10:20</div>
+                <div class="clock-row"><span class="c1">10:15</span><span class="cs">→</span><span class="c2">10:52–55</span></div>
+                <div class="clock-sub">Calentamiento · Cuerpo principal</div>
             </div>
         </header>
         <div class="div-line"></div>
@@ -3319,12 +3399,12 @@
     <div id="toast">✅ Recorrido guardado</div>
 
     <div id="timerOverlay">
+        <button class="btn-fs" id="btnFs" onclick="toggleFullscreen()">⛶ Pantalla completa</button>
         <div class="timer-shell">
 
             <!-- ── HEADER: logo + hora ── -->
             <div class="tmr-top">
-                <button class="tmr-close" id="btnVolver" onclick="closeTimer()">← Volver</button>
-                <button class="tmr-close" id="btnSalirFs" onclick="toggleFullscreen()">✕ Salir</button>
+                <button class="tmr-close" onclick="closeTimer()">← Volver</button>
                 <div class="tmr-logo">
                     <span class="tmr-logo-icon">🚴</span>
                     <div class="tmr-logo-text">
@@ -3334,8 +3414,6 @@
                 </div>
                 <div class="tmr-live-clock" id="tmrLiveClock">--:--</div>
             </div>
-            <!-- Botón fijo pantalla completa — visible al hacer scroll -->
-            <button class="btn-fs-inline" id="btnFs" onclick="toggleFullscreen()">⛶ Pantalla completa</button>
 
             <!-- ── BARRA DE PROGRESO TOTAL ── -->
             <div class="tmr-progress-wrap">
@@ -3391,28 +3469,30 @@
                                     stroke-dasharray="276.46" stroke-dashoffset="0" stroke="var(--accent)"/>
                             </svg>
                             <div class="tmr-digits" id="tmrDigits">0:00</div>
+                            <div class="tmr-digits-lbl">MIN</div>
                         </div>
                     </div>
                     <div class="tmr-interval-num" id="tmrIvNum">Intervalo 1</div>
                 </div>
 
-                <!-- Card AHORA -->
+                <!-- Columna derecha: card AHORA -->
                 <div class="tmr-curr" id="tmrCurrCard">
                     <div class="tmr-curr-label">
                         <span class="tmr-curr-lbl-txt">AHORA</span>
-                        <div class="tmr-curr-dur" id="tmrCurrDurLabel" style="margin-left:auto"></div>
                     </div>
                     <div class="tmr-curr-body">
-                        <!-- ícono bici + ejercicio grande -->
+                        <!-- ícono bici + RPM grande -->
                         <div class="tmr-curr-top">
                             <span class="tmr-curr-bike-icon" id="tmrCurrIcon">🚴</span>
                             <div class="tmr-curr-rpm" id="tmrCurrDesc">—</div>
                         </div>
-                        <!-- posición e intensidad ocultos — info ya está en el nombre del ejercicio -->
-                        <span class="tmr-curr-pos" id="tmrCurrPos" style="display:none"></span>
-                        <span class="tmr-curr-int" id="tmrCurrInt" style="display:none"></span>
-                        <!-- nombre del bloque -->
+                        <!-- posición -->
+                        <span class="tmr-curr-pos" id="tmrCurrPos">Sentado</span>
+                        <!-- badge intensidad -->
+                        <span class="tmr-curr-int" id="tmrCurrInt">—</span>
+                        <!-- nombre completo del bloque -->
                         <div class="tmr-curr-blk" id="ctxBlockName">—</div>
+                        <div class="tmr-curr-dur" id="tmrCurrDurLabel"></div>
                     </div>
                 </div>
             </div>
@@ -4041,13 +4121,6 @@
                     }
                 }
             }
-            // Paso final garantizado: forzar suma exacta ajustando el último bloque
-            const finalSum = durations.reduce((a, b) => a + b, 0);
-            if (finalSum !== totalWorkTime) {
-                durations[durations.length - 1] += (totalWorkTime - finalSum);
-                // Asegurar mínimo 1 min en el último bloque
-                if (durations[durations.length - 1] < 1) durations[durations.length - 1] = 1;
-            }
             return durations;
         }
 
@@ -4643,13 +4716,15 @@
             const bTypes = [...mode.blocks];
             const blockCount = bTypes.length;
 
-            // Neto de bloques: exactamente 33, 34, 35 o 36 min
-            // Cierre = 10:20 + bloques + cooldown → siempre termina 10:53-10:56
-            const totalWorkTime = rnd([33, 34, 35, 36]);
-            const coolDown = 2 + Math.floor(Math.random() * 2); // 2 o 3 min vuelta a la calma
-            const closeMinCalc = 20 + totalWorkTime + coolDown; // minutos desde 10:00
-            const closeTime = `10:${String(closeMinCalc).padStart(2, '0')}`;
-            // closeTime siempre cae en 10:53-10:56 ✓
+            // Cierre real de la clase: siempre 10:52-10:55, elegido primero
+            const closeTime = rnd(CLOSE);
+            const closeParts = closeTime.split(':');
+            const closeMin = (parseInt(closeParts[0]) - 10) * 60 + parseInt(closeParts[1]);
+            const coolDown = 2 + Math.floor(Math.random() * 3);
+            // Mínimo 33 min totales de clase: 5 warmup + bloques + cooldown(mín 2)
+            // → bloques deben ser al menos 26 min
+            const MIN_WORK_TIME = 26;
+            const totalWorkTime = Math.max(5 * blockCount, MIN_WORK_TIME, closeMin - 20 - coolDown);
 
             // ── Resolver perfil para cada terreno ──────────────────────────────
             function resolveProfile(profileId) {
@@ -4685,10 +4760,31 @@
                 }
             });
 
-            const blockDurations = distributeBlockDurations(totalWorkTime, blockCount, phases);
-
             // El primer bloque nunca es de pico
             if (phases[0] === 'peak') phases[0] = 'build';
+
+            const blockDurations = distributeBlockDurations(totalWorkTime, blockCount, phases);
+            // ── Recalcular tiempo real (puede haber cambiado por modo repetitiva o clampeo)
+            const realWorkTime = blockDurations.reduce((a, b) => a + b, 0);
+
+            // El cierre SIEMPRE debe ser 10:52, 10:53, 10:54 o 10:55
+            // Calculamos cuántos minutos desde las 10:00 son 10:52..10:55
+            const targetCloseMins = [53, 54, 55, 56]; // minutos desde 10:00
+            // 10:00 + 20 (warmup) + realWorkTime + coolDown = cierre
+            // coolDown = cierre - 20 - realWorkTime
+            // Elegimos el cierre objetivo más cercano que dé coolDown >= 1
+            let bestCloseMin = null;
+            let bestCoolDown = null;
+            for (const cm of targetCloseMins) {
+                const cd = cm - 20 - realWorkTime;
+                if (cd >= 1) { bestCloseMin = cm; bestCoolDown = cd; break; }
+            }
+            // Si ninguno da coolDown >= 1, usar el mayor disponible con coolDown mínimo de 1
+            if (bestCloseMin === null) {
+                bestCloseMin = targetCloseMins[targetCloseMins.length - 1];
+                bestCoolDown = Math.max(1, bestCloseMin - 20 - realWorkTime);
+            }
+            const realCloseTime = `${10 + Math.floor(bestCloseMin/60)}:${String(bestCloseMin%60).padStart(2,'0')}`;
 
             const blocks = bTypes.map((t, i) => buildBlock(t, i + 1, blockDurations[i], phases[i]));
 
@@ -4733,9 +4829,9 @@
 
             return {
                 blocks,
-                totalWorkTime: totalWorkTime,
+                totalWorkTime: realWorkTime,
                 mode,
-                closeTime: closeTime,
+                closeTime: realCloseTime,
                 profilePlano: profilePlano.id,
                 profileMontana: profileMontana.id,
                 profile: profilePlano.id, // compat legado
@@ -5546,8 +5642,8 @@
                     bike.style.left = `${Math.min(Math.max(progPct, 2), 98).toFixed(1)}%`;
                 }
                 let bikeColor = iv.isWarmup || iv.terrain === 'warmup' ? 'var(--hibrido)'
-                              : iv.terrain === 'montana' ? '#ff2020'
-                              : iv.terrain === 'plano'   ? '#00d4ff'
+                              : iv.terrain === 'montana' ? 'var(--montana)'
+                              : iv.terrain === 'plano'   ? 'var(--plano)'
                               : 'var(--accent)';
                 bike.style.color = bikeColor;
                 bike.classList.remove('terrain-plano','terrain-montana','terrain-warmup');
@@ -5825,14 +5921,17 @@
                 const req = el.requestFullscreen || el.webkitRequestFullscreen || el.mozRequestFullScreen || el.msRequestFullscreen;
                 if (req) req.call(el).catch(() => {});
                 overlay.classList.add('fs-mode');
+                document.getElementById('btnFs').textContent = '✕ Salir';
                 _isFs = true;
-                requestWakeLock();
+                requestWakeLock(); // asegurar pantalla encendida al entrar a fullscreen
             } else {
                 const ex = document.exitFullscreen || document.webkitExitFullscreen || document.mozCancelFullScreen || document.msExitFullscreen;
                 if (ex) ex.call(document).catch(() => {});
                 overlay.classList.remove('fs-mode');
+                document.getElementById('btnFs').textContent = '⛶ Pantalla completa';
                 _isFs = false;
             }
+            // Actualizar UI para reflejar el nuevo modo (reloj integrado en AHORA)
             if (timerState.flatList && timerState.flatList.length) {
                 requestAnimationFrame(() => {
                     buildClassProfileGraph(timerState.flatList);
@@ -5846,6 +5945,7 @@
             document.addEventListener(ev, () => {
                 if (!document.fullscreenElement && !document.webkitFullscreenElement) {
                     document.getElementById('timerOverlay').classList.remove('fs-mode');
+                    document.getElementById('btnFs').textContent = '⛶ Pantalla completa';
                     _isFs = false;
                     if (timerState.flatList && timerState.flatList.length) {
                         requestAnimationFrame(() => buildClassProfileGraph(timerState.flatList));
@@ -5932,12 +6032,8 @@
 
         function loadRoute(id) {
             const routes = getSavedRoutes();
-            const saved = routes.find(r => r.id == id); // == para tolerar string/number
-            if (!saved) {
-                showToast('⚠️ No se encontró el recorrido');
-                console.warn('loadRoute: id no encontrado', id, routes.map(r=>r.id));
-                return;
-            }
+            const saved = routes.find(r => r.id === id);
+            if (!saved) return;
 
             // Reconstruir currentClass desde los datos guardados
             currentClass = saved.classData;
@@ -6414,13 +6510,8 @@
         }
 
         function loadArmarRoute(id) {
-            const routes = getArmarSavedRoutes();
-            const saved = routes.find(r => r.id == id); // == para tolerar string/number
-            if (!saved) {
-                showToast('⚠️ No se encontró el recorrido');
-                console.warn('loadArmarRoute: id no encontrado', id, routes.map(r=>r.id));
-                return;
-            }
+            const saved = getArmarSavedRoutes().find(r => r.id === id);
+            if (!saved) return;
             armarTotalMin = saved.totalMin;
             armarBloques = JSON.parse(JSON.stringify(saved.bloques));
             // Ensure IDs don't collide
