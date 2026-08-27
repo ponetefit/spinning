@@ -1479,6 +1479,26 @@
             flex-shrink: 0;
         }
 
+        /* Resguardo para celulares angostos (320-375px): el header nunca
+           debe cortarse — se achica el botón, se oculta el subtítulo del
+           logo, y si aun así no entra, se permite que pase a 2 filas. */
+        @media(max-width:380px) {
+            .tmr-top {
+                flex-wrap: wrap;
+                row-gap: 6px;
+            }
+            .tmr-close {
+                padding: 7px 10px;
+                font-size: 11px;
+            }
+            .tmr-logo-sub {
+                display: none;
+            }
+            .tmr-live-clock {
+                font-size: 22px;
+            }
+        }
+
         /* ── BARRA PROGRESO ── */
         .tmr-progress-wrap {
             height: 7px;
@@ -1750,12 +1770,20 @@
             align-items: center;
             gap: 5px;
             font-family: 'Space Mono', monospace;
-            font-size: clamp(10px, 2.4vw, 12px);
+            font-size: clamp(10px, 2.8vw, 12px);
             font-weight: 700;
             padding: 4px 10px;
             border-radius: 6px;
-            white-space: nowrap;
+            max-width: 100%;
+            white-space: normal;
+            text-align: center;
             cursor: pointer;
+        }
+        .fc-badge-row {
+            display: flex;
+            justify-content: center;
+            margin-top: 6px;
+            padding: 0 8px;
         }
         .fc-zone-badge .fc-heart {
             font-size: 11px;
@@ -3499,7 +3527,6 @@
             <div class="tmr-top">
                 <button class="tmr-close" id="btnVolver" onclick="closeTimer()">← Volver</button>
                 <button class="tmr-close" id="btnSalirFs" onclick="toggleFullscreen()">✕ Salir</button>
-                <button class="tmr-close" id="btnEdadFc" onclick="openEdadModal()">❤ FC</button>
                 <div class="tmr-logo">
                     <span class="tmr-logo-icon">🚴</span>
                     <div class="tmr-logo-text">
@@ -3575,8 +3602,10 @@
                 <div class="tmr-curr" id="tmrCurrCard">
                     <div class="tmr-curr-label">
                         <span class="tmr-curr-lbl-txt">AHORA</span>
-                        <span class="fc-zone-badge fc-empty" id="tmrFcBadge" onclick="openEdadModal()" style="margin-left:auto">❤ Configurar FC</span>
-                        <div class="tmr-curr-dur" id="tmrCurrDurLabel" style="margin-left:8px"></div>
+                        <div class="tmr-curr-dur" id="tmrCurrDurLabel"></div>
+                    </div>
+                    <div class="fc-badge-row">
+                        <span class="fc-zone-badge fc-empty" id="tmrFcBadge" onclick="openEdadModal()">❤ Configurar FC</span>
                     </div>
                     <div class="tmr-curr-body">
                         <!-- ícono bici + ejercicio grande -->
