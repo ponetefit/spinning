@@ -4061,8 +4061,14 @@
             return 5;
         }
 
-        function getZonaFC(intensityLabel, isHydration) {
-            if (isHydration) return FC_ZONES[2]; // hidratación: siempre Zona 2, igual que estar en la bici
+        function getZonaFC(intensityLabel, isHydration, prevZonaNum) {
+            if (isHydration) {
+                // La FC no cae de golpe: viniendo de una Zona alta, la hidratación
+                // (60") solo alcanza a bajar UN escalón de zona, nunca directo al
+                // piso — de Zona 5 a Zona 2 en 1 minuto no pasa fisiológicamente.
+                const piso = prevZonaNum ? Math.max(2, prevZonaNum - 1) : 2;
+                return FC_ZONES[piso];
+            }
             const score = INT_SCORE[intensityLabel] ?? 2;
             return FC_ZONES[scoreToZoneNum(score)];
         }
@@ -4145,12 +4151,13 @@
                 label: '▲ Progresivo',
                 desc: 'Sube de media a máxima continuamente',
                 buildPhases: (n) => {
-                    // build → ... → peak → descent (último siempre baja)
+                    // build → build → ... → peak — el ÚLTIMO bloque es siempre
+                    // el más intenso (con 2 bloques, el segundo es el pico).
+                    // Antes terminaba en "descent" y contradecía la propia
+                    // descripción del perfil ("sube... continuamente").
                     const p = [];
                     for (let i = 0; i < n; i++) {
-                        if (i < n - 2) p.push('build');
-                        else if (i === n - 2) p.push('peak');
-                        else p.push('descent');
+                        p.push(i === n - 1 ? 'peak' : 'build');
                     }
                     return p;
                 }
@@ -5950,9 +5957,13 @@
             // ── ZONA DE FRECUENCIA CARDÍACA ──
             const edadAlumno = getEdadAlumno();
             const fcBadge = document.getElementById('tmrFcBadge');
+            // Zona del intervalo inmediatamente anterior (para que la hidratación
+            // decaiga gradual y no salte directo al piso — ver getZonaFC).
+            const prevIv = timerState.flatList[timerState.idx - 1];
+            const prevZonaNum = prevIv ? getZonaFC(prevIv.intensity, prevIv.isHydration).num : null;
             if (fcBadge) {
                 if (edadAlumno) {
-                    const zona = getZonaFC(iv.intensity, iv.isHydration);
+                    const zona = getZonaFC(iv.intensity, iv.isHydration, prevZonaNum);
                     const rango = getFCRange(edadAlumno, zona);
                     fcBadge.className = 'fc-zone-badge';
                     fcBadge.style.background = zona.color + '30';
@@ -5980,7 +5991,8 @@
                 const nextFcBadge = document.getElementById('tmrNextFcBadge');
                 if (nextFcBadge) {
                     if (edadAlumno) {
-                        const nextZona = getZonaFC(next.intensity, next.isHydration);
+                        const currZonaNum = getZonaFC(iv.intensity, iv.isHydration, prevZonaNum).num;
+                        const nextZona = getZonaFC(next.intensity, next.isHydration, currZonaNum);
                         nextFcBadge.style.display = 'inline';
                         nextFcBadge.style.background = nextZona.color + '30';
                         nextFcBadge.style.color = nextZona.color;
