@@ -4581,7 +4581,9 @@
         // intLevel 1: bloques de valle/bajada → sin peaks, máximo intScore 3
         // intLevel 2: bloques de desarrollo   → sin peaks, máximo intScore 3-4
         // intLevel 3: bloques de pico         → peaks habilitados al final
-        function buildIntervals(terrain, durs, blockNum, intLevel, blockDurMin) {
+        // profileId: id del perfil de camino que generó este bloque (progresivo,
+        // escalera, constante, etc.) — habilita ajustes de guion específicos por perfil.
+        function buildIntervals(terrain, durs, blockNum, intLevel, blockDurMin, profileId) {
             const lvl = intLevel || 2;
             const isP = terrain === 'plano';
             const fullPool = [...(isP ? PLANO_EX : MONT_EX)];
@@ -4598,6 +4600,19 @@
 
             // En bloques conservadores (valle/bajada), excluir peaks del pool de partida
             const workingPool = lvl === 1 ? fullPool.filter(e => !e.peak) : fullPool;
+
+            // ── CONSTANTE: "rodar en ruta" — una sola técnica sostenida todo el
+            // camino, sin sprint, sin que se mueva la zona. Se elige UNA vez acá
+            // y se usa en cada intervalo, sin variar.
+            // ── CONSTANTE — Plano: "rodar en ruta" con una sola técnica fija.
+            // Montaña: no hace falta forzar una técnica fija — con quedarse
+            // en Zona 3-4 sin picos alcanza (ya lo hace la fase 'build' sola),
+            // así que ahí simplemente no exigimos flatEx.
+            const flatEx = (profileId === 'constante' && terrain === 'plano')
+                ? (workingPool.find(e => e.opener && !e.rare && e.intScore === 2) ||
+                   workingPool.find(e => e.opener && !e.rare) ||
+                   workingPool[0])
+                : null;
 
             // Tipos "cada tanto": pueden reaparecer en la clase (no bloqueados tras 1ª vez)
             const CADA_TANTO = new Set(['60rs', '100s']);
@@ -4639,6 +4654,14 @@
             }
             const nFinal = durs.length;
 
+            // ── PICO ANTICIPADO: dentro del bloque de pico, la fuerza máxima o el
+            // sprint aparecen ANTES del final (≈60% del bloque), no como cierre —
+            // así el bloque "explota" y después sigue desarrollando, en vez de
+            // terminar justo en el pico.
+            const picoAnticipadoIdx = (profileId === 'pico_anticipado' && lvl === 3)
+                ? Math.max(1, Math.floor(nFinal * 0.6))
+                : -1;
+
             for (let i = 0; i < nFinal; i++) {
                 let d = durs[i];
                 const isFirst = i === 0;
@@ -4651,19 +4674,29 @@
 
                 let ex;
 
-                if (isFirst) {
+                if (profileId === 'constante' && flatEx) {
+                    // Rodar en ruta (Plano): siempre la misma técnica, ni sprint ni variación
+                    ex = flatEx;
+
+                } else if (isFirst) {
                     // Opener siempre — entrada al bloque con intensidad baja-media
                     let openers = pool.filter(e => e.opener);
                     if (!openers.length) openers = pool;
                     openers = openers.slice().sort(() => Math.random() - 0.5);
                     ex = openers[0];
 
-                } else if (isLast && n >= 3 && lvl === 3) {
+                } else if (i === picoAnticipadoIdx) {
+                    // Pico anticipado: la fuerza máxima/sprint llega ACÁ, antes del
+                    // cierre del bloque — no al final.
+                    const peaks = pool.filter(e => e.peak);
+                    ex = peaks.length ? rnd(peaks) : pickEx(pool, lastType, true);
+
+                } else if (isLast && n >= 3 && lvl === 3 && profileId !== 'pico_anticipado') {
                     // Pico final: solo en bloques de pico habilitados
                     const peaks = pool.filter(e => e.peak);
                     ex = peaks.length ? rnd(peaks) : pickEx(pool, lastType, true);
 
-                } else if (isSecondToLast && lvl === 3 && n >= 5 && Math.random() < 0.4) {
+                } else if (isSecondToLast && lvl === 3 && n >= 5 && Math.random() < 0.4 && profileId !== 'pico_anticipado') {
                     // En bloques largos de pico, a veces el anteúltimo también es peak
                     const peaks = pool.filter(e => e.peak);
                     ex = peaks.length ? rnd(peaks) : pickEx(pool, lastType, true);
@@ -4756,6 +4789,23 @@
 
                 if (ex.rare) usedRareThisClass[ex.type] = true;
 
+                // ── Ajustes de guion específicos por perfil de camino ──────────────
+                if (profileId === 'escalera' && !isFirst && !(isLast && lvl === 3) && ex.intScore >= 3) {
+                    // Escalera: la técnica fuerte del bloque se sostiene cada vez más
+                    // tiempo a medida que se sube de escalón (usa el Nº de aparición
+                    // de este camino en la clase — 1er bloque, 2do, 3ro...).
+                    d = Math.min(60, 20 + zonaOcurrencia[terrain] * 10);
+                }
+                if (profileId === 'explosion_final' && isLast && lvl === 3 && ex.peak) {
+                    // Explosión final: el sprint de cierre es SIEMPRE largo (45-60"),
+                    // nunca un sprint corto — es la explosión de toda la clase.
+                    d = 45 + Math.floor(Math.random() * 16);
+                }
+                if (profileId === 'doble_pico' && ex.peak) {
+                    // Doble pico: los DOS picos son largos (45-60"), no sprints cortos.
+                    d = 45 + Math.floor(Math.random() * 16);
+                }
+
                 const exPos = ex.pos || 'Sentado';
                 if (exPos === lastPos) {
                     consecSec += d;
@@ -4835,7 +4885,7 @@
         // ═══════════════════════════════════════════════════════
         // BUILD BLOCK — recibe la fase del bloque en la clase
         // ═══════════════════════════════════════════════════════
-        function buildBlock(bType, num, durMin, phase) {
+        function buildBlock(bType, num, durMin, phase, profilePlanoId, profileMontanaId) {
             const intLevel = blkIntLevel(phase || 'build');
             const blkStyle = rnd(BLOCK_STYLES[phase || 'build'] || BLOCK_STYLES.build);
             const hydration = {
@@ -4864,8 +4914,9 @@
 
             if (bType === 'P' || bType === 'M') {
                 const terrain = bType === 'P' ? 'plano' : 'montana';
+                const profileId = terrain === 'plano' ? profilePlanoId : profileMontanaId;
                 const durs = genDurs(baseWorkSec, blkStyle);
-                const baseIvs = buildIntervals(terrain, durs, num, intLevel, durMin);
+                const baseIvs = buildIntervals(terrain, durs, num, intLevel, durMin, profileId);
                 const singleRepeatIvCount = baseIvs.length;
                 // Expandir la secuencia para el timer (cada rep es copia exacta)
                 let allIvs = [];
@@ -4956,7 +5007,7 @@
                     // Intervalos normales de plano
                     if (normalSec >= 20) {
                         const nd = genDurs(normalSec, blkStyle);
-                        buildIntervals(planoT, nd, num, intLevel, durMin)
+                        buildIntervals(planoT, nd, num, intLevel, durMin, profilePlanoId)
                             .filter(v => !v.isHydration)
                             .forEach(iv => { allIntervals.push(iv); terrainSeqFlat.push(planoT); });
                     }
@@ -4982,7 +5033,8 @@
                 } else {
                     // Tramo normal: generar intervalos del terreno correspondiente
                     tramoDurs = genDurs(tramoSec, blkStyle);
-                    buildIntervals(tramo.terrain, tramoDurs, num, intLevel, durMin)
+                    const tramoProfileId = tramo.terrain === 'plano' ? profilePlanoId : profileMontanaId;
+                    buildIntervals(tramo.terrain, tramoDurs, num, intLevel, durMin, tramoProfileId)
                         .filter(v => !v.isHydration)
                         .forEach(iv => { allIntervals.push(iv); terrainSeqFlat.push(tramo.terrain); });
                 }
@@ -5070,7 +5122,7 @@
             // El primer bloque nunca es de pico
             if (phases[0] === 'peak') phases[0] = 'build';
 
-            const blocks = bTypes.map((t, i) => buildBlock(t, i + 1, blockDurations[i], phases[i]));
+            const blocks = bTypes.map((t, i) => buildBlock(t, i + 1, blockDurations[i], phases[i], profilePlano.id, profileMontana.id));
 
             // ── MODO REPETITIVA: clonar el primer bloque de cada terreno para todos los del mismo tipo ──
             if (modoRepetitiva) {
