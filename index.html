@@ -1479,26 +1479,6 @@
             flex-shrink: 0;
         }
 
-        /* Resguardo para celulares angostos (320-375px): el header nunca
-           debe cortarse — se achica el botón, se oculta el subtítulo del
-           logo, y si aun así no entra, se permite que pase a 2 filas. */
-        @media(max-width:380px) {
-            .tmr-top {
-                flex-wrap: wrap;
-                row-gap: 6px;
-            }
-            .tmr-close {
-                padding: 7px 10px;
-                font-size: 11px;
-            }
-            .tmr-logo-sub {
-                display: none;
-            }
-            .tmr-live-clock {
-                font-size: 22px;
-            }
-        }
-
         /* ── BARRA PROGRESO ── */
         .tmr-progress-wrap {
             height: 7px;
@@ -1762,111 +1742,6 @@
             color: var(--muted);
             width: 100%;
             text-align: center;
-        }
-
-        /* ── BADGE ZONA FC ── */
-        .fc-zone-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-            font-family: 'Space Mono', monospace;
-            font-size: clamp(10px, 2.8vw, 12px);
-            font-weight: 700;
-            padding: 4px 10px;
-            border-radius: 6px;
-            max-width: 100%;
-            white-space: normal;
-            text-align: center;
-            cursor: pointer;
-        }
-        .fc-badge-row {
-            display: flex;
-            justify-content: center;
-            margin-top: 6px;
-            padding: 0 8px;
-        }
-        .fc-zone-badge .fc-heart {
-            font-size: 11px;
-        }
-        .fc-zone-badge.fc-empty {
-            background: rgba(96,96,128,.15);
-            color: var(--muted);
-            border: 1px dashed var(--muted);
-        }
-        .tmr-next-fc-badge {
-            font-family: 'Space Mono', monospace;
-            font-size: 10px;
-            font-weight: 700;
-            padding: 2px 7px;
-            border-radius: 5px;
-            margin-left: 6px;
-        }
-
-        /* ── MODAL EDAD / FC ── */
-        .edad-fc-overlay {
-            display: none;
-            position: fixed;
-            inset: 0;
-            background: rgba(0,0,0,.65);
-            z-index: 9999;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-        }
-        .edad-fc-card {
-            background: var(--card);
-            border: 1.5px solid var(--accent);
-            border-radius: 14px;
-            padding: 20px;
-            max-width: 320px;
-            width: 100%;
-        }
-        .edad-fc-title {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 20px;
-            letter-spacing: 1px;
-            color: var(--accent);
-            margin-bottom: 6px;
-        }
-        .edad-fc-sub {
-            font-size: 12px;
-            color: var(--muted);
-            margin-bottom: 14px;
-            line-height: 1.4;
-        }
-        .edad-fc-input {
-            width: 100%;
-            background: var(--surface);
-            border: 1.5px solid var(--muted);
-            border-radius: 8px;
-            padding: 10px 12px;
-            color: var(--text);
-            font-family: 'Space Mono', monospace;
-            font-size: 16px;
-            margin-bottom: 14px;
-            box-sizing: border-box;
-        }
-        .edad-fc-actions {
-            display: flex;
-            gap: 8px;
-        }
-        .edad-fc-actions button {
-            flex: 1;
-            padding: 10px;
-            border-radius: 8px;
-            border: none;
-            font-weight: 700;
-            font-size: 13px;
-            cursor: pointer;
-        }
-        .edad-fc-btn-cancel {
-            background: var(--surface);
-            color: var(--muted);
-            border: 1px solid var(--muted) !important;
-        }
-        .edad-fc-btn-save {
-            background: var(--accent);
-            color: var(--bg);
         }
 
         /* ── LO SIGUIENTE ── */
@@ -2514,81 +2389,6 @@
                 min-width: calc(50% - 4px);
                 flex: 1 1 calc(50% - 4px);
             }
-        }
-
-        /* ── SELECTOR DE ZONA FC OBJETIVO ── */
-        .zona-label {
-            font-family: 'Space Mono', monospace;
-            font-size: 10px;
-            color: var(--muted);
-            letter-spacing: 1.5px;
-            text-transform: uppercase;
-            margin: 10px 0 6px;
-        }
-        .zona-chips {
-            display: flex;
-            gap: 6px;
-            flex-wrap: wrap;
-        }
-        .zona-chip {
-            font-family: 'Space Mono', monospace;
-            font-size: 11px;
-            font-weight: 700;
-            padding: 6px 11px;
-            border-radius: 6px;
-            border: 1.5px solid var(--border);
-            background: var(--card);
-            color: var(--muted);
-            cursor: pointer;
-            transition: all .15s;
-        }
-        .zona-chip:hover {
-            border-color: rgba(232, 216, 64, .4);
-        }
-        .zona-chip.zona-selected {
-            color: #08080d;
-            border-color: transparent;
-        }
-        .zona-etapa-row {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            margin-bottom: 6px;
-            flex-wrap: wrap;
-        }
-        .zona-etapa-lbl {
-            font-family: 'Space Mono', monospace;
-            font-size: 10px;
-            color: var(--muted);
-            min-width: 52px;
-        }
-        .zona-etapa-chips {
-            display: flex;
-            gap: 5px;
-            flex-wrap: wrap;
-        }
-        .zona-etapa-del {
-            color: var(--muted);
-            cursor: pointer;
-            font-size: 13px;
-            padding: 2px 6px;
-        }
-        .zona-etapa-del:hover {
-            color: var(--accent2);
-        }
-        .zona-etapa-add {
-            font-family: 'Space Mono', monospace;
-            font-size: 11px;
-            color: var(--accent);
-            border: 1px dashed var(--accent);
-            border-radius: 6px;
-            padding: 5px 10px;
-            display: inline-block;
-            cursor: pointer;
-            margin-top: 2px;
-        }
-        .zona-etapa-add:hover {
-            background: rgba(232, 216, 64, .08);
         }
 
         /* ══════════════════════════════════════════
@@ -3482,14 +3282,10 @@
                 <div class="profile-row">
                     <div class="profile-terrain-label plano-label">🔵 Camino Plano</div>
                     <div class="profile-btns" id="profileBtnsPlano"></div>
-                    <div class="zona-label">❤ Etapas de zona FC (opcional, en orden de aparición)</div>
-                    <div class="zona-chips" id="zonaChipsPlano"></div>
                 </div>
                 <div class="profile-row" style="margin-top:18px">
                     <div class="profile-terrain-label montana-label">🟠 Camino Montaña</div>
                     <div class="profile-btns" id="profileBtnsMontana"></div>
-                    <div class="zona-label">❤ Etapas de zona FC (opcional, en orden de aparición)</div>
-                    <div class="zona-chips" id="zonaChipsMontana"></div>
                 </div>
                 <div class="profile-row" style="margin-top:22px;border-top:1px solid var(--border);padding-top:16px">
                     <label class="repetitiva-toggle" id="repetitivaLabel">
@@ -3602,10 +3398,7 @@
                 <div class="tmr-curr" id="tmrCurrCard">
                     <div class="tmr-curr-label">
                         <span class="tmr-curr-lbl-txt">AHORA</span>
-                        <div class="tmr-curr-dur" id="tmrCurrDurLabel"></div>
-                    </div>
-                    <div class="fc-badge-row">
-                        <span class="fc-zone-badge fc-empty" id="tmrFcBadge" onclick="openEdadModal()">❤ Configurar FC</span>
+                        <div class="tmr-curr-dur" id="tmrCurrDurLabel" style="margin-left:auto"></div>
                     </div>
                     <div class="tmr-curr-body">
                         <!-- ícono bici + ejercicio grande -->
@@ -3630,10 +3423,7 @@
                 </div>
                 <div class="tmr-next-center">
                     <div class="tmr-next-desc" id="tmrNextDesc">—</div>
-                    <div class="tmr-next-blk">
-                        <span id="tmrNextBlk">—</span>
-                        <span class="tmr-next-fc-badge" id="tmrNextFcBadge" style="display:none"></span>
-                    </div>
+                    <div class="tmr-next-blk" id="tmrNextBlk">—</div>
                 </div>
                 <div class="tmr-next-time" id="tmrNextTime">—</div>
             </div>
@@ -4037,93 +3827,6 @@
             }[l] || '#e8d840');
         }
 
-        // ══════════════════════════════════════════════
-        // ZONAS DE ENTRENAMIENTO POR FRECUENCIA CARDÍACA
-        // ══════════════════════════════════════════════
-        // NOTA: no usamos Zona 1 — arriba de la bici, pedaleando, ya se está en
-        // Zona 2 como mínimo (incluida la hidratación). El "piso" real de la clase
-        // es Zona 2, y los valles (recuperación activa entre picos) bajan hasta
-        // Zona 3, nunca menos.
-        const FC_ZONES = [
-            null, // índice 0 sin usar
-            null, // índice 1 sin usar — Zona 1 no aplica en spinning
-            { num: 2, nombre: 'Resistencia',   pctMin: 0.60, pctMax: 0.70, color: '#00d4ff' },
-            { num: 3, nombre: 'Tempo',         pctMin: 0.70, pctMax: 0.80, color: '#e8d840' },
-            { num: 4, nombre: 'Umbral',        pctMin: 0.80, pctMax: 0.90, color: '#ff9040' },
-            { num: 5, nombre: 'VO2 Máx',       pctMin: 0.90, pctMax: 1.00, color: '#ff2050' },
-        ];
-
-        // Mapea el score de intensidad (0–8) a una zona de FC (2–5) — piso en Zona 2
-        function scoreToZoneNum(score) {
-            if (score <= 2) return 2;
-            if (score <= 4) return 3;
-            if (score <= 6) return 4;
-            return 5;
-        }
-
-        function getZonaFC(intensityLabel, isHydration, prevZonaNum) {
-            if (isHydration) {
-                // La FC no cae de golpe: viniendo de una Zona alta, la hidratación
-                // (60") solo alcanza a bajar UN escalón de zona, nunca directo al
-                // piso — de Zona 5 a Zona 2 en 1 minuto no pasa fisiológicamente.
-                const piso = prevZonaNum ? Math.max(2, prevZonaNum - 1) : 2;
-                return FC_ZONES[piso];
-            }
-            const score = INT_SCORE[intensityLabel] ?? 2;
-            return FC_ZONES[scoreToZoneNum(score)];
-        }
-
-        // FC máxima estimada — fórmula de Tanaka: 208 - (0.7 × edad)
-        function calcFCMax(edad) {
-            return Math.round(208 - (0.7 * edad));
-        }
-
-        function getFCRange(edad, zona) {
-            const fcMax = calcFCMax(edad);
-            return {
-                min: Math.round(fcMax * zona.pctMin),
-                max: Math.round(fcMax * zona.pctMax)
-            };
-        }
-
-        // ── Persistencia de la edad del alumno ──
-        function getEdadAlumno() {
-            try {
-                const v = localStorage.getItem('pfs_edad_alumno');
-                return v ? parseInt(v, 10) : null;
-            } catch (e) { return null; }
-        }
-
-        function setEdadAlumno(edad) {
-            try { localStorage.setItem('pfs_edad_alumno', String(edad)); } catch (e) {}
-        }
-
-        function openEdadModal() {
-            const modal = document.getElementById('edadFcModal');
-            const input = document.getElementById('edadFcInput');
-            const actual = getEdadAlumno();
-            if (input) input.value = actual || '';
-            if (modal) modal.style.display = 'flex';
-            if (input) setTimeout(() => input.focus(), 50);
-        }
-
-        function closeEdadModal() {
-            const modal = document.getElementById('edadFcModal');
-            if (modal) modal.style.display = 'none';
-        }
-
-        function guardarEdadFC() {
-            const input = document.getElementById('edadFcInput');
-            const edad = parseInt(input.value, 10);
-            if (!edad || edad < 5 || edad > 100) {
-                input.style.borderColor = '#ff3d5a';
-                return;
-            }
-            setEdadAlumno(edad);
-            closeEdadModal();
-            updateTimerUI();
-        }
-
         function safePos(ex) {
             if (ex.pos) return ex.pos;
             return rnd(['Sentado', 'Parado']);
@@ -4151,13 +3854,12 @@
                 label: '▲ Progresivo',
                 desc: 'Sube de media a máxima continuamente',
                 buildPhases: (n) => {
-                    // build → build → ... → peak — el ÚLTIMO bloque es siempre
-                    // el más intenso (con 2 bloques, el segundo es el pico).
-                    // Antes terminaba en "descent" y contradecía la propia
-                    // descripción del perfil ("sube... continuamente").
+                    // build → ... → peak → descent (último siempre baja)
                     const p = [];
                     for (let i = 0; i < n; i++) {
-                        p.push(i === n - 1 ? 'peak' : 'build');
+                        if (i < n - 2) p.push('build');
+                        else if (i === n - 2) p.push('peak');
+                        else p.push('descent');
                     }
                     return p;
                 }
@@ -4265,44 +3967,6 @@
         // Perfiles seleccionados por el profe (por terreno)
         let selectedProfilePlano = 'aleatorio';
         let selectedProfileMontana = 'aleatorio';
-
-        // ── ZONAS DE FC POR ETAPAS, POR CAMINO ──
-        // Cada camino tiene una lista ordenada de "etapas". Cada etapa es un array
-        // de zonas (1-5) — puede tener una sola (ej. [3]) o varias combinadas (ej. [4,5]).
-        // La 1ª vez que aparece ese camino en la clase usa la etapa 0, la 2ª vez la
-        // etapa 1, etc. Si hay más apariciones que etapas, se repite la última.
-        // Ejemplo pedido: montaña → [[3], [4,5]] · plano → [[3,4]]
-        let zonaEtapasPlano = [];
-        let zonaEtapasMontana = [];
-
-        // Contador de apariciones por camino, se resetea al empezar cada clase
-        let zonaOcurrencia = { plano: 0, montana: 0 };
-
-        // Banda de intScore (0-8) correspondiente a cada zona 2-5 (Zona 1 no aplica)
-        const ZONA_SCORE_BANDS = {
-            2: [0, 2],
-            3: [3, 4],
-            4: [5, 6],
-            5: [7, 8]
-        };
-
-        // Une las bandas de score de varias zonas elegidas en una etapa (ej. [4,5] → [5,8])
-        function getEtapaBand(zonas) {
-            if (!zonas || !zonas.length) return null;
-            const mins = zonas.map(z => ZONA_SCORE_BANDS[z][0]);
-            const maxs = zonas.map(z => ZONA_SCORE_BANDS[z][1]);
-            return [Math.min(...mins), Math.max(...maxs)];
-        }
-
-        // Devuelve la banda de score a usar para la próxima aparición de este camino,
-        // avanzando el contador de ocurrencias. null si no hay etapas configuradas.
-        function nextZonaBand(terrain) {
-            const etapas = terrain === 'plano' ? zonaEtapasPlano : terrain === 'montana' ? zonaEtapasMontana : [];
-            if (!etapas.length) return null;
-            zonaOcurrencia[terrain] = (zonaOcurrencia[terrain] || 0) + 1;
-            const idx = Math.min(zonaOcurrencia[terrain] - 1, etapas.length - 1);
-            return getEtapaBand(etapas[idx]);
-        }
         let modoRepetitiva = false;
 
         // Legacy CLASS_PROFILES — se mantiene por compatibilidad interna
@@ -4565,25 +4229,10 @@
         }
 
         // ── buildIntervals recibe el nivel de intensidad del bloque (intLevel) ──────
-        // Zona de FC "natural" de cada fase del perfil — así el perfil elegido
-        // (progresivo, ondulado, explosión final, etc.) ya implica una zona objetivo
-        // por sí solo, sin que el profe tenga que configurar etapas manuales.
-        // No existe Zona 1: arriba de la bici pedaleando ya se está en Zona 2 como
-        // piso. Los valles (recuperación activa) bajan hasta Zona 3, nunca menos.
-        //   valley/descent (intLevel 1) → Z3     · valle activo, nunca por debajo
-        //   build          (intLevel 2) → Z3     · tempo, ritmo sostenido
-        //   peak           (intLevel 3) → Z4-Z5  · umbral / esfuerzo máximo
-        function intLevelToZonaBand(lvl) {
-            if (lvl === 3) return [5, 8];
-            return [3, 4];
-        }
-
         // intLevel 1: bloques de valle/bajada → sin peaks, máximo intScore 3
         // intLevel 2: bloques de desarrollo   → sin peaks, máximo intScore 3-4
         // intLevel 3: bloques de pico         → peaks habilitados al final
-        // profileId: id del perfil de camino que generó este bloque (progresivo,
-        // escalera, constante, etc.) — habilita ajustes de guion específicos por perfil.
-        function buildIntervals(terrain, durs, blockNum, intLevel, blockDurMin, profileId) {
+        function buildIntervals(terrain, durs, blockNum, intLevel, blockDurMin) {
             const lvl = intLevel || 2;
             const isP = terrain === 'plano';
             const fullPool = [...(isP ? PLANO_EX : MONT_EX)];
@@ -4593,26 +4242,8 @@
             let lastPos = null;
             let consecSec = 0;
 
-            // Zona de FC objetivo para ESTA aparición del camino: si el profe configuró
-            // etapas manuales, esas mandan; si no, se usa la zona que el perfil implica
-            // naturalmente según la fase de este bloque (build/peak/valley/descent).
-            const zonaBand = nextZonaBand(terrain) || intLevelToZonaBand(lvl);
-
             // En bloques conservadores (valle/bajada), excluir peaks del pool de partida
             const workingPool = lvl === 1 ? fullPool.filter(e => !e.peak) : fullPool;
-
-            // ── CONSTANTE: "rodar en ruta" — una sola técnica sostenida todo el
-            // camino, sin sprint, sin que se mueva la zona. Se elige UNA vez acá
-            // y se usa en cada intervalo, sin variar.
-            // ── CONSTANTE — Plano: "rodar en ruta" con una sola técnica fija.
-            // Montaña: no hace falta forzar una técnica fija — con quedarse
-            // en Zona 3-4 sin picos alcanza (ya lo hace la fase 'build' sola),
-            // así que ahí simplemente no exigimos flatEx.
-            const flatEx = (profileId === 'constante' && terrain === 'plano')
-                ? (workingPool.find(e => e.opener && !e.rare && e.intScore === 2) ||
-                   workingPool.find(e => e.opener && !e.rare) ||
-                   workingPool[0])
-                : null;
 
             // Tipos "cada tanto": pueden reaparecer en la clase (no bloqueados tras 1ª vez)
             const CADA_TANTO = new Set(['60rs', '100s']);
@@ -4654,14 +4285,6 @@
             }
             const nFinal = durs.length;
 
-            // ── PICO ANTICIPADO: dentro del bloque de pico, la fuerza máxima o el
-            // sprint aparecen ANTES del final (≈60% del bloque), no como cierre —
-            // así el bloque "explota" y después sigue desarrollando, en vez de
-            // terminar justo en el pico.
-            const picoAnticipadoIdx = (profileId === 'pico_anticipado' && lvl === 3)
-                ? Math.max(1, Math.floor(nFinal * 0.6))
-                : -1;
-
             for (let i = 0; i < nFinal; i++) {
                 let d = durs[i];
                 const isFirst = i === 0;
@@ -4674,29 +4297,19 @@
 
                 let ex;
 
-                if (profileId === 'constante' && flatEx) {
-                    // Rodar en ruta (Plano): siempre la misma técnica, ni sprint ni variación
-                    ex = flatEx;
-
-                } else if (isFirst) {
+                if (isFirst) {
                     // Opener siempre — entrada al bloque con intensidad baja-media
                     let openers = pool.filter(e => e.opener);
                     if (!openers.length) openers = pool;
                     openers = openers.slice().sort(() => Math.random() - 0.5);
                     ex = openers[0];
 
-                } else if (i === picoAnticipadoIdx) {
-                    // Pico anticipado: la fuerza máxima/sprint llega ACÁ, antes del
-                    // cierre del bloque — no al final.
-                    const peaks = pool.filter(e => e.peak);
-                    ex = peaks.length ? rnd(peaks) : pickEx(pool, lastType, true);
-
-                } else if (isLast && n >= 3 && lvl === 3 && profileId !== 'pico_anticipado') {
+                } else if (isLast && n >= 3 && lvl === 3) {
                     // Pico final: solo en bloques de pico habilitados
                     const peaks = pool.filter(e => e.peak);
                     ex = peaks.length ? rnd(peaks) : pickEx(pool, lastType, true);
 
-                } else if (isSecondToLast && lvl === 3 && n >= 5 && Math.random() < 0.4 && profileId !== 'pico_anticipado') {
+                } else if (isSecondToLast && lvl === 3 && n >= 5 && Math.random() < 0.4) {
                     // En bloques largos de pico, a veces el anteúltimo también es peak
                     const peaks = pool.filter(e => e.peak);
                     ex = peaks.length ? rnd(peaks) : pickEx(pool, lastType, true);
@@ -4718,35 +4331,8 @@
                         3: 4
                     }[lvl] || 3;
                     let candidates = buildPool.filter(e => e.intScore >= prevScore && e.intScore <= scoreCap);
-                    if (!candidates.length) {
-                        // No hay ningún ejercicio disponible que mantenga o suba la intensidad
-                        // (pool chico + no repetir el mismo tipo). En vez de caer a cualquier
-                        // opción — que podría ser una cadencia baja tipo "recuperación" — se
-                        // toma la de mayor score posible dentro del techo del bloque. La
-                        // intensidad no debe aflojar a mitad de bloque: para bajar la FC está
-                        // la hidratación al cierre, no un intervalo suave a mitad de camino.
-                        const capped = buildPool.filter(e => e.intScore <= scoreCap);
-                        if (capped.length) {
-                            const maxAvail = Math.max(...capped.map(e => e.intScore));
-                            candidates = capped.filter(e => e.intScore === maxAvail);
-                        }
-                    }
+                    if (!candidates.length) candidates = buildPool.filter(e => e.intScore <= scoreCap);
                     if (!candidates.length) candidates = buildPool;
-
-                    // Bias por zona de FC objetivo: preferir candidatos cuya intensidad
-                    // REAL (la etiqueta que después se muestra en el timer, calculada con
-                    // getInt+INT_SCORE sobre la duración real del intervalo) caiga en la
-                    // banda de la zona elegida. Ojo: e.intScore es una escala interna del
-                    // pool (≈1-5, solo para ordenar progresión) distinta de INT_SCORE
-                    // (0-8, la que se ve en pantalla) — hay que usar esta última acá.
-                    if (zonaBand) {
-                        const zonados = candidates.filter(e => {
-                            const label = getInt(e.type, d);
-                            const sc = INT_SCORE[label] ?? 2;
-                            return sc >= zonaBand[0] && sc <= zonaBand[1];
-                        });
-                        if (zonados.length) candidates = zonados;
-                    }
 
                     const posCandidate = decidePos(candidates, lastPos, consecSec, d, lastType);
                     if (posCandidate) {
@@ -4788,23 +4374,6 @@
                 }
 
                 if (ex.rare) usedRareThisClass[ex.type] = true;
-
-                // ── Ajustes de guion específicos por perfil de camino ──────────────
-                if (profileId === 'escalera' && !isFirst && !(isLast && lvl === 3) && ex.intScore >= 3) {
-                    // Escalera: la técnica fuerte del bloque se sostiene cada vez más
-                    // tiempo a medida que se sube de escalón (usa el Nº de aparición
-                    // de este camino en la clase — 1er bloque, 2do, 3ro...).
-                    d = Math.min(60, 20 + zonaOcurrencia[terrain] * 10);
-                }
-                if (profileId === 'explosion_final' && isLast && lvl === 3 && ex.peak) {
-                    // Explosión final: el sprint de cierre es SIEMPRE largo (45-60"),
-                    // nunca un sprint corto — es la explosión de toda la clase.
-                    d = 45 + Math.floor(Math.random() * 16);
-                }
-                if (profileId === 'doble_pico' && ex.peak) {
-                    // Doble pico: los DOS picos son largos (45-60"), no sprints cortos.
-                    d = 45 + Math.floor(Math.random() * 16);
-                }
 
                 const exPos = ex.pos || 'Sentado';
                 if (exPos === lastPos) {
@@ -4885,7 +4454,7 @@
         // ═══════════════════════════════════════════════════════
         // BUILD BLOCK — recibe la fase del bloque en la clase
         // ═══════════════════════════════════════════════════════
-        function buildBlock(bType, num, durMin, phase, profilePlanoId, profileMontanaId) {
+        function buildBlock(bType, num, durMin, phase) {
             const intLevel = blkIntLevel(phase || 'build');
             const blkStyle = rnd(BLOCK_STYLES[phase || 'build'] || BLOCK_STYLES.build);
             const hydration = {
@@ -4914,9 +4483,8 @@
 
             if (bType === 'P' || bType === 'M') {
                 const terrain = bType === 'P' ? 'plano' : 'montana';
-                const profileId = terrain === 'plano' ? profilePlanoId : profileMontanaId;
                 const durs = genDurs(baseWorkSec, blkStyle);
-                const baseIvs = buildIntervals(terrain, durs, num, intLevel, durMin, profileId);
+                const baseIvs = buildIntervals(terrain, durs, num, intLevel, durMin);
                 const singleRepeatIvCount = baseIvs.length;
                 // Expandir la secuencia para el timer (cada rep es copia exacta)
                 let allIvs = [];
@@ -5007,7 +4575,7 @@
                     // Intervalos normales de plano
                     if (normalSec >= 20) {
                         const nd = genDurs(normalSec, blkStyle);
-                        buildIntervals(planoT, nd, num, intLevel, durMin, profilePlanoId)
+                        buildIntervals(planoT, nd, num, intLevel, durMin)
                             .filter(v => !v.isHydration)
                             .forEach(iv => { allIntervals.push(iv); terrainSeqFlat.push(planoT); });
                     }
@@ -5033,8 +4601,7 @@
                 } else {
                     // Tramo normal: generar intervalos del terreno correspondiente
                     tramoDurs = genDurs(tramoSec, blkStyle);
-                    const tramoProfileId = tramo.terrain === 'plano' ? profilePlanoId : profileMontanaId;
-                    buildIntervals(tramo.terrain, tramoDurs, num, intLevel, durMin, tramoProfileId)
+                    buildIntervals(tramo.terrain, tramoDurs, num, intLevel, durMin)
                         .filter(v => !v.isHydration)
                         .forEach(iv => { allIntervals.push(iv); terrainSeqFlat.push(tramo.terrain); });
                 }
@@ -5068,7 +4635,6 @@
 
         function buildClass(mode) {
             usedRareThisClass = {};
-            zonaOcurrencia = { plano: 0, montana: 0 };
             // 80 RPM: habilitar con probabilidad ~0.20 por clase (≈1 cada 5 clases)
             if (Math.random() < 0.20) usedRareThisClass['__allow80rs'] = true;
             if (Math.random() < 0.20) usedRareThisClass['__allow80rp'] = true;
@@ -5122,7 +4688,7 @@
             // El primer bloque nunca es de pico
             if (phases[0] === 'peak') phases[0] = 'build';
 
-            const blocks = bTypes.map((t, i) => buildBlock(t, i + 1, blockDurations[i], phases[i], profilePlano.id, profileMontana.id));
+            const blocks = bTypes.map((t, i) => buildBlock(t, i + 1, blockDurations[i], phases[i]));
 
             // ── MODO REPETITIVA: clonar el primer bloque de cada terreno para todos los del mismo tipo ──
             if (modoRepetitiva) {
@@ -5491,70 +5057,6 @@
             });
         }
 
-        function renderZonaEtapas(terrain) {
-            const containerId = terrain === 'plano' ? 'zonaChipsPlano' : 'zonaChipsMontana';
-            const container = document.getElementById(containerId);
-            const etapas = terrain === 'plano' ? zonaEtapasPlano : zonaEtapasMontana;
-            container.innerHTML = '';
-
-            etapas.forEach((zonas, idx) => {
-                const row = document.createElement('div');
-                row.className = 'zona-etapa-row';
-
-                const lbl = document.createElement('span');
-                lbl.className = 'zona-etapa-lbl';
-                lbl.textContent = `Etapa ${idx + 1}`;
-                row.appendChild(lbl);
-
-                const chipsWrap = document.createElement('div');
-                chipsWrap.className = 'zona-etapa-chips';
-                [2, 3, 4, 5].forEach(z => {
-                    const chip = document.createElement('span');
-                    const isSel = zonas.includes(z);
-                    chip.className = `zona-chip${isSel ? ' zona-selected' : ''}`;
-                    chip.textContent = `Z${z}`;
-                    if (isSel) {
-                        chip.style.background = FC_ZONES[z].color;
-                        chip.style.borderColor = FC_ZONES[z].color;
-                    }
-                    chip.addEventListener('click', () => {
-                        const arr = terrain === 'plano' ? zonaEtapasPlano : zonaEtapasMontana;
-                        const set = arr[idx];
-                        const pos = set.indexOf(z);
-                        if (pos > -1) set.splice(pos, 1); else set.push(z);
-                        renderZonaEtapas(terrain);
-                        updateProfileSummary();
-                    });
-                    chipsWrap.appendChild(chip);
-                });
-                row.appendChild(chipsWrap);
-
-                const delBtn = document.createElement('span');
-                delBtn.className = 'zona-etapa-del';
-                delBtn.textContent = '✕';
-                delBtn.addEventListener('click', () => {
-                    const arr = terrain === 'plano' ? zonaEtapasPlano : zonaEtapasMontana;
-                    arr.splice(idx, 1);
-                    renderZonaEtapas(terrain);
-                    updateProfileSummary();
-                });
-                row.appendChild(delBtn);
-
-                container.appendChild(row);
-            });
-
-            const addBtn = document.createElement('div');
-            addBtn.className = 'zona-etapa-add';
-            addBtn.textContent = '+ Agregar etapa';
-            addBtn.addEventListener('click', () => {
-                const arr = terrain === 'plano' ? zonaEtapasPlano : zonaEtapasMontana;
-                arr.push([]);
-                renderZonaEtapas(terrain);
-                updateProfileSummary();
-            });
-            container.appendChild(addBtn);
-        }
-
         function toggleRepetitiva(checked) {
             modoRepetitiva = checked;
             updateProfileSummary();
@@ -5566,11 +5068,8 @@
                 return p ? p.label : id;
             };
             const repTag = modoRepetitiva ? ' · 🔁 Repetitiva' : '';
-            const etapasTag = etapas => etapas.length
-                ? ` [${etapas.map(zs => zs.length ? zs.map(z => 'Z' + z).join('/') : '—').join(' → ')}]`
-                : '';
             document.getElementById('profileSummary').textContent =
-                `🔵 ${getLabel(selectedProfilePlano)}${etapasTag(zonaEtapasPlano)} · 🟠 ${getLabel(selectedProfileMontana)}${etapasTag(zonaEtapasMontana)}${repTag}`;
+                `🔵 ${getLabel(selectedProfilePlano)} · 🟠 ${getLabel(selectedProfileMontana)}${repTag}`;
         }
 
         function toggleProfilePanel() {
@@ -5584,8 +5083,6 @@
         // Inicializar botones de perfil
         buildProfileButtons('profileBtnsPlano', 'plano');
         buildProfileButtons('profileBtnsMontana', 'montana');
-        renderZonaEtapas('plano');
-        renderZonaEtapas('montana');
         document.getElementById('btnStart').addEventListener('click', async() => {
             if (!selectedMode) return;
             const loader = document.getElementById('loader');
@@ -6006,29 +5503,6 @@
             intEl.className = `tmr-curr-int ${intCls(iv.intensity)}`;
             intEl.style.color = intColor(iv.intensity);
 
-            // ── ZONA DE FRECUENCIA CARDÍACA ──
-            const edadAlumno = getEdadAlumno();
-            const fcBadge = document.getElementById('tmrFcBadge');
-            // Zona del intervalo inmediatamente anterior (para que la hidratación
-            // decaiga gradual y no salte directo al piso — ver getZonaFC).
-            const prevIv = timerState.flatList[timerState.idx - 1];
-            const prevZonaNum = prevIv ? getZonaFC(prevIv.intensity, prevIv.isHydration).num : null;
-            if (fcBadge) {
-                if (edadAlumno) {
-                    const zona = getZonaFC(iv.intensity, iv.isHydration, prevZonaNum);
-                    const rango = getFCRange(edadAlumno, zona);
-                    fcBadge.className = 'fc-zone-badge';
-                    fcBadge.style.background = zona.color + '30';
-                    fcBadge.style.color = zona.color;
-                    fcBadge.innerHTML = `<span class="fc-heart">❤</span> ZONA ${zona.num} · ${rango.min}-${rango.max} BPM`;
-                } else {
-                    fcBadge.className = 'fc-zone-badge fc-empty';
-                    fcBadge.style.background = '';
-                    fcBadge.style.color = '';
-                    fcBadge.innerHTML = '❤ Configurar FC';
-                }
-            }
-
             // ── LO SIGUIENTE ──
             if (next) {
                 document.getElementById('tmrNextWrap').style.display = 'flex';
@@ -6040,19 +5514,6 @@
                 const nextBlkEl = document.getElementById('tmrNextBlk');
                 if (nextBlkEl) nextBlkEl.textContent = nextBlkRef ? (nextBlkRef.num === 0 ? nextBlkRef.name : `Bloque ${nextBlkRef.num} · ${nextBlkRef.name}`) : '';
                 document.getElementById('tmrNextTime').textContent = fmtSec(next.d);
-                const nextFcBadge = document.getElementById('tmrNextFcBadge');
-                if (nextFcBadge) {
-                    if (edadAlumno) {
-                        const currZonaNum = getZonaFC(iv.intensity, iv.isHydration, prevZonaNum).num;
-                        const nextZona = getZonaFC(next.intensity, next.isHydration, currZonaNum);
-                        nextFcBadge.style.display = 'inline';
-                        nextFcBadge.style.background = nextZona.color + '30';
-                        nextFcBadge.style.color = nextZona.color;
-                        nextFcBadge.textContent = `Z${nextZona.num}`;
-                    } else {
-                        nextFcBadge.style.display = 'none';
-                    }
-                }
             } else {
                 document.getElementById('tmrNextWrap').style.display = 'flex';
                 const nextPosIconEl = document.getElementById('tmrNextPosIcon');
@@ -6061,8 +5522,6 @@
                 const nextBlkEl = document.getElementById('tmrNextBlk');
                 if (nextBlkEl) nextBlkEl.textContent = '';
                 document.getElementById('tmrNextTime').textContent = '—';
-                const nextFcBadge = document.getElementById('tmrNextFcBadge');
-                if (nextFcBadge) nextFcBadge.style.display = 'none';
             }
 
             // ── Barra de progreso total ──
@@ -7347,19 +6806,6 @@ self.addEventListener('fetch',e=>{
             }
         })();
     </script>
-    <!-- ── MODAL EDAD / ZONA FC ── -->
-    <div class="edad-fc-overlay" id="edadFcModal">
-        <div class="edad-fc-card">
-            <div class="edad-fc-title">❤ Zona de frecuencia cardíaca</div>
-            <div class="edad-fc-sub">Ingresá la edad del alumno para calcular su FC máxima (fórmula de Tanaka: 208 − 0,7 × edad) y mostrar la zona de entrenamiento en cada intervalo.</div>
-            <input type="number" class="edad-fc-input" id="edadFcInput" placeholder="Edad (ej. 35)" min="5" max="100" inputmode="numeric">
-            <div class="edad-fc-actions">
-                <button class="edad-fc-btn-cancel" onclick="closeEdadModal()">Cancelar</button>
-                <button class="edad-fc-btn-save" onclick="guardarEdadFC()">Guardar</button>
-            </div>
-        </div>
-    </div>
-
 </body>
 
 </html>
