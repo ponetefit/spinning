@@ -2387,55 +2387,60 @@
         }
 
         /* ══════════════════════════════════════════
-           MODO FULLSCREEN — mismo layout que normal,
-           más ancho y sin lista de clase ni beep controls
+           EL TIMER SIEMPRE OCUPA TODA LA PANTALLA
+           (el tamaño/ancho ya no depende de si se activó
+           el modo pantalla completa nativo del navegador)
+        ══════════════════════════════════════════ */
+
+        #timerOverlay.active .timer-shell {
+            max-width: 100%;
+            padding: 0 20px 16px;
+            height: 100%;
+            min-height: 100dvh;
+            overflow-y: auto;
+        }
+
+        /* Reloj grande y responsive siempre */
+        #timerOverlay.active .tmr-circle {
+            width: clamp(220px, 62vw, 320px);
+            height: clamp(220px, 62vw, 320px);
+        }
+        #timerOverlay.active .tmr-digits {
+            font-size: clamp(96px, 26vw, 160px);
+        }
+        #timerOverlay.active .tmr-interval-num {
+            font-size: clamp(12px, 3vw, 16px);
+        }
+
+        #timerOverlay.active .tmr-curr-rpm {
+            font-size: clamp(22px, 5.5vw, 34px);
+        }
+        #timerOverlay.active .tmr-curr-bike-icon { font-size: clamp(22px, 5.5vw, 30px); }
+        #timerOverlay.active .tmr-curr-blk  { font-size: clamp(11px, 2.5vw, 14px); }
+        #timerOverlay.active .tmr-curr-dur  { font-size: clamp(11px, 2.5vw, 14px); }
+
+        #timerOverlay.active .tmr-next-desc { font-size: clamp(24px, 6vw, 36px); }
+        #timerOverlay.active .tmr-next-time { font-size: clamp(40px, 10vw, 56px); }
+        #timerOverlay.active .tmr-next-pos-icon { font-size: clamp(18px, 4.5vw, 26px); }
+
+        #timerOverlay.active .btn-ctrl {
+            font-size: clamp(20px, 5vw, 28px);
+            padding: 20px 8px;
+        }
+
+        /* ══════════════════════════════════════════
+           MODO FULLSCREEN NATIVO — solo esconde la barra
+           de direcciones del navegador y algunos controles
+           secundarios; el tamaño ya es el mismo siempre.
         ══════════════════════════════════════════ */
 
         #timerOverlay.fs-mode {
             overflow: hidden;
         }
 
-        #timerOverlay.fs-mode .timer-shell {
-            max-width: 100%;
-            padding: 0 20px 16px;
-            height: 100%;
-            overflow-y: auto;
-        }
-
         /* Ocultar elementos secundarios en fs (el plan de clase se mantiene
            visible — colapsado por defecto, con su propia pestaña para abrirlo) */
         #timerOverlay.fs-mode .beep-controls { display: none; }
-
-        /* Reloj aún más grande en fs */
-        #timerOverlay.fs-mode .tmr-circle {
-            width: clamp(220px, 62vw, 320px);
-            height: clamp(220px, 62vw, 320px);
-        }
-        #timerOverlay.fs-mode .tmr-digits {
-            font-size: clamp(96px, 26vw, 160px);
-        }
-        #timerOverlay.fs-mode .tmr-interval-num {
-            font-size: clamp(12px, 3vw, 16px);
-        }
-
-        /* Ejercicio más chico en fs también */
-        #timerOverlay.fs-mode .tmr-curr-rpm {
-            font-size: clamp(22px, 5.5vw, 34px);
-        }
-        #timerOverlay.fs-mode .tmr-curr-bike-icon { font-size: clamp(22px, 5.5vw, 30px); }
-        #timerOverlay.fs-mode .tmr-curr-blk  { font-size: clamp(11px, 2.5vw, 14px); }
-        #timerOverlay.fs-mode .tmr-curr-dur  { font-size: clamp(11px, 2.5vw, 14px); }
-
-        /* Lo siguiente más grande en fs */
-        #timerOverlay.fs-mode .tmr-next-desc { font-size: clamp(24px, 6vw, 36px); }
-        #timerOverlay.fs-mode .tmr-next-time { font-size: clamp(40px, 10vw, 56px); }
-        #timerOverlay.fs-mode .tmr-next-pos-icon { font-size: clamp(18px, 4.5vw, 26px); }
-
-        /* Controles más altos en fs */
-        #timerOverlay.fs-mode .btn-ctrl {
-            font-size: clamp(20px, 5vw, 28px);
-            padding: 20px 8px;
-        }
         /* ── PROFILE ACCORDION ── */
         
         .profile-accordion {
@@ -6264,6 +6269,7 @@
             requestWakeLock();
             requestAnimationFrame(() => buildClassProfileGraph(list));
             startInterval();
+            enterFullscreenMode();
         }
 
         function closeTimer() {
@@ -6744,26 +6750,37 @@
         ══════════════════════════════════════════ */
         let _isFs = false;
 
-        function toggleFullscreen() {
+        function enterFullscreenMode() {
             const overlay = document.getElementById('timerOverlay');
-            if (!_isFs) {
-                const el = document.documentElement;
-                const req = el.requestFullscreen || el.webkitRequestFullscreen || el.mozRequestFullScreen || el.msRequestFullscreen;
-                if (req) req.call(el).catch(() => {});
-                overlay.classList.add('fs-mode');
-                _isFs = true;
-                requestWakeLock();
-            } else {
-                const ex = document.exitFullscreen || document.webkitExitFullscreen || document.mozCancelFullScreen || document.msExitFullscreen;
-                if (ex) ex.call(document).catch(() => {});
-                overlay.classList.remove('fs-mode');
-                _isFs = false;
-            }
+            const el = document.documentElement;
+            const req = el.requestFullscreen || el.webkitRequestFullscreen || el.mozRequestFullScreen || el.msRequestFullscreen;
+            if (req) req.call(el).catch(() => {});
+            overlay.classList.add('fs-mode');
+            _isFs = true;
+            requestWakeLock();
             if (timerState.flatList && timerState.flatList.length) {
                 requestAnimationFrame(() => {
                     buildClassProfileGraph(timerState.flatList);
                     updateTimerUI();
                 });
+            }
+        }
+
+        function toggleFullscreen() {
+            const overlay = document.getElementById('timerOverlay');
+            if (!_isFs) {
+                enterFullscreenMode();
+            } else {
+                const ex = document.exitFullscreen || document.webkitExitFullscreen || document.mozCancelFullScreen || document.msExitFullscreen;
+                if (ex) ex.call(document).catch(() => {});
+                overlay.classList.remove('fs-mode');
+                _isFs = false;
+                if (timerState.flatList && timerState.flatList.length) {
+                    requestAnimationFrame(() => {
+                        buildClassProfileGraph(timerState.flatList);
+                        updateTimerUI();
+                    });
+                }
             }
         }
 
@@ -7483,6 +7500,7 @@
             document.getElementById('btnPlayPause').textContent = '⏸ Pausar';
             requestWakeLock();
             requestAnimationFrame(() => buildClassProfileGraph(flatList));
+            enterFullscreenMode();
         }
 
         // Init
