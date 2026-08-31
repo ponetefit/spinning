@@ -1422,8 +1422,10 @@
             padding: 0 14px 48px;
             display: flex;
             flex-direction: column;
+            justify-content: center;
             box-sizing: border-box;
             height: 100%;
+            min-height: 100dvh;
             overflow-y: auto;
             overflow-x: hidden;
         }
@@ -4348,6 +4350,22 @@
             if (schedList && schedList.innerHTML.trim()) {
                 schedList.innerHTML = renderBlocksList(currentClass);
             }
+
+            // ── Si el timer ya está corriendo, la edición de un intervalo
+            // (técnica/terreno) no debe quedar "colgada": hay que reconstruir
+            // el flatList que usa el timer y redibujar el gráfico de recorrido
+            // (CPG) y la bici, para que reflejen el cambio en vivo.
+            // Las duraciones de cada intervalo no cambian al editar la técnica,
+            // así que el índice actual (timerState.idx) y el tiempo transcurrido
+            // (timerState.elapsedSec) siguen siendo válidos sobre la nueva lista.
+            const timerActive = document.getElementById('timerOverlay').classList.contains('active');
+            if (timerActive && currentClass && currentClass.blocks) {
+                const newFlatList = flattenClass(currentClass);
+                timerState.flatList = newFlatList;
+                timerState.totalSec = newFlatList.reduce((a, v) => a + v.d, 0);
+                requestAnimationFrame(() => buildClassProfileGraph(newFlatList));
+                updateTimerUI();
+            }
         }
 
         function guardarEdadFC() {
@@ -6447,8 +6465,8 @@
                     bike.style.left = `${Math.min(Math.max(progPct, 2), 98).toFixed(1)}%`;
                 }
                 let bikeColor = iv.isWarmup || iv.terrain === 'warmup' || iv.isRecovery ? 'var(--hibrido)'
-                              : iv.terrain === 'montana' ? '#ff2020'
-                              : iv.terrain === 'plano'   ? '#00d4ff'
+                              : iv.terrain === 'montana' ? 'var(--montana)'
+                              : iv.terrain === 'plano'   ? 'var(--plano)'
                               : 'var(--accent)';
                 bike.style.color = bikeColor;
                 bike.classList.remove('terrain-plano','terrain-montana','terrain-warmup');
