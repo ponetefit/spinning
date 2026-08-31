@@ -4342,6 +4342,7 @@
             const outputEl = document.getElementById('output');
             if (outputEl && outputEl.innerHTML.trim()) {
                 outputEl.innerHTML = renderClass(currentClass);
+                outputEl.insertAdjacentHTML('beforeend', actionBtnsHtml());
             }
             const schedList = document.getElementById('tmrSchedList');
             if (schedList && schedList.innerHTML.trim()) {
@@ -5931,16 +5932,10 @@
         renderZonaEtapas('plano');
         renderZonaEtapas('montana');
 
-        document.getElementById('btnStart').addEventListener('click', async() => {
-            if (!selectedMode) return;
-            const loader = document.getElementById('loader');
-            const output = document.getElementById('output');
-            output.style.display = 'none';
-            loader.style.display = 'block';
-            await new Promise(r => setTimeout(r, 700));
-            currentClass = buildClassNoRepeat(selectedMode);
-            output.innerHTML = renderClass(currentClass);
-            output.insertAdjacentHTML('beforeend', `
+        // Los 3 botones de acción que van debajo del recorrido — en una función
+        // aparte para poder reusarlos también al refrescar tras una edición.
+        function actionBtnsHtml() {
+            return `
     <div class="action-btns-wrap">
       <div class="timer-btn-wrap">
         <button class="btn-timer" onclick="openTimer()">
@@ -5953,7 +5948,19 @@
       <button class="btn-pdf" onclick="exportToPDF()">
         <span>📄</span><span>EXPORTAR PDF</span>
       </button>
-    </div>`);
+    </div>`;
+        }
+
+        document.getElementById('btnStart').addEventListener('click', async() => {
+            if (!selectedMode) return;
+            const loader = document.getElementById('loader');
+            const output = document.getElementById('output');
+            output.style.display = 'none';
+            loader.style.display = 'block';
+            await new Promise(r => setTimeout(r, 700));
+            currentClass = buildClassNoRepeat(selectedMode);
+            output.innerHTML = renderClass(currentClass);
+            output.insertAdjacentHTML('beforeend', actionBtnsHtml());
             output.style.display = 'block';
             loader.style.display = 'none';
             output.scrollIntoView({
@@ -6861,20 +6868,7 @@
             // Renderizar el recorrido
             const output = document.getElementById('output');
             output.innerHTML = renderClass(currentClass);
-            output.insertAdjacentHTML('beforeend', `
-    <div class="action-btns-wrap">
-      <div class="timer-btn-wrap">
-        <button class="btn-timer" onclick="openTimer()">
-          <span>⏱</span><span>INICIAR TIMER DE CLASE</span>
-        </button>
-      </div>
-      <button class="btn-save" onclick="_autoSaveSource='rafa';saveCurrentRoute()">
-        <span>💾</span><span>GUARDAR RECORRIDO</span>
-      </button>
-      <button class="btn-pdf" onclick="exportToPDF()">
-        <span>📄</span><span>EXPORTAR PDF</span>
-      </button>
-    </div>`);
+            output.insertAdjacentHTML('beforeend', actionBtnsHtml());
             output.style.display = 'block';
 
             output.scrollIntoView({
