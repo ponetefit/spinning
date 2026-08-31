@@ -1429,9 +1429,6 @@
             min-height: 100dvh;
             overflow-y: auto;
             overflow-x: hidden;
-            transform-origin: center center;
-            transition: transform .18s ease;
-            will-change: transform;
         }
 
         /* ── TOP BAR ── */
@@ -2424,7 +2421,7 @@
         }
 
         #timerOverlay.active .tmr-curr-rpm {
-            font-size: clamp(22px, 5.5vw, 34px);
+            font-size: clamp(30px, 7.5vw, 46px);
         }
         #timerOverlay.active .tmr-curr-bike-icon { font-size: clamp(22px, 5.5vw, 30px); }
         #timerOverlay.active .tmr-curr-blk  { font-size: clamp(11px, 2.5vw, 14px); }
@@ -6273,44 +6270,6 @@
             }
         }
 
-        // ── AJUSTE AUTOMÁTICO DE ESCALA: hace que toda la pantalla de clase
-        // (reloj, gráfico, tarjetas y controles) entre siempre en el viewport
-        // visible, sin scroll ni necesidad de hacer zoom/ajustar a mano. ──
-        function ajustarEscalaTimer() {
-            const overlay = document.getElementById('timerOverlay');
-            const shell = document.querySelector('.timer-shell');
-            if (!overlay || !shell || !overlay.classList.contains('active')) return;
-
-            // Medir la altura natural del contenido, sin transform ni min-height forzado
-            shell.style.transition = 'none';
-            shell.style.transform = 'none';
-            shell.style.height = 'auto';
-            shell.style.minHeight = '0';
-            // eslint-disable-next-line no-unused-expressions
-            shell.offsetHeight; // forzar reflow
-            const contentHeight = shell.scrollHeight;
-
-            // Restaurar el layout definido por CSS
-            shell.style.height = '';
-            shell.style.minHeight = '';
-
-            const available = (window.visualViewport ? window.visualViewport.height : window.innerHeight);
-
-            if (available > 0 && contentHeight > available) {
-                const scale = Math.max(0.42, (available - 4) / contentHeight);
-                shell.style.transform = `scale(${scale})`;
-            } else {
-                shell.style.transform = 'none';
-            }
-            requestAnimationFrame(() => { shell.style.transition = ''; });
-        }
-
-        let _fitTimerDebounce = null;
-        function programarAjusteEscalaTimer(delay) {
-            clearTimeout(_fitTimerDebounce);
-            _fitTimerDebounce = setTimeout(ajustarEscalaTimer, delay || 60);
-        }
-
         function openTimer() {
             if (!currentClass) return;
             const list = flattenClass(currentClass);
@@ -6324,9 +6283,8 @@
             document.getElementById('timerOverlay').classList.add('active');
             document.body.style.overflow = 'hidden';
             requestWakeLock();
-            requestAnimationFrame(() => { buildClassProfileGraph(list); ajustarEscalaTimer(); });
+            requestAnimationFrame(() => buildClassProfileGraph(list));
             startInterval();
-            programarAjusteEscalaTimer(150);
         }
 
         function closeTimer() {
@@ -6335,8 +6293,6 @@
             releaseWakeLock();
             document.getElementById('timerOverlay').classList.remove('active');
             document.body.style.overflow = '';
-            const shell = document.querySelector('.timer-shell');
-            if (shell) shell.style.transform = 'none';
         }
 
         function buildSchedule(list) {
@@ -6386,11 +6342,6 @@
                 playBell();
                 timerState.remaining = timerState.flatList[timerState.idx].d;
                 syncMetronome();
-                updateTimerUI();
-                // Recalcular el ajuste de escala solo cuando cambia el intervalo
-                // (el texto puede variar de largo), no en cada segundo.
-                programarAjusteEscalaTimer(50);
-                return;
             }
             updateTimerUI();
         }
@@ -6826,10 +6777,8 @@
                 requestAnimationFrame(() => {
                     buildClassProfileGraph(timerState.flatList);
                     updateTimerUI();
-                    ajustarEscalaTimer();
                 });
             }
-            programarAjusteEscalaTimer(200);
         }
 
         function toggleFullscreen() {
@@ -6845,10 +6794,8 @@
                     requestAnimationFrame(() => {
                         buildClassProfileGraph(timerState.flatList);
                         updateTimerUI();
-                        ajustarEscalaTimer();
                     });
                 }
-                programarAjusteEscalaTimer(200);
             }
         }
 
@@ -6859,9 +6806,8 @@
                     document.getElementById('timerOverlay').classList.remove('fs-mode');
                     _isFs = false;
                     if (timerState.flatList && timerState.flatList.length) {
-                        requestAnimationFrame(() => { buildClassProfileGraph(timerState.flatList); ajustarEscalaTimer(); });
+                        requestAnimationFrame(() => buildClassProfileGraph(timerState.flatList));
                     }
-                    programarAjusteEscalaTimer(200);
                 }
             });
         });
@@ -6874,13 +6820,8 @@
                     buildClassProfileGraph(timerState.flatList);
                     updateClassProfileGraph();
                 }
-                ajustarEscalaTimer();
             }, 200);
         });
-        window.addEventListener('orientationchange', () => programarAjusteEscalaTimer(250));
-        if (window.visualViewport) {
-            window.visualViewport.addEventListener('resize', () => programarAjusteEscalaTimer(120));
-        }
 
         /* ══════════════════════════════════════════
            GUARDAR / CARGAR RECORRIDOS
@@ -7573,8 +7514,7 @@
             document.getElementById('timerOverlay').classList.add('active');
             document.getElementById('btnPlayPause').textContent = '⏸ Pausar';
             requestWakeLock();
-            requestAnimationFrame(() => { buildClassProfileGraph(flatList); ajustarEscalaTimer(); });
-            programarAjusteEscalaTimer(150);
+            requestAnimationFrame(() => buildClassProfileGraph(flatList));
         }
 
         // Init
