@@ -6326,7 +6326,6 @@
             requestWakeLock();
             requestAnimationFrame(() => { buildClassProfileGraph(list); ajustarEscalaTimer(); });
             startInterval();
-            enterFullscreenMode();
             programarAjusteEscalaTimer(150);
         }
 
@@ -6387,6 +6386,11 @@
                 playBell();
                 timerState.remaining = timerState.flatList[timerState.idx].d;
                 syncMetronome();
+                updateTimerUI();
+                // Recalcular el ajuste de escala solo cuando cambia el intervalo
+                // (el texto puede variar de largo), no en cada segundo.
+                programarAjusteEscalaTimer(50);
+                return;
             }
             updateTimerUI();
         }
@@ -6543,7 +6547,6 @@
             }
 
             updateClassProfileGraph();
-            ajustarEscalaTimer();
 
             document.querySelectorAll('.sched-item').forEach((el, i) => {
                 el.classList.toggle('done', i < timerState.idx);
@@ -7571,7 +7574,6 @@
             document.getElementById('btnPlayPause').textContent = '⏸ Pausar';
             requestWakeLock();
             requestAnimationFrame(() => { buildClassProfileGraph(flatList); ajustarEscalaTimer(); });
-            enterFullscreenMode();
             programarAjusteEscalaTimer(150);
         }
 
