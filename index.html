@@ -41,6 +41,7 @@
             padding: 0;
             box-sizing: border-box;
             -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
         }
         
         html {
@@ -1884,10 +1885,13 @@
         /* ── EDITAR TÉCNICA DE UN INTERVALO ── */
         .iv-edit {
             cursor: pointer;
-            padding: 4px 8px;
-            font-size: 14px;
-            opacity: .55;
+            padding: 10px;
+            font-size: 16px;
+            opacity: .6;
             flex-shrink: 0;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
         }
         .iv-edit:hover, .iv-edit:active {
             opacity: 1;
@@ -1929,24 +1933,26 @@
         .ex-picker-close {
             cursor: pointer;
             color: var(--muted);
-            font-size: 18px;
-            padding: 4px 10px;
+            font-size: 20px;
+            padding: 12px 16px;
         }
         .ex-picker-list {
             overflow-y: auto;
         }
         .ex-picker-item {
-            padding: 14px 16px;
+            padding: 16px;
+            min-height: 48px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             border-bottom: 1px solid rgba(255,255,255,.04);
             cursor: pointer;
-            font-size: 15px;
+            font-size: 16px;
             color: var(--text);
+            box-sizing: border-box;
         }
         .ex-picker-item:active {
-            background: rgba(232,216,64,.08);
+            background: rgba(232,216,64,.14);
         }
         .ex-picker-item.sel {
             color: var(--accent);
@@ -2096,9 +2102,9 @@
         }
         .tmr-sched-close {
             cursor: pointer;
-            font-size: 20px;
+            font-size: 22px;
             color: var(--muted);
-            padding: 4px 12px;
+            padding: 12px 16px;
         }
         .tmr-sched-list {
             flex: 1;
@@ -2109,7 +2115,9 @@
             display: flex;
             align-items: center;
             gap: 10px;
-            padding: 9px 16px;
+            padding: 12px 16px;
+            min-height: 44px;
+            box-sizing: border-box;
             border-bottom: 1px solid rgba(255,255,255,.03);
             transition: background .15s;
         }
@@ -2641,8 +2649,8 @@
         .zona-etapa-del {
             color: var(--muted);
             cursor: pointer;
-            font-size: 13px;
-            padding: 2px 6px;
+            font-size: 16px;
+            padding: 8px 10px;
         }
         .zona-etapa-del:hover {
             color: var(--accent2);
@@ -3053,8 +3061,9 @@
             border-radius: 4px;
             color: var(--text);
             font-family: 'Space Mono', monospace;
-            font-size: clamp(10px, 2.5vw, 11px);
-            padding: 4px 6px;
+            font-size: 16px;
+            padding: 10px 8px;
+            min-height: 40px;
             cursor: pointer;
         }
 
@@ -3069,7 +3078,8 @@
             color: var(--text);
             font-family: 'DM Sans', sans-serif;
             font-size: var(--fs-xs);
-            padding: 4px 6px;
+            padding: 10px 8px;
+            min-height: 40px;
             cursor: pointer;
         }
 
@@ -3082,7 +3092,8 @@
             color: var(--accent);
             font-family: 'Space Mono', monospace;
             font-size: var(--fs-xs);
-            padding: 4px 6px;
+            padding: 10px 8px;
+            min-height: 40px;
             cursor: pointer;
             white-space: nowrap;
         }
@@ -3093,12 +3104,17 @@
             background: transparent;
             border: none;
             color: var(--muted);
-            font-size: 15px;
+            font-size: 17px;
             cursor: pointer;
-            padding: 2px 5px;
-            border-radius: 3px;
+            padding: 10px;
+            border-radius: 6px;
             transition: color .12s;
             flex-shrink: 0;
+            min-width: 40px;
+            min-height: 40px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .iv-del-btn:hover { color: var(--accent2); }
