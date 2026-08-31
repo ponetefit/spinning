@@ -286,6 +286,11 @@
             opacity: .22;
             cursor: not-allowed;
         }
+        .btn-main-inline {
+            font-size: clamp(18px, 4.5vw, 24px);
+            padding: 14px;
+            margin-top: 16px;
+        }
         /* ── LOADER ── */
         
         .loader {
@@ -473,6 +478,11 @@
         
         .blk {
             border-bottom: 1px solid var(--border);
+        }
+
+        .blk.blk-current .blk-hdr {
+            background: rgba(232, 216, 64, .1);
+            border-left: 3px solid var(--accent);
         }
         
         .blk:last-of-type {
@@ -1479,6 +1489,26 @@
             flex-shrink: 0;
         }
 
+        /* Resguardo para celulares angostos (320-375px): el header nunca
+           debe cortarse — se achica el botón, se oculta el subtítulo del
+           logo, y si aun así no entra, se permite que pase a 2 filas. */
+        @media(max-width:380px) {
+            .tmr-top {
+                flex-wrap: wrap;
+                row-gap: 6px;
+            }
+            .tmr-close {
+                padding: 7px 10px;
+                font-size: 11px;
+            }
+            .tmr-logo-sub {
+                display: none;
+            }
+            .tmr-live-clock {
+                font-size: 22px;
+            }
+        }
+
         /* ── BARRA PROGRESO ── */
         .tmr-progress-wrap {
             height: 7px;
@@ -1744,6 +1774,194 @@
             text-align: center;
         }
 
+        /* ── BADGE ZONA FC ── */
+        .fc-zone-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            font-family: 'Space Mono', monospace;
+            font-size: clamp(10px, 2.8vw, 12px);
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 6px;
+            max-width: 100%;
+            white-space: normal;
+            text-align: center;
+            cursor: pointer;
+        }
+        .fc-badge-row {
+            display: flex;
+            justify-content: center;
+            margin-top: 6px;
+            padding: 0 8px;
+        }
+        .fc-zone-badge .fc-heart {
+            font-size: 11px;
+        }
+        .fc-zone-badge.fc-empty {
+            background: rgba(96,96,128,.15);
+            color: var(--muted);
+            border: 1px dashed var(--muted);
+        }
+        .tmr-next-fc-badge {
+            font-family: 'Space Mono', monospace;
+            font-size: 10px;
+            font-weight: 700;
+            padding: 2px 7px;
+            border-radius: 5px;
+            margin-left: 6px;
+        }
+
+        /* ── MODAL EDAD / FC ── */
+        .edad-fc-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,.65);
+            z-index: 9999;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .edad-fc-card {
+            background: var(--card);
+            border: 1.5px solid var(--accent);
+            border-radius: 14px;
+            padding: 20px;
+            max-width: 320px;
+            width: 100%;
+        }
+        .edad-fc-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 20px;
+            letter-spacing: 1px;
+            color: var(--accent);
+            margin-bottom: 6px;
+        }
+        .edad-fc-sub {
+            font-size: 12px;
+            color: var(--muted);
+            margin-bottom: 14px;
+            line-height: 1.4;
+        }
+        .edad-fc-input {
+            width: 100%;
+            background: var(--surface);
+            border: 1.5px solid var(--muted);
+            border-radius: 8px;
+            padding: 10px 12px;
+            color: var(--text);
+            font-family: 'Space Mono', monospace;
+            font-size: 16px;
+            margin-bottom: 14px;
+            box-sizing: border-box;
+        }
+        .edad-fc-actions {
+            display: flex;
+            gap: 8px;
+        }
+        .edad-fc-actions button {
+            flex: 1;
+            padding: 10px;
+            border-radius: 8px;
+            border: none;
+            font-weight: 700;
+            font-size: 13px;
+            cursor: pointer;
+        }
+        .edad-fc-btn-cancel {
+            background: var(--surface);
+            color: var(--muted);
+            border: 1px solid var(--muted) !important;
+        }
+        .edad-fc-btn-save {
+            background: var(--accent);
+            color: var(--bg);
+        }
+
+        /* ── EDITAR TÉCNICA DE UN INTERVALO ── */
+        .iv-edit {
+            cursor: pointer;
+            padding: 4px 8px;
+            font-size: 14px;
+            opacity: .55;
+            flex-shrink: 0;
+        }
+        .iv-edit:hover, .iv-edit:active {
+            opacity: 1;
+        }
+        .ex-picker-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,.65);
+            z-index: 9999;
+            align-items: flex-end;
+            justify-content: center;
+        }
+        .ex-picker-overlay.open {
+            display: flex;
+        }
+        .ex-picker-card {
+            background: var(--card);
+            border-radius: 16px 16px 0 0;
+            width: 100%;
+            max-width: 480px;
+            max-height: 70vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        .ex-picker-hdr {
+            padding: 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 20px;
+            letter-spacing: 1px;
+            color: var(--accent);
+            border-bottom: 1px solid var(--border);
+            flex-shrink: 0;
+        }
+        .ex-picker-close {
+            cursor: pointer;
+            color: var(--muted);
+            font-size: 18px;
+            padding: 4px 10px;
+        }
+        .ex-picker-list {
+            overflow-y: auto;
+        }
+        .ex-picker-item {
+            padding: 14px 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255,255,255,.04);
+            cursor: pointer;
+            font-size: 15px;
+            color: var(--text);
+        }
+        .ex-picker-item:active {
+            background: rgba(232,216,64,.08);
+        }
+        .ex-picker-item.sel {
+            color: var(--accent);
+            font-weight: 700;
+        }
+        .ex-picker-check {
+            color: var(--accent);
+        }
+        .ex-picker-group {
+            padding: 10px 16px 4px;
+            font-family: 'Space Mono', monospace;
+            font-size: 10px;
+            letter-spacing: 2px;
+            color: var(--muted);
+            text-transform: uppercase;
+        }
+
         /* ── LO SIGUIENTE ── */
         .tmr-next {
             background: rgba(0,212,255,.05);
@@ -1772,7 +1990,13 @@
             text-transform: uppercase;
             text-align: center;
         }
-        .tmr-next-pos-icon { font-size: clamp(24px, 6vw, 32px); }
+        .tmr-next-pos-icon {
+            font-size: clamp(15px, 3.8vw, 20px);
+            font-family: 'Space Mono', monospace;
+            font-weight: 700;
+            letter-spacing: 1px;
+            color: var(--text);
+        }
         .tmr-next-center { flex: 1; min-width: 0; }
         .tmr-next-desc {
             font-size: clamp(22px, 5.8vw, 32px);
@@ -1822,30 +2046,62 @@
         .btn-ctrl.primary { background: var(--accent); color: #08080d; border-color: var(--accent); }
         .btn-ctrl.primary:hover { opacity: .9; }
 
-        /* ── PLAN DE CLASE ── */
+        /* ── PLAN DE CLASE — botón flotante + modal de pantalla completa,
+           siempre alcanzable sin importar el scroll o el modo (normal/fs) ── */
+        .tmr-plan-fab {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 50;
+            background: var(--accent);
+            color: #08080d;
+            border: none;
+            border-radius: 30px;
+            padding: 13px 22px;
+            font-family: 'Space Mono', monospace;
+            font-weight: 700;
+            font-size: 13px;
+            letter-spacing: .5px;
+            box-shadow: 0 6px 20px rgba(0,0,0,.5);
+            cursor: pointer;
+            white-space: nowrap;
+        }
+        .tmr-plan-fab:active { transform: translateX(-50%) scale(.96); }
+
         .tmr-schedule {
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: var(--rad);
-            overflow: hidden;
-            margin-bottom: 10px;
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 150;
+            background: var(--bg);
+            flex-direction: column;
+        }
+        .tmr-schedule.open {
+            display: flex;
         }
         .tmr-sched-hdr {
-            padding: 10px 16px;
-            font-family: 'Space Mono', monospace;
-            font-size: var(--fs-xs);
-            color: var(--muted);
-            letter-spacing: 3px;
-            text-transform: uppercase;
+            padding: 16px;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(18px, 5vw, 22px);
+            letter-spacing: 1px;
+            color: var(--accent);
             border-bottom: 1px solid var(--border);
-            cursor: pointer;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            flex-shrink: 0;
+        }
+        .tmr-sched-close {
+            cursor: pointer;
+            font-size: 20px;
+            color: var(--muted);
+            padding: 4px 12px;
         }
         .tmr-sched-list {
-            max-height: 200px;
+            flex: 1;
             overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
         }
         .sched-item {
             display: flex;
@@ -1974,76 +2230,9 @@
             cursor: pointer;
             border: none;
         }
-        /* ── LISTA DE CLASE ── */
-        
-        .tmr-schedule {
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: var(--rad);
-            overflow: hidden;
-        }
-        
-        .tmr-sched-hdr {
-            padding: 12px 16px;
-            font-family: 'Space Mono', monospace;
-            font-size: var(--fs-xs);
-            color: var(--muted);
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            border-bottom: 1px solid var(--border);
-        }
-        
-        .tmr-sched-list {
-            max-height: 220px;
-            overflow-y: auto;
-        }
-        
-        .sched-item {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 11px 16px;
-            border-bottom: 1px solid rgba(255, 255, 255, .03);
-        }
-        
-        .sched-item:last-child {
-            border-bottom: none;
-        }
-        
-        .sched-item.done {
-            opacity: .3;
-        }
-        
-        .sched-item.current {
-            background: rgba(232, 216, 64, .07);
-        }
-        
-        .sched-dot {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            flex-shrink: 0;
-        }
-        
-        .sched-t {
-            font-family: 'Space Mono', monospace;
-            font-size: var(--fs-sm);
-            color: var(--muted);
-            min-width: 40px;
-            flex-shrink: 0;
-        }
-        
-        .sched-d {
-            font-size: var(--fs-md);
-            color: var(--text);
-            flex: 1;
-        }
-        
-        .sched-pos {
-            font-size: var(--fs-sm);
-            color: var(--muted);
-        }
-        
+        /* ── LISTA DE CLASE (estilos de .sched-item ya definidos arriba;
+           .tmr-schedule/.tmr-sched-hdr/.tmr-sched-list quedan como modal fullscreen) ── */
+
         ::-webkit-scrollbar {
             width: 3px;
             height: 3px;
@@ -2211,8 +2400,8 @@
             overflow-y: auto;
         }
 
-        /* Ocultar elementos secundarios en fs */
-        #timerOverlay.fs-mode .tmr-schedule  { display: none; }
+        /* Ocultar elementos secundarios en fs (el plan de clase se mantiene
+           visible — colapsado por defecto, con su propia pestaña para abrirlo) */
         #timerOverlay.fs-mode .beep-controls { display: none; }
 
         /* Reloj aún más grande en fs */
@@ -2238,7 +2427,7 @@
         /* Lo siguiente más grande en fs */
         #timerOverlay.fs-mode .tmr-next-desc { font-size: clamp(24px, 6vw, 36px); }
         #timerOverlay.fs-mode .tmr-next-time { font-size: clamp(40px, 10vw, 56px); }
-        #timerOverlay.fs-mode .tmr-next-pos-icon { font-size: clamp(28px, 7vw, 38px); }
+        #timerOverlay.fs-mode .tmr-next-pos-icon { font-size: clamp(18px, 4.5vw, 26px); }
 
         /* Controles más altos en fs */
         #timerOverlay.fs-mode .btn-ctrl {
@@ -2389,6 +2578,81 @@
                 min-width: calc(50% - 4px);
                 flex: 1 1 calc(50% - 4px);
             }
+        }
+
+        /* ── SELECTOR DE ZONA FC OBJETIVO ── */
+        .zona-label {
+            font-family: 'Space Mono', monospace;
+            font-size: 10px;
+            color: var(--muted);
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin: 10px 0 6px;
+        }
+        .zona-chips {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+        .zona-chip {
+            font-family: 'Space Mono', monospace;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 6px 11px;
+            border-radius: 6px;
+            border: 1.5px solid var(--border);
+            background: var(--card);
+            color: var(--muted);
+            cursor: pointer;
+            transition: all .15s;
+        }
+        .zona-chip:hover {
+            border-color: rgba(232, 216, 64, .4);
+        }
+        .zona-chip.zona-selected {
+            color: #08080d;
+            border-color: transparent;
+        }
+        .zona-etapa-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 6px;
+            flex-wrap: wrap;
+        }
+        .zona-etapa-lbl {
+            font-family: 'Space Mono', monospace;
+            font-size: 10px;
+            color: var(--muted);
+            min-width: 52px;
+        }
+        .zona-etapa-chips {
+            display: flex;
+            gap: 5px;
+            flex-wrap: wrap;
+        }
+        .zona-etapa-del {
+            color: var(--muted);
+            cursor: pointer;
+            font-size: 13px;
+            padding: 2px 6px;
+        }
+        .zona-etapa-del:hover {
+            color: var(--accent2);
+        }
+        .zona-etapa-add {
+            font-family: 'Space Mono', monospace;
+            font-size: 11px;
+            color: var(--accent);
+            border: 1px dashed var(--accent);
+            border-radius: 6px;
+            padding: 5px 10px;
+            display: inline-block;
+            cursor: pointer;
+            margin-top: 2px;
+        }
+        .zona-etapa-add:hover {
+            background: rgba(232, 216, 64, .08);
         }
 
         /* ══════════════════════════════════════════
@@ -3282,10 +3546,14 @@
                 <div class="profile-row">
                     <div class="profile-terrain-label plano-label">🔵 Camino Plano</div>
                     <div class="profile-btns" id="profileBtnsPlano"></div>
+                    <div class="zona-label">❤ Etapas de zona FC (opcional, en orden de aparición)</div>
+                    <div class="zona-chips" id="zonaChipsPlano"></div>
                 </div>
                 <div class="profile-row" style="margin-top:18px">
                     <div class="profile-terrain-label montana-label">🟠 Camino Montaña</div>
                     <div class="profile-btns" id="profileBtnsMontana"></div>
+                    <div class="zona-label">❤ Etapas de zona FC (opcional, en orden de aparición)</div>
+                    <div class="zona-chips" id="zonaChipsMontana"></div>
                 </div>
                 <div class="profile-row" style="margin-top:22px;border-top:1px solid var(--border);padding-top:16px">
                     <label class="repetitiva-toggle" id="repetitivaLabel">
@@ -3297,11 +3565,9 @@
                         </span>
                     </label>
                 </div>
+                <button class="btn-main btn-main-inline" id="btnStart" disabled>⚡ Iniciar Recorrido</button>
             </div>
         </div>
-
-        <div class="sec-lbl">03 · Arrancar</div>
-        <button class="btn-main" id="btnStart" disabled>⚡ Iniciar Recorrido</button>
 
         <div class="loader" id="loader">
             <div class="lspin"></div>GENERANDO CLASE DINÁMICA...</div>
@@ -3398,7 +3664,10 @@
                 <div class="tmr-curr" id="tmrCurrCard">
                     <div class="tmr-curr-label">
                         <span class="tmr-curr-lbl-txt">AHORA</span>
-                        <div class="tmr-curr-dur" id="tmrCurrDurLabel" style="margin-left:auto"></div>
+                        <div class="tmr-curr-dur" id="tmrCurrDurLabel"></div>
+                    </div>
+                    <div class="fc-badge-row">
+                        <span class="fc-zone-badge fc-empty" id="tmrFcBadge" onclick="openEdadModal()">❤ Configurar FC</span>
                     </div>
                     <div class="tmr-curr-body">
                         <!-- ícono bici + ejercicio grande -->
@@ -3419,11 +3688,14 @@
             <div class="tmr-next" id="tmrNextWrap">
                 <div class="tmr-next-left">
                     <span class="tmr-next-lbl">LO SIGUIENTE</span>
-                    <span class="tmr-next-pos-icon" id="tmrNextPosIcon">🪑</span>
+                    <span class="tmr-next-pos-icon" id="tmrNextPosIcon">PARADO</span>
                 </div>
                 <div class="tmr-next-center">
                     <div class="tmr-next-desc" id="tmrNextDesc">—</div>
-                    <div class="tmr-next-blk" id="tmrNextBlk">—</div>
+                    <div class="tmr-next-blk">
+                        <span id="tmrNextBlk">—</span>
+                        <span class="tmr-next-fc-badge" id="tmrNextFcBadge" style="display:none"></span>
+                    </div>
                 </div>
                 <div class="tmr-next-time" id="tmrNextTime">—</div>
             </div>
@@ -3452,13 +3724,20 @@
                 </div>
             </div>
 
-            <!-- ── PLAN DE CLASE ── -->
-            <div class="tmr-schedule">
-                <div class="tmr-sched-hdr">Plan de clase completo</div>
-                <div class="tmr-sched-list" id="tmrSchedList"></div>
-            </div>
-
         </div>
+
+        <!-- Botón flotante SIEMPRE visible — no depende de dónde estés scrolleado -->
+        <button class="tmr-plan-fab" id="tmrPlanFab" onclick="document.getElementById('tmrScheduleWrap').classList.add('open')">📋 Ver clase completa</button>
+
+        <!-- ── PLAN DE CLASE (modal de pantalla completa) ── -->
+        <div class="tmr-schedule" id="tmrScheduleWrap">
+            <div class="tmr-sched-hdr">
+                <span>Plan de clase completo</span>
+                <span class="tmr-sched-close" onclick="document.getElementById('tmrScheduleWrap').classList.remove('open')">✕</span>
+            </div>
+            <div class="tmr-sched-list" id="tmrSchedList"></div>
+        </div>
+
     </div>
 
     <script>
@@ -3565,6 +3844,13 @@
         //   90 RPM | 100 RPM | 100 RPM (Var. 2) | 110 RPM (Velocidad) | Sprint (Máx. Vel.)
         // Posición fija según parámetros. REGLA: 100 RPM y 100 RPM (Var.2) no son adyacentes.
         // ─────────────────────────────────────────────────────────────────────────────
+        // ─────────────────────────────────────────────────────────────────────────────
+        // PLANO — técnicas del camino plano (sin 80 RPM por decisión explícita de
+        // Rafa, aunque el manual de Spinning lo incluya en el rango "flat road"):
+        //   90 RPM | 100 RPM (Parado/Sentado) | 110 RPM (Sentado/Parado) | Sprint
+        // Apertura de bloque SIEMPRE 90 RPM Parado o 100 RPM Sentado (únicos openers).
+        // REGLA: 100 RPM y 100 RPM (Var.2) no son adyacentes.
+        // ─────────────────────────────────────────────────────────────────────────────
         const PLANO_EX = [{
             pos: 'Parado',
             type: '90p',
@@ -3572,22 +3858,30 @@
             opener: true,
             intScore: 1
         }, {
+            pos: 'Sentado',
+            type: '90s',
+            label: '90 RPM Sentado',
+            intScore: 1
+        }, {
             pos: 'Parado',
             type: '100p',
             label: '100 RPM Parado',
-            opener: true,
             intScore: 2
         }, {
             pos: 'Sentado',
             type: '100s',
             label: '100 RPM Sentado',
             opener: true,
-            intScore: 2,
-            rare: true
+            intScore: 2
         }, {
             pos: 'Sentado',
             type: '110s',
             label: '110 RPM',
+            intScore: 3
+        }, {
+            pos: 'Parado',
+            type: '110p',
+            label: '110 RPM Parado',
             intScore: 3
         }, {
             pos: 'Sentado',
@@ -3609,21 +3903,19 @@
         // 80vc: rare → aparece máximo 1 vez por clase y con baja probabilidad
         // ─────────────────────────────────────────────────────────────────────────────
         const MONT_EX = [
-            // 60 RPM Sentado — opener suave de montaña, aparece cada tanto
+            // 60 RPM Sentado — opener de montaña (alterna con 60 RPM Parado, según el manual)
             {
                 pos: 'Sentado',
                 type: '60rs',
                 label: '60 RPM Sentado',
                 opener: true,
-                intScore: 1,
-                rare: true
+                intScore: 1
             }, {
                 pos: 'Sentado',
                 type: '60rs',
                 label: '60 RPM Sentado',
                 opener: true,
-                intScore: 1,
-                rare: true
+                intScore: 1
             },
             // 60 RPM Parado (Montaña) — mayor peso (3 entradas para mayor frecuencia)
             {
@@ -3643,12 +3935,12 @@
                 label: '60 RPM Parado',
                 intScore: 3
             },
-            // 80 RPM Sentado — aparece cada tanto en el recorrido
+            // 80 RPM Sentado — aparece cada tanto en el recorrido, NO como apertura
+            // (según el manual, la montaña siempre arranca en 60 RPM)
             {
                 pos: 'Sentado',
                 type: '80rs',
                 label: '80 RPM Sentado',
-                opener: true,
                 intScore: 1,
                 rare: true
             }, {
@@ -3658,12 +3950,11 @@
                 intScore: 2,
                 rare: true
             },
-            // 80 RPM Parado — aparece cada tanto en el recorrido
+            // 80 RPM Parado — aparece cada tanto en el recorrido, NO como apertura
             {
                 pos: 'Parado',
                 type: '80rp',
                 label: '80 RPM Parado',
-                opener: true,
                 intScore: 2,
                 rare: true
             }, {
@@ -3672,6 +3963,13 @@
                 label: '80 RPM Parado',
                 intScore: 2,
                 rare: true
+            },
+            // 70 RPM Parado — cadencia intermedia de subida, más variedad real
+            {
+                pos: 'Parado',
+                type: '70rp',
+                label: '70 RPM Parado',
+                intScore: 2
             },
             // Acelerado Sentado
             {
@@ -3780,6 +4078,14 @@
         // Grupos de 100 RPM: ninguno puede ir junto al otro
         const GRUPO_100 = new Set(['100p', '100s']);
         const GRUPO_ACEL = new Set(['acel_s', 'acel_p']);
+        const GRUPO_90 = new Set(['90p', '90s']);
+        const GRUPO_110 = new Set(['110s', '110p']);
+        // Fuerza Máxima usa resistencia alta y cadencia baja (subida). Acelerado y
+        // Sprint necesitan resistencia baja y cadencia alta — bajar la carga de
+        // golpe no da tiempo físico a ajustarla bien. Por eso, en Montaña, después
+        // de Fuerza Máxima nunca va directo un Acelerado o Sprint: primero una
+        // vuelta corta de transición a 60 RPM (bajando la carga con tiempo).
+        const GRUPO_RAPIDO_MONT = new Set(['acel_s', 'acel_p', 'sprint_m']);
 
         const INT_SCORE = {
             'Muy Baja': 0,
@@ -3827,6 +4133,234 @@
             }[l] || '#e8d840');
         }
 
+        // ══════════════════════════════════════════════
+        // ZONAS DE ENTRENAMIENTO POR FRECUENCIA CARDÍACA
+        // ══════════════════════════════════════════════
+        // NOTA: no usamos Zona 1 — arriba de la bici, pedaleando, ya se está en
+        // Zona 2 como mínimo (incluida la hidratación). El "piso" real de la clase
+        // es Zona 2, y los valles (recuperación activa entre picos) bajan hasta
+        // Zona 3, nunca menos.
+        const FC_ZONES = [
+            null, // índice 0 sin usar
+            null, // índice 1 sin usar — Zona 1 no aplica en spinning
+            { num: 2, nombre: 'Resistencia',   pctMin: 0.60, pctMax: 0.70, color: '#00d4ff' },
+            { num: 3, nombre: 'Tempo',         pctMin: 0.70, pctMax: 0.80, color: '#e8d840' },
+            { num: 4, nombre: 'Umbral',        pctMin: 0.80, pctMax: 0.90, color: '#ff9040' },
+            { num: 5, nombre: 'VO2 Máx',       pctMin: 0.90, pctMax: 1.00, color: '#ff2050' },
+        ];
+
+        // Mapea el score de intensidad (0–8) a una zona de FC (2–5) — piso en Zona 2
+        function scoreToZoneNum(score) {
+            if (score <= 2) return 2;
+            if (score <= 4) return 3;
+            if (score <= 6) return 4;
+            return 5;
+        }
+
+        function getZonaFC(intensityLabel, isHydration, prevZonaNum) {
+            if (isHydration) {
+                // La FC no cae de golpe: viniendo de una Zona alta, la hidratación
+                // (60") solo alcanza a bajar UN escalón de zona, nunca directo al
+                // piso — de Zona 5 a Zona 2 en 1 minuto no pasa fisiológicamente.
+                const piso = prevZonaNum ? Math.max(2, prevZonaNum - 1) : 2;
+                return FC_ZONES[piso];
+            }
+            const score = INT_SCORE[intensityLabel] ?? 2;
+            return FC_ZONES[scoreToZoneNum(score)];
+        }
+
+        // FC máxima estimada — fórmula de Tanaka: 208 - (0.7 × edad)
+        function calcFCMax(edad) {
+            return Math.round(208 - (0.7 * edad));
+        }
+
+        function getFCRange(edad, zona) {
+            const fcMax = calcFCMax(edad);
+            return {
+                min: Math.round(fcMax * zona.pctMin),
+                max: Math.round(fcMax * zona.pctMax)
+            };
+        }
+
+        // ── Persistencia de la edad del alumno ──
+        function getEdadAlumno() {
+            try {
+                const v = localStorage.getItem('pfs_edad_alumno');
+                return v ? parseInt(v, 10) : null;
+            } catch (e) { return null; }
+        }
+
+        function setEdadAlumno(edad) {
+            try { localStorage.setItem('pfs_edad_alumno', String(edad)); } catch (e) {}
+        }
+
+        function openEdadModal() {
+            const modal = document.getElementById('edadFcModal');
+            const input = document.getElementById('edadFcInput');
+            const actual = getEdadAlumno();
+            if (input) input.value = actual || '';
+            if (modal) modal.style.display = 'flex';
+            if (input) setTimeout(() => input.focus(), 50);
+        }
+
+        function closeEdadModal() {
+            const modal = document.getElementById('edadFcModal');
+            if (modal) modal.style.display = 'none';
+        }
+
+        // ══════════════════════════════════════════════
+        // ANTI-REPETICIÓN — "memoria" de las últimas 30 clases generadas
+        // ══════════════════════════════════════════════
+        const CLASS_HISTORY_SIZE = 30;
+        const CLASS_HISTORY_KEY = 'pfs_class_history';
+
+        // Hash simple (djb2) para no guardar la huella completa en localStorage
+        function hashStr(str) {
+            let h = 5381;
+            for (let i = 0; i < str.length; i++) {
+                h = ((h << 5) + h + str.charCodeAt(i)) | 0;
+            }
+            return (h >>> 0).toString(36);
+        }
+
+        // La "huella" de una clase es la secuencia real de técnica+duración+posición
+        // de cada intervalo en cada bloque — dos clases con la misma huella son,
+        // en la práctica, la misma clase aunque el modo/perfil elegido sea el mismo.
+        function getClassFingerprint(cls) {
+            const raw = cls.blocks.map(b =>
+                b.intervals.map(iv => `${iv.ex.type}.${iv.d}.${iv.pos[0]}`).join('-')
+            ).join('|');
+            return hashStr(raw);
+        }
+
+        function getClassHistory() {
+            try {
+                const raw = localStorage.getItem(CLASS_HISTORY_KEY);
+                return raw ? JSON.parse(raw) : [];
+            } catch (e) { return []; }
+        }
+
+        function addToClassHistory(fp) {
+            try {
+                const hist = getClassHistory();
+                hist.push(fp);
+                while (hist.length > CLASS_HISTORY_SIZE) hist.shift();
+                localStorage.setItem(CLASS_HISTORY_KEY, JSON.stringify(hist));
+            } catch (e) {}
+        }
+
+        // Genera una clase evitando repetir cualquiera de las últimas 30 —
+        // si sale una huella repetida, vuelve a generar (hasta 25 intentos,
+        // así nunca se cuelga si el pool es chico y no hay más variedad real).
+        function buildClassNoRepeat(mode) {
+            const history = getClassHistory();
+            let cls, fp, attempts = 0;
+            do {
+                cls = buildClass(mode);
+                fp = getClassFingerprint(cls);
+                attempts++;
+            } while (history.includes(fp) && attempts < 25);
+            addToClassHistory(fp);
+            return cls;
+        }
+
+        // ══════════════════════════════════════════════
+        // EDITAR TÉCNICA DE UN INTERVALO PUNTUAL
+        // Cambia solo el ejercicio (RPM/posición) de un intervalo — no la
+        // duración ni el resto de la clase. Si el bloque es Montaña, se
+        // ofrecen las técnicas de Montaña; si es Plano, las de Plano; si
+        // el bloque es Híbrido, se ofrecen todas juntas.
+        // ══════════════════════════════════════════════
+        function openExPicker(blkNum, ivIdx) {
+            if (!currentClass) return;
+            const blk = currentClass.blocks.find(b => b.num === blkNum);
+            if (!blk) return;
+            const iv = blk.intervals[ivIdx];
+            if (!iv) return;
+
+            const list = document.getElementById('exPickerList');
+            const dedupe = pool => {
+                const seen = new Set();
+                return pool.filter(e => {
+                    if (seen.has(e.type)) return false;
+                    seen.add(e.type);
+                    return true;
+                });
+            };
+
+            let html = '';
+            if (blk.isHybrid) {
+                html += `<div class="ex-picker-group">🔵 Plano</div>`;
+                html += dedupe(PLANO_EX).map(e => exPickerItemHtml(e, blkNum, ivIdx, iv)).join('');
+                html += `<div class="ex-picker-group">🟠 Montaña</div>`;
+                html += dedupe(MONT_EX).map(e => exPickerItemHtml(e, blkNum, ivIdx, iv)).join('');
+            } else if (iv.terrain === 'montana') {
+                html += dedupe(MONT_EX).map(e => exPickerItemHtml(e, blkNum, ivIdx, iv)).join('');
+            } else {
+                html += dedupe(PLANO_EX).map(e => exPickerItemHtml(e, blkNum, ivIdx, iv)).join('');
+            }
+            list.innerHTML = html;
+            document.getElementById('exPickerOverlay').classList.add('open');
+        }
+
+        function exPickerItemHtml(e, blkNum, ivIdx, iv) {
+            const isSel = e.type === iv.ex.type;
+            return `<div class="ex-picker-item ${isSel?'sel':''}" onclick="applyExPick(${blkNum},${ivIdx},'${e.type}')">
+  <span>${e.label}</span>
+  ${isSel ? '<span class="ex-picker-check">✓</span>' : ''}
+</div>`;
+        }
+
+        function applyExPick(blkNum, ivIdx, type) {
+            const blk = currentClass.blocks.find(b => b.num === blkNum);
+            if (!blk) return;
+            const iv = blk.intervals[ivIdx];
+            if (!iv) return;
+
+            const newEx = [...PLANO_EX, ...MONT_EX].find(e => e.type === type);
+            if (!newEx) return;
+
+            iv.ex = newEx;
+            iv.pos = newEx.pos || iv.pos;
+            iv.intensity = getInt(newEx.type, iv.d); // misma duración, nueva técnica
+            if (blk.isHybrid) {
+                // El intervalo puede haber cambiado de camino dentro del bloque híbrido
+                iv.terrain = PLANO_EX.some(e => e.type === type) ? 'plano' : 'montana';
+            }
+
+            closeExPicker();
+            refreshAllClassViews();
+        }
+
+        function closeExPicker() {
+            document.getElementById('exPickerOverlay').classList.remove('open');
+        }
+
+        // Refresca cualquier vista en pantalla que dependa de currentClass
+        // después de una edición manual (tarjeta previa y/o plan del timer)
+        function refreshAllClassViews() {
+            const outputEl = document.getElementById('output');
+            if (outputEl && outputEl.innerHTML.trim()) {
+                outputEl.innerHTML = renderClass(currentClass);
+            }
+            const schedList = document.getElementById('tmrSchedList');
+            if (schedList && schedList.innerHTML.trim()) {
+                schedList.innerHTML = renderBlocksList(currentClass);
+            }
+        }
+
+        function guardarEdadFC() {
+            const input = document.getElementById('edadFcInput');
+            const edad = parseInt(input.value, 10);
+            if (!edad || edad < 5 || edad > 100) {
+                input.style.borderColor = '#ff3d5a';
+                return;
+            }
+            setEdadAlumno(edad);
+            closeEdadModal();
+            updateTimerUI();
+        }
+
         function safePos(ex) {
             if (ex.pos) return ex.pos;
             return rnd(['Sentado', 'Parado']);
@@ -3854,12 +4388,13 @@
                 label: '▲ Progresivo',
                 desc: 'Sube de media a máxima continuamente',
                 buildPhases: (n) => {
-                    // build → ... → peak → descent (último siempre baja)
+                    // build → build → ... → peak — el ÚLTIMO bloque es siempre
+                    // el más intenso (con 2 bloques, el segundo es el pico).
+                    // Antes terminaba en "descent" y contradecía la propia
+                    // descripción del perfil ("sube... continuamente").
                     const p = [];
                     for (let i = 0; i < n; i++) {
-                        if (i < n - 2) p.push('build');
-                        else if (i === n - 2) p.push('peak');
-                        else p.push('descent');
+                        p.push(i === n - 1 ? 'peak' : 'build');
                     }
                     return p;
                 }
@@ -3967,6 +4502,44 @@
         // Perfiles seleccionados por el profe (por terreno)
         let selectedProfilePlano = 'aleatorio';
         let selectedProfileMontana = 'aleatorio';
+
+        // ── ZONAS DE FC POR ETAPAS, POR CAMINO ──
+        // Cada camino tiene una lista ordenada de "etapas". Cada etapa es un array
+        // de zonas (1-5) — puede tener una sola (ej. [3]) o varias combinadas (ej. [4,5]).
+        // La 1ª vez que aparece ese camino en la clase usa la etapa 0, la 2ª vez la
+        // etapa 1, etc. Si hay más apariciones que etapas, se repite la última.
+        // Ejemplo pedido: montaña → [[3], [4,5]] · plano → [[3,4]]
+        let zonaEtapasPlano = [];
+        let zonaEtapasMontana = [];
+
+        // Contador de apariciones por camino, se resetea al empezar cada clase
+        let zonaOcurrencia = { plano: 0, montana: 0 };
+
+        // Banda de intScore (0-8) correspondiente a cada zona 2-5 (Zona 1 no aplica)
+        const ZONA_SCORE_BANDS = {
+            2: [0, 2],
+            3: [3, 4],
+            4: [5, 6],
+            5: [7, 8]
+        };
+
+        // Une las bandas de score de varias zonas elegidas en una etapa (ej. [4,5] → [5,8])
+        function getEtapaBand(zonas) {
+            if (!zonas || !zonas.length) return null;
+            const mins = zonas.map(z => ZONA_SCORE_BANDS[z][0]);
+            const maxs = zonas.map(z => ZONA_SCORE_BANDS[z][1]);
+            return [Math.min(...mins), Math.max(...maxs)];
+        }
+
+        // Devuelve la banda de score a usar para la próxima aparición de este camino,
+        // avanzando el contador de ocurrencias. null si no hay etapas configuradas.
+        function nextZonaBand(terrain) {
+            const etapas = terrain === 'plano' ? zonaEtapasPlano : terrain === 'montana' ? zonaEtapasMontana : [];
+            if (!etapas.length) return null;
+            zonaOcurrencia[terrain] = (zonaOcurrencia[terrain] || 0) + 1;
+            const idx = Math.min(zonaOcurrencia[terrain] - 1, etapas.length - 1);
+            return getEtapaBand(etapas[idx]);
+        }
         let modoRepetitiva = false;
 
         // Legacy CLASS_PROFILES — se mantiene por compatibilidad interna
@@ -4187,10 +4760,14 @@
         function pickEx(pool, lastType, preferHigher, minScore, maxScore) {
             const last100 = GRUPO_100.has(lastType);
             const lastAcel = GRUPO_ACEL.has(lastType);
+            const last90 = GRUPO_90.has(lastType);
+            const last110 = GRUPO_110.has(lastType);
             let candidates = pool.filter(e => {
                 if (e.type === lastType) return false;
                 if (last100 && GRUPO_100.has(e.type)) return false;
                 if (lastAcel && GRUPO_ACEL.has(e.type)) return false;
+                if (last90 && GRUPO_90.has(e.type)) return false;
+                if (last110 && GRUPO_110.has(e.type)) return false;
                 if (minScore !== undefined && e.intScore < minScore) return false;
                 if (maxScore !== undefined && e.intScore > maxScore) return false;
                 return true;
@@ -4207,7 +4784,7 @@
         function decidePos(pool, lastPos, consecSec, d, lastType) {
             const mustSwitch = lastPos && (consecSec + d > MAX_CONSEC_SEC);
             const oppositePos = lastPos === 'Parado' ? 'Sentado' : 'Parado';
-            const no100adj = e => !(GRUPO_100.has(lastType) && GRUPO_100.has(e.type)) && !(GRUPO_ACEL.has(lastType) && GRUPO_ACEL.has(e.type));
+            const no100adj = e => !(GRUPO_100.has(lastType) && GRUPO_100.has(e.type)) && !(GRUPO_ACEL.has(lastType) && GRUPO_ACEL.has(e.type)) && !(GRUPO_90.has(lastType) && GRUPO_90.has(e.type)) && !(GRUPO_110.has(lastType) && GRUPO_110.has(e.type));
 
             if (mustSwitch) {
                 const switchPool = pool.filter(e => e.pos === oppositePos && e.type !== lastType && no100adj(e));
@@ -4229,10 +4806,25 @@
         }
 
         // ── buildIntervals recibe el nivel de intensidad del bloque (intLevel) ──────
+        // Zona de FC "natural" de cada fase del perfil — así el perfil elegido
+        // (progresivo, ondulado, explosión final, etc.) ya implica una zona objetivo
+        // por sí solo, sin que el profe tenga que configurar etapas manuales.
+        // No existe Zona 1: arriba de la bici pedaleando ya se está en Zona 2 como
+        // piso. Los valles (recuperación activa) bajan hasta Zona 3, nunca menos.
+        //   valley/descent (intLevel 1) → Z3     · valle activo, nunca por debajo
+        //   build          (intLevel 2) → Z3     · tempo, ritmo sostenido
+        //   peak           (intLevel 3) → Z4-Z5  · umbral / esfuerzo máximo
+        function intLevelToZonaBand(lvl) {
+            if (lvl === 3) return [5, 8];
+            return [3, 4];
+        }
+
         // intLevel 1: bloques de valle/bajada → sin peaks, máximo intScore 3
         // intLevel 2: bloques de desarrollo   → sin peaks, máximo intScore 3-4
         // intLevel 3: bloques de pico         → peaks habilitados al final
-        function buildIntervals(terrain, durs, blockNum, intLevel, blockDurMin) {
+        // profileId: id del perfil de camino que generó este bloque (progresivo,
+        // escalera, constante, etc.) — habilita ajustes de guion específicos por perfil.
+        function buildIntervals(terrain, durs, blockNum, intLevel, blockDurMin, profileId) {
             const lvl = intLevel || 2;
             const isP = terrain === 'plano';
             const fullPool = [...(isP ? PLANO_EX : MONT_EX)];
@@ -4242,8 +4834,26 @@
             let lastPos = null;
             let consecSec = 0;
 
+            // Zona de FC objetivo para ESTA aparición del camino: si el profe configuró
+            // etapas manuales, esas mandan; si no, se usa la zona que el perfil implica
+            // naturalmente según la fase de este bloque (build/peak/valley/descent).
+            const zonaBand = nextZonaBand(terrain) || intLevelToZonaBand(lvl);
+
             // En bloques conservadores (valle/bajada), excluir peaks del pool de partida
             const workingPool = lvl === 1 ? fullPool.filter(e => !e.peak) : fullPool;
+
+            // ── CONSTANTE: "rodar en ruta" — una sola técnica sostenida todo el
+            // camino, sin sprint, sin que se mueva la zona. Se elige UNA vez acá
+            // y se usa en cada intervalo, sin variar.
+            // ── CONSTANTE — Plano: "rodar en ruta" con una sola técnica fija.
+            // Montaña: no hace falta forzar una técnica fija — con quedarse
+            // en Zona 3-4 sin picos alcanza (ya lo hace la fase 'build' sola),
+            // así que ahí simplemente no exigimos flatEx.
+            const flatEx = (profileId === 'constante' && terrain === 'plano')
+                ? (workingPool.find(e => e.opener && !e.rare && e.intScore === 2) ||
+                   workingPool.find(e => e.opener && !e.rare) ||
+                   workingPool[0])
+                : null;
 
             // Tipos "cada tanto": pueden reaparecer en la clase (no bloqueados tras 1ª vez)
             const CADA_TANTO = new Set(['60rs', '100s']);
@@ -4269,7 +4879,13 @@
             }
 
             function no100(e) {
-                return !(GRUPO_100.has(lastType) && GRUPO_100.has(e.type)) && !(GRUPO_ACEL.has(lastType) && GRUPO_ACEL.has(e.type));
+                return !(GRUPO_100.has(lastType) && GRUPO_100.has(e.type)) && !(GRUPO_ACEL.has(lastType) && GRUPO_ACEL.has(e.type)) && !(GRUPO_90.has(lastType) && GRUPO_90.has(e.type)) && !(GRUPO_110.has(lastType) && GRUPO_110.has(e.type));
+            }
+
+            // Después de Fuerza Máxima (carga alta), nunca ir directo a un
+            // movimiento rápido de carga baja — hace falta la transición.
+            function noFmToRapido(e) {
+                return !(terrain === 'montana' && lastType === 'fm' && GRUPO_RAPIDO_MONT.has(e.type));
             }
 
             // No permitir 15s en el último intervalo antes de hidratación
@@ -4285,32 +4901,48 @@
             }
             const nFinal = durs.length;
 
+            // ── PICO ANTICIPADO: dentro del bloque de pico, la fuerza máxima o el
+            // sprint aparecen ANTES del final (≈60% del bloque), no como cierre —
+            // así el bloque "explota" y después sigue desarrollando, en vez de
+            // terminar justo en el pico.
+            const picoAnticipadoIdx = (profileId === 'pico_anticipado' && lvl === 3)
+                ? Math.max(1, Math.floor(nFinal * 0.6))
+                : -1;
+
             for (let i = 0; i < nFinal; i++) {
                 let d = durs[i];
                 const isFirst = i === 0;
                 const isLast = i === nFinal - 1;
                 const isSecondToLast = i === nFinal - 2 && nFinal >= 4;
 
-                let pool = filterRare(workingPool).filter(e => no100(e) && e.type !== lastType);
-                if (!pool.length) pool = workingPool.filter(e => e.type !== lastType);
+                let pool = filterRare(workingPool).filter(e => no100(e) && noFmToRapido(e) && e.type !== lastType);
+                if (!pool.length) pool = workingPool.filter(e => noFmToRapido(e) && e.type !== lastType);
+                if (!pool.length) pool = workingPool.filter(e => noFmToRapido(e));
                 if (!pool.length) pool = workingPool;
 
                 let ex;
 
-                if (isFirst) {
+                if (profileId === 'constante' && flatEx) {
+                    // Rodar en ruta (Plano): siempre la misma técnica, ni sprint ni variación
+                    ex = flatEx;
+
+                } else if (isFirst) {
                     // Opener siempre — entrada al bloque con intensidad baja-media
                     let openers = pool.filter(e => e.opener);
                     if (!openers.length) openers = pool;
                     openers = openers.slice().sort(() => Math.random() - 0.5);
                     ex = openers[0];
 
-                } else if (isLast && n >= 3 && lvl === 3) {
-                    // Pico final: solo en bloques de pico habilitados
+                } else if (i === picoAnticipadoIdx) {
+                    // Pico anticipado: la fuerza máxima/sprint llega ACÁ, antes del
+                    // cierre del bloque — no al final.
                     const peaks = pool.filter(e => e.peak);
                     ex = peaks.length ? rnd(peaks) : pickEx(pool, lastType, true);
 
-                } else if (isSecondToLast && lvl === 3 && n >= 5 && Math.random() < 0.4) {
-                    // En bloques largos de pico, a veces el anteúltimo también es peak
+                } else if (isLast && n >= 3 && lvl === 3 && profileId !== 'pico_anticipado') {
+                    // Pico final: UN solo movimiento de pico por bloque, siempre
+                    // precedido por intensidad moderada (nunca dos picos seguidos
+                    // sin nada moderado entre medio — no es fisiológico).
                     const peaks = pool.filter(e => e.peak);
                     ex = peaks.length ? rnd(peaks) : pickEx(pool, lastType, true);
 
@@ -4319,9 +4951,15 @@
                     let buildPool = lvl < 3 ? pool.filter(e => !e.peak) : pool.filter(e => !e.peak);
                     if (!buildPool.length) buildPool = pool;
 
-                    // Progresión interna del bloque: cada intervalo puede ser igual o mayor al anterior
-                    const prevScore = out.filter(v => !v.isRecovery).length ?
-                        (INT_SCORE[out.filter(v => !v.isRecovery)[out.filter(v => !v.isRecovery).length - 1].intensity] || 1) : 1;
+                    // Progresión interna del bloque: cada intervalo puede ser igual o mayor al
+                    // anterior — usa la MISMA escala que scoreCap (la del pool, e.intScore),
+                    // no la escala de 0-8 que se usa para las etiquetas de pantalla. Antes se
+                    // comparaban dos escalas distintas: prevScore casi siempre "ganaba" por ser
+                    // más alto (llegaba a 7-8), así que el filtro normal nunca daba candidatos
+                    // y siempre caía al fallback de "agarrar el más alto disponible" — por eso
+                    // la intensidad saltaba de golpe al techo en vez de subir de a poco.
+                    const prevIvs = out.filter(v => !v.isRecovery);
+                    const prevScore = prevIvs.length ? (prevIvs[prevIvs.length - 1].ex.intScore || 1) : 1;
 
                     // El techo de score del bloque varía con el nivel:
                     // lvl 1 → hasta score 2, lvl 2 → hasta score 3, lvl 3 → hasta score 4 en build
@@ -4330,9 +4968,42 @@
                         2: 3,
                         3: 4
                     }[lvl] || 3;
-                    let candidates = buildPool.filter(e => e.intScore >= prevScore && e.intScore <= scoreCap);
-                    if (!candidates.length) candidates = buildPool.filter(e => e.intScore <= scoreCap);
+
+                    // Subida gradual: nunca más de 1 escalón de golpe (salvo que no haya
+                    // ninguna opción así, ahí sí se relaja). Esto es lo que hace que, por
+                    // ejemplo al arrancar un camino de Montaña, la zona de FC vaya subiendo
+                    // paulatinamente con la intensidad en vez de saltar directo al techo.
+                    let candidates = buildPool.filter(e => e.intScore >= prevScore && e.intScore <= Math.min(scoreCap, prevScore + 1));
+                    if (!candidates.length) candidates = buildPool.filter(e => e.intScore >= prevScore && e.intScore <= scoreCap);
+                    if (!candidates.length) {
+                        // No hay ningún ejercicio disponible que mantenga o suba la intensidad
+                        // (pool chico + no repetir el mismo tipo). En vez de caer a cualquier
+                        // opción — que podría ser una cadencia baja tipo "recuperación" — se
+                        // toma la de mayor score posible dentro del techo del bloque. La
+                        // intensidad no debe aflojar a mitad de bloque: para bajar la FC está
+                        // la hidratación al cierre, no un intervalo suave a mitad de camino.
+                        const capped = buildPool.filter(e => e.intScore <= scoreCap);
+                        if (capped.length) {
+                            const maxAvail = Math.max(...capped.map(e => e.intScore));
+                            candidates = capped.filter(e => e.intScore === maxAvail);
+                        }
+                    }
                     if (!candidates.length) candidates = buildPool;
+
+                    // Bias por zona de FC objetivo: preferir candidatos cuya intensidad
+                    // REAL (la etiqueta que después se muestra en el timer, calculada con
+                    // getInt+INT_SCORE sobre la duración real del intervalo) caiga en la
+                    // banda de la zona elegida. Ojo: e.intScore es una escala interna del
+                    // pool (≈1-5, solo para ordenar progresión) distinta de INT_SCORE
+                    // (0-8, la que se ve en pantalla) — hay que usar esta última acá.
+                    if (zonaBand) {
+                        const zonados = candidates.filter(e => {
+                            const label = getInt(e.type, d);
+                            const sc = INT_SCORE[label] ?? 2;
+                            return sc >= zonaBand[0] && sc <= zonaBand[1];
+                        });
+                        if (zonados.length) candidates = zonados;
+                    }
 
                     const posCandidate = decidePos(candidates, lastPos, consecSec, d, lastType);
                     if (posCandidate) {
@@ -4374,6 +5045,24 @@
                 }
 
                 if (ex.rare) usedRareThisClass[ex.type] = true;
+
+                // ── Ajustes de guion específicos por perfil de camino ──────────────
+                if (profileId === 'escalera' && !isFirst && !(isLast && lvl === 3) && ex.intScore >= 3) {
+                    // Escalera: la técnica fuerte del bloque se sostiene cada vez más
+                    // tiempo a medida que se sube de escalón (usa el Nº de aparición
+                    // de este camino en la clase — 1er bloque, 2do, 3ro...).
+                    d = Math.min(60, 20 + zonaOcurrencia[terrain] * 10);
+                }
+                if (profileId === 'explosion_final' && isLast && lvl === 3 && ex.peak) {
+                    // Explosión final: el sprint de cierre es SIEMPRE largo (45-60"),
+                    // nunca un sprint corto — es la explosión de toda la clase.
+                    // Duraciones "limpias" como el resto de la app (nunca 48", 52"...).
+                    d = rnd([45, 50, 60]);
+                }
+                if (profileId === 'doble_pico' && ex.peak) {
+                    // Doble pico: los DOS picos son largos (45-60"), no sprints cortos.
+                    d = rnd([45, 50, 60]);
+                }
 
                 const exPos = ex.pos || 'Sentado';
                 if (exPos === lastPos) {
@@ -4454,7 +5143,41 @@
         // ═══════════════════════════════════════════════════════
         // BUILD BLOCK — recibe la fase del bloque en la clase
         // ═══════════════════════════════════════════════════════
-        function buildBlock(bType, num, durMin, phase) {
+        // ══════════════════════════════════════════════
+        // VUELTA A LA CALMA — segmento real de cierre (no solo una etiqueta de
+        // hora). El manual de Spinning® es explícito: la clase siempre empieza
+        // y termina en la zona más baja disponible. Acá usamos la técnica más
+        // suave del camino con el que cierra la clase, sostenida sin cortes.
+        // ══════════════════════════════════════════════
+        function buildCooldownBlock(num, durMin, sourceTerrain) {
+            // sourceTerrain solo se usa para elegir una técnica realista (RPM) —
+            // el bloque en sí NO pertenece a ningún camino, es su propio segmento.
+            const pool = sourceTerrain === 'montana' ? MONT_EX : PLANO_EX;
+            const lowEx = pool.filter(e => !e.peak && !e.rare).sort((a, b) => a.intScore - b.intScore)[0] || pool[0];
+            const totalSec = durMin * 60;
+            return {
+                bType: 'CD',
+                num,
+                durMin,
+                intervals: [{
+                    d: totalSec,
+                    ex: lowEx,
+                    pos: lowEx.pos || 'Sentado',
+                    intensity: 'Muy Baja',
+                    terrain: 'cooldown',
+                    isRecovery: true
+                }],
+                isHybrid: false,
+                terrain: 'cooldown',
+                phase: 'cooldown',
+                intLevel: 1,
+                style: 'cooldown',
+                microRepeat: 1,
+                singleRepeatIvCount: 1
+            };
+        }
+
+        function buildBlock(bType, num, durMin, phase, profilePlanoId, profileMontanaId) {
             const intLevel = blkIntLevel(phase || 'build');
             const blkStyle = rnd(BLOCK_STYLES[phase || 'build'] || BLOCK_STYLES.build);
             const hydration = {
@@ -4483,8 +5206,9 @@
 
             if (bType === 'P' || bType === 'M') {
                 const terrain = bType === 'P' ? 'plano' : 'montana';
+                const profileId = terrain === 'plano' ? profilePlanoId : profileMontanaId;
                 const durs = genDurs(baseWorkSec, blkStyle);
-                const baseIvs = buildIntervals(terrain, durs, num, intLevel, durMin);
+                const baseIvs = buildIntervals(terrain, durs, num, intLevel, durMin, profileId);
                 const singleRepeatIvCount = baseIvs.length;
                 // Expandir la secuencia para el timer (cada rep es copia exacta)
                 let allIvs = [];
@@ -4575,7 +5299,7 @@
                     // Intervalos normales de plano
                     if (normalSec >= 20) {
                         const nd = genDurs(normalSec, blkStyle);
-                        buildIntervals(planoT, nd, num, intLevel, durMin)
+                        buildIntervals(planoT, nd, num, intLevel, durMin, profilePlanoId)
                             .filter(v => !v.isHydration)
                             .forEach(iv => { allIntervals.push(iv); terrainSeqFlat.push(planoT); });
                     }
@@ -4601,7 +5325,8 @@
                 } else {
                     // Tramo normal: generar intervalos del terreno correspondiente
                     tramoDurs = genDurs(tramoSec, blkStyle);
-                    buildIntervals(tramo.terrain, tramoDurs, num, intLevel, durMin)
+                    const tramoProfileId = tramo.terrain === 'plano' ? profilePlanoId : profileMontanaId;
+                    buildIntervals(tramo.terrain, tramoDurs, num, intLevel, durMin, tramoProfileId)
                         .filter(v => !v.isHydration)
                         .forEach(iv => { allIntervals.push(iv); terrainSeqFlat.push(tramo.terrain); });
                 }
@@ -4635,6 +5360,7 @@
 
         function buildClass(mode) {
             usedRareThisClass = {};
+            zonaOcurrencia = { plano: 0, montana: 0 };
             // 80 RPM: habilitar con probabilidad ~0.20 por clase (≈1 cada 5 clases)
             if (Math.random() < 0.20) usedRareThisClass['__allow80rs'] = true;
             if (Math.random() < 0.20) usedRareThisClass['__allow80rp'] = true;
@@ -4688,7 +5414,7 @@
             // El primer bloque nunca es de pico
             if (phases[0] === 'peak') phases[0] = 'build';
 
-            const blocks = bTypes.map((t, i) => buildBlock(t, i + 1, blockDurations[i], phases[i]));
+            const blocks = bTypes.map((t, i) => buildBlock(t, i + 1, blockDurations[i], phases[i], profilePlano.id, profileMontana.id));
 
             // ── MODO REPETITIVA: clonar el primer bloque de cada terreno para todos los del mismo tipo ──
             if (modoRepetitiva) {
@@ -4729,6 +5455,14 @@
                 }
             }
 
+            // ── Vuelta a la calma real — antes esto era solo una etiqueta de
+            // hora (closeTime); ahora agrega contenido real al final.
+            const lastBlock = blocks[blocks.length - 1];
+            const lastTerrainUsed = lastBlock.isHybrid
+                ? (lastBlock.secondTerrain || 'plano')
+                : (lastBlock.terrain === 'montana' ? 'montana' : 'plano');
+            blocks.push(buildCooldownBlock(blocks.length + 1, coolDown, lastTerrainUsed));
+
             return {
                 blocks,
                 totalWorkTime: totalWorkTime,
@@ -4744,14 +5478,16 @@
 
         // ═══════════════════════════════════════════════════════
         // RENDER INTERVALS — formato tabla: RPM | Posición | Intensidad
+        // blk (opcional): si se pasa, agrega un botón ✏️ para editar la
+        // técnica de ese intervalo puntual (RPM/posición), sin tocar duración.
         // ═══════════════════════════════════════════════════════
-        function renderIv(iv, showTerrain) {
+        function renderIv(iv, showTerrain, blk) {
             if (iv.isHydration) return '';
             const isP = iv.terrain === 'plano';
             const bdrCls = iv.isRecovery ? 'iv-rec' : isP ? 'iv-p' : 'iv-m';
             const tCls = iv.isRecovery ? 'cr' : isP ? 'cp' : 'cm';
             const posCls = iv.pos === 'Sentado' ? 'pos-s' : 'pos-p';
-            const posIcon = iv.pos === 'Sentado' ? '🪑 Sentado' : '🧍 Parado';
+            const posIcon = iv.pos === 'Sentado' ? 'Sentado' : 'Parado';
 
             // Rango completo de intensidades para este ejercicio según la tabla
             const intRange = INT_MAP[iv.ex.type];
@@ -4769,12 +5505,112 @@
                 `<span class="iv-terrain ${isP?'ivt-p':'ivt-m'}">${isP?'🔵 Plano':'🟠 Montaña'}</span>` :
                 '';
 
+            // Editable solo si viene de un bloque real de trabajo (no vuelta a la calma)
+            const editable = blk && iv.terrain !== 'cooldown';
+            const editBtn = editable ?
+                `<span class="iv-edit" onclick="event.stopPropagation();openExPicker(${blk.num},${blk.intervals.indexOf(iv)})">✏️</span>` :
+                '';
+
             return `<div class="iv-row ${bdrCls}">
   <span class="iv-time ${tCls}">${fmtSec(iv.d)}</span>
   <span class="iv-pos ${posCls}">${posIcon}</span>
   ${terrainBadge}<span class="iv-desc">${iv.ex.label}</span>
   ${rangeHtml}
+  ${editBtn}
 </div>`;
+        }
+
+        // ═══════════════════════════════════════════════════════
+        // RENDER BLOCKS LIST — reutilizable: se usa en la tarjeta previa
+        // Y en el panel de "plan completo" del timer en vivo.
+        // currentBlockNum (opcional): resalta ese bloque como "en curso".
+        // ═══════════════════════════════════════════════════════
+        function renderBlocksList(cls, currentBlockNum) {
+            const { blocks } = cls;
+            let html = `
+  <div class="wu-bar">
+    <span class="bar-lbl">▸ Entrada en Calor</span>
+    <span class="bar-det">Pedaleo progresivo, cadencia paulatina</span>
+    <span class="bar-t">10:15 → 10:20 · 5'</span>
+  </div>`;
+
+            let accumulatedTime = 20;
+            blocks.forEach((blk, bi) => {
+                const tS = addMin(BASE, accumulatedTime);
+                accumulatedTime += blk.durMin;
+                const tE = addMin(BASE, accumulatedTime);
+
+                let bdgCls, bdgTxt;
+                if (blk.terrain === 'cooldown') {
+                    bdgCls = 'bb-h';
+                    bdgTxt = '🧘 Vuelta a la Calma';
+                } else if (blk.isHybrid) {
+                    bdgCls = 'bb-h';
+                    bdgTxt = `⚡ Híbrido · ${blk.firstTerrain==='plano'?'Plano → Montaña':'Montaña → Plano'}`;
+                } else if (blk.terrain === 'plano') {
+                    bdgCls = 'bb-p';
+                    bdgTxt = '🔵 Plano';
+                } else {
+                    bdgCls = 'bb-m';
+                    bdgTxt = '🟠 Montaña';
+                }
+
+                // A — Micro-repetición: en el header mostrar "5 ivs × 3" en lugar de "15 ivs"
+                const mr = blk.microRepeat || 1;
+                const seqLen = mr > 1 ? blk.singleRepeatIvCount : 0;
+                const displayIvCount = mr > 1 ? blk.singleRepeatIvCount : blk.intervals.filter(v => !v.isHydration).length;
+                const ivCountLabel = mr > 1 ?
+                    `${displayIvCount} ivs <span class="blk-rep-badge">×${mr}</span>` :
+                    `${displayIvCount} intervalos`;
+
+                // B — Repetición de bloque: mostrar badge en el header
+                const rt = blk.repeatTimes || 1;
+                const repBadge = rt > 1 ? `<span class="blk-whole-rep">🔁 ×${rt}</span>` : '';
+
+                const isCurrent = currentBlockNum && blk.num === currentBlockNum;
+                const openCls = (bi === 0 || isCurrent) ? 'open' : '';
+                const currentCls = isCurrent ? ' blk-current' : '';
+
+                html += `<div class="blk ${openCls}${currentCls}" data-blocknum="${blk.num}" ${isCurrent ? 'id="planCurrentBlk"' : ''}>
+  <div class="blk-hdr" onclick="this.parentElement.classList.toggle('open')">
+    <span class="blk-num">${String(bi+1).padStart(2,'0')}</span>
+    <span class="blk-badge ${bdgCls}">${bdgTxt} (${blk.durMin}')${repBadge}</span>
+    <span class="blk-cnt">${ivCountLabel}</span>
+    <span class="blk-dur">${tS} → ${tE}</span>
+    <span class="blk-arr">▾</span>
+  </div>
+  <div class="blk-body">`;
+
+                if (blk.isHybrid) {
+                    blk.intervals.filter(v => !v.isHydration).forEach(iv => {
+                        html += renderIv(iv, true, blk);
+                    });
+                } else if (mr > 1) {
+                    // A — Mostrar solo la primera repetición con badge de repetición
+                    const showTerrain = false;
+                    const seqIvs = blk.intervals.filter(v => !v.isHydration).slice(0, seqLen);
+                    html += `<div class="micro-rep-wrap">`;
+                    seqIvs.forEach(iv => {
+                        html += renderIv(iv, showTerrain, blk);
+                    });
+                    html += `<div class="micro-rep-lbl">🔄 Repetir esta secuencia <strong>× ${mr}</strong> veces</div>`;
+                    html += `</div>`;
+                } else {
+                    blk.intervals.filter(v => !v.isHydration).forEach(iv => {
+                        html += renderIv(iv, false, blk);
+                    });
+                }
+
+                // B — Nota de repetición del bloque completo
+                const repNote = rt > 1 ?
+                    `<div class="blk-rep-note">🔁 Hacer este bloque <strong>× ${rt} veces</strong></div>` :
+                    '';
+
+                const hydBar = blk.terrain === 'cooldown' ? '' :
+                    `<div class="hyd"><span>💧</span><strong>1' HIDRATACIÓN</strong><span>— intensidad Muy Baja, cadencia libre</span></div>`;
+                html += `${hydBar}${repNote}</div></div>`;
+            });
+            return html;
         }
 
         // ═══════════════════════════════════════════════════════
@@ -4793,7 +5629,7 @@
 
             let tl = `<div class="tl-strip"><div class="tl-seg" style="background:var(--hibrido);flex:5"></div>`;
             blocks.forEach(b => {
-                const c = b.isHybrid ? 'var(--hibrido)' : b.terrain === 'plano' ? 'var(--plano)' : 'var(--montana)';
+                const c = b.terrain === 'cooldown' ? 'var(--hibrido)' : b.isHybrid ? 'var(--hibrido)' : b.terrain === 'plano' ? 'var(--plano)' : 'var(--montana)';
                 tl += `<div class="tl-seg" style="background:${c};flex:${b.durMin}"></div>`;
             });
             tl += `</div>`;
@@ -4833,87 +5669,9 @@
   <div class="cls-meta"><strong>${blocks.length}</strong> bloques · Tiempos variables<br>Total: <strong>${totalWorkTime} min</strong>${cls.repetitiva ? ' · <span style="color:var(--accent)">🔁 Repetitiva</span>' : ''}<br>Cierre: <strong style="color:var(--accent)">${closeTime}</strong></div>
 </div>
 <div class="tl-wrap"><div class="tl-lbl">Recorrido · 10:15 → ${closeTime}</div>${tl}${times}</div>
-<div class="blks">
-  <div class="wu-bar">
-    <span class="bar-lbl">▸ Entrada en Calor</span>
-    <span class="bar-det">Pedaleo progresivo, cadencia paulatina</span>
-    <span class="bar-t">10:15 → 10:20 · 5'</span>
-  </div>`;
+<div class="blks">${renderBlocksList(cls)}</div>`;
 
-            let accumulatedTime = 20;
-            blocks.forEach((blk, bi) => {
-                const tS = addMin(BASE, accumulatedTime);
-                accumulatedTime += blk.durMin;
-                const tE = addMin(BASE, accumulatedTime);
-
-                let bdgCls, bdgTxt;
-                if (blk.isHybrid) {
-                    bdgCls = 'bb-h';
-                    bdgTxt = `⚡ Híbrido · ${blk.firstTerrain==='plano'?'Plano → Montaña':'Montaña → Plano'}`;
-                } else if (blk.terrain === 'plano') {
-                    bdgCls = 'bb-p';
-                    bdgTxt = '🔵 Plano';
-                } else {
-                    bdgCls = 'bb-m';
-                    bdgTxt = '🟠 Montaña';
-                }
-
-                // A — Micro-repetición: en el header mostrar "5 ivs × 3" en lugar de "15 ivs"
-                const mr = blk.microRepeat || 1;
-                const seqLen = mr > 1 ? blk.singleRepeatIvCount : 0;
-                const displayIvCount = mr > 1 ? blk.singleRepeatIvCount : blk.intervals.filter(v => !v.isHydration).length;
-                const ivCountLabel = mr > 1 ?
-                    `${displayIvCount} ivs <span class="blk-rep-badge">×${mr}</span>` :
-                    `${displayIvCount} intervalos`;
-
-                // B — Repetición de bloque: mostrar badge en el header
-                const rt = blk.repeatTimes || 1;
-                const repBadge = rt > 1 ? `<span class="blk-whole-rep">🔁 ×${rt}</span>` : '';
-
-                html += `<div class="blk ${bi===0?'open':''}">
-  <div class="blk-hdr" onclick="this.parentElement.classList.toggle('open')">
-    <span class="blk-num">${String(bi+1).padStart(2,'0')}</span>
-    <span class="blk-badge ${bdgCls}">${bdgTxt} (${blk.durMin}')${repBadge}</span>
-    <span class="blk-cnt">${ivCountLabel}</span>
-    <span class="blk-dur">${tS} → ${tE}</span>
-    <span class="blk-arr">▾</span>
-  </div>
-  <div class="blk-body">`;
-
-                if (blk.isHybrid) {
-                    blk.intervals.filter(v => !v.isHydration).forEach(iv => {
-                        html += renderIv(iv, true);
-                    });
-                } else if (mr > 1) {
-                    // A — Mostrar solo la primera repetición con badge de repetición
-                    const showTerrain = false;
-                    const seqIvs = blk.intervals.filter(v => !v.isHydration).slice(0, seqLen);
-                    html += `<div class="micro-rep-wrap">`;
-                    seqIvs.forEach(iv => {
-                        html += renderIv(iv, showTerrain);
-                    });
-                    html += `<div class="micro-rep-lbl">🔄 Repetir esta secuencia <strong>× ${mr}</strong> veces</div>`;
-                    html += `</div>`;
-                } else {
-                    blk.intervals.filter(v => !v.isHydration).forEach(iv => {
-                        html += renderIv(iv, false);
-                    });
-                }
-
-                // B — Nota de repetición del bloque completo
-                const repNote = rt > 1 ?
-                    `<div class="blk-rep-note">🔁 Hacer este bloque <strong>× ${rt} veces</strong></div>` :
-                    '';
-
-                html += `<div class="hyd"><span>💧</span><strong>1' HIDRATACIÓN</strong><span>— intensidad Muy Baja, cadencia libre</span></div>${repNote}</div></div>`;
-            });
-
-            html += `<div class="cd-bar">
-    <span class="bar-lbl">▸ Vuelta a la Calma</span>
-    <span class="bar-det">Pedaleo libre y estiramiento muscular</span>
-    <span class="bar-t" style="color:var(--hibrido)">${closeTime} →</span>
-  </div></div>
-  <div class="summary">
+            html += `<div class="summary">
     <div class="sum-c"><div class="sum-v" style="color:var(--hibrido)">10:15</div><div class="sum-k">Inicio</div></div>
     <div class="sum-c"><div class="sum-v" style="color:var(--accent)">${totalWorkTime}'</div><div class="sum-k">Min bloques</div></div>
     <div class="sum-c"><div class="sum-v" style="color:var(--accent)">${blocks.length}</div><div class="sum-k">Bloques</div></div>
@@ -5022,7 +5780,16 @@
                 el.classList.add('sel');
                 el.style.borderColor = 'var(--accent)';
                 selectedMode = m;
-                document.getElementById('btnStart').disabled = false;
+                enableStartButtons();
+                // Mover el panel de perfiles justo debajo de la tarjeta tocada —
+                // como solo hay una instancia, al moverlo a otra tarjeta
+                // desaparece automáticamente de donde estaba antes.
+                el.insertAdjacentElement('afterend', document.getElementById('profileAccordion'));
+                openProfilePanel();
+                // Limpiar cualquier recorrido ya generado con el modo anterior,
+                // para que no se acumule contenido (scroll infinito) al cambiar de modo.
+                document.getElementById('output').innerHTML = '';
+                document.getElementById('output').style.display = 'none';
             });
             grid.appendChild(el);
         });
@@ -5057,6 +5824,70 @@
             });
         }
 
+        function renderZonaEtapas(terrain) {
+            const containerId = terrain === 'plano' ? 'zonaChipsPlano' : 'zonaChipsMontana';
+            const container = document.getElementById(containerId);
+            const etapas = terrain === 'plano' ? zonaEtapasPlano : zonaEtapasMontana;
+            container.innerHTML = '';
+
+            etapas.forEach((zonas, idx) => {
+                const row = document.createElement('div');
+                row.className = 'zona-etapa-row';
+
+                const lbl = document.createElement('span');
+                lbl.className = 'zona-etapa-lbl';
+                lbl.textContent = `Etapa ${idx + 1}`;
+                row.appendChild(lbl);
+
+                const chipsWrap = document.createElement('div');
+                chipsWrap.className = 'zona-etapa-chips';
+                [2, 3, 4, 5].forEach(z => {
+                    const chip = document.createElement('span');
+                    const isSel = zonas.includes(z);
+                    chip.className = `zona-chip${isSel ? ' zona-selected' : ''}`;
+                    chip.textContent = `Z${z}`;
+                    if (isSel) {
+                        chip.style.background = FC_ZONES[z].color;
+                        chip.style.borderColor = FC_ZONES[z].color;
+                    }
+                    chip.addEventListener('click', () => {
+                        const arr = terrain === 'plano' ? zonaEtapasPlano : zonaEtapasMontana;
+                        const set = arr[idx];
+                        const pos = set.indexOf(z);
+                        if (pos > -1) set.splice(pos, 1); else set.push(z);
+                        renderZonaEtapas(terrain);
+                        updateProfileSummary();
+                    });
+                    chipsWrap.appendChild(chip);
+                });
+                row.appendChild(chipsWrap);
+
+                const delBtn = document.createElement('span');
+                delBtn.className = 'zona-etapa-del';
+                delBtn.textContent = '✕';
+                delBtn.addEventListener('click', () => {
+                    const arr = terrain === 'plano' ? zonaEtapasPlano : zonaEtapasMontana;
+                    arr.splice(idx, 1);
+                    renderZonaEtapas(terrain);
+                    updateProfileSummary();
+                });
+                row.appendChild(delBtn);
+
+                container.appendChild(row);
+            });
+
+            const addBtn = document.createElement('div');
+            addBtn.className = 'zona-etapa-add';
+            addBtn.textContent = '+ Agregar etapa';
+            addBtn.addEventListener('click', () => {
+                const arr = terrain === 'plano' ? zonaEtapasPlano : zonaEtapasMontana;
+                arr.push([]);
+                renderZonaEtapas(terrain);
+                updateProfileSummary();
+            });
+            container.appendChild(addBtn);
+        }
+
         function toggleRepetitiva(checked) {
             modoRepetitiva = checked;
             updateProfileSummary();
@@ -5068,8 +5899,11 @@
                 return p ? p.label : id;
             };
             const repTag = modoRepetitiva ? ' · 🔁 Repetitiva' : '';
+            const etapasTag = etapas => etapas.length
+                ? ` [${etapas.map(zs => zs.length ? zs.map(z => 'Z' + z).join('/') : '—').join(' → ')}]`
+                : '';
             document.getElementById('profileSummary').textContent =
-                `🔵 ${getLabel(selectedProfilePlano)} · 🟠 ${getLabel(selectedProfileMontana)}${repTag}`;
+                `🔵 ${getLabel(selectedProfilePlano)}${etapasTag(zonaEtapasPlano)} · 🟠 ${getLabel(selectedProfileMontana)}${etapasTag(zonaEtapasMontana)}${repTag}`;
         }
 
         function toggleProfilePanel() {
@@ -5080,9 +5914,23 @@
             arrow.classList.toggle('open', !isOpen);
         }
 
+        function openProfilePanel() {
+            document.getElementById('profilePanel').classList.add('open');
+            document.getElementById('profileArrow').classList.add('open');
+        }
+
+        // Habilita el botón "Iniciar" y abre el panel de perfiles automáticamente
+        function enableStartButtons() {
+            const b = document.getElementById('btnStart');
+            if (b) b.disabled = false;
+        }
+
         // Inicializar botones de perfil
         buildProfileButtons('profileBtnsPlano', 'plano');
         buildProfileButtons('profileBtnsMontana', 'montana');
+        renderZonaEtapas('plano');
+        renderZonaEtapas('montana');
+
         document.getElementById('btnStart').addEventListener('click', async() => {
             if (!selectedMode) return;
             const loader = document.getElementById('loader');
@@ -5090,7 +5938,7 @@
             output.style.display = 'none';
             loader.style.display = 'block';
             await new Promise(r => setTimeout(r, 700));
-            currentClass = buildClass(selectedMode);
+            currentClass = buildClassNoRepeat(selectedMode);
             output.innerHTML = renderClass(currentClass);
             output.insertAdjacentHTML('beforeend', `
     <div class="action-btns-wrap">
@@ -5149,7 +5997,7 @@
             });
 
             cls.blocks.forEach((blk, bi) => {
-                const bName = blk.isHybrid ? 'Híbrido' : blk.terrain === 'plano' ? 'Plano' : 'Montaña';
+                const bName = blk.terrain === 'cooldown' ? 'Vuelta a la Calma' : blk.isHybrid ? 'Híbrido' : blk.terrain === 'plano' ? 'Plano' : 'Montaña';
                 accumTime += blk.durMin;
                 const endHourStr = addMin(BASE, accumTime);
 
@@ -5331,6 +6179,8 @@
                     let txt, color;
                     if (g.isWarmup || g.terrain === 'warmup') {
                         txt = 'Calent.'; color = '#a855f7';
+                    } else if (g.terrain === 'cooldown') {
+                        txt = 'V. Calma'; color = '#a855f7';
                     } else if (g.name === 'Plano' || g.terrain === 'plano') {
                         txt = 'Plano';   color = '#00d4ff';
                     } else if (g.name === 'Montaña' || g.terrain === 'montana') {
@@ -5401,8 +6251,16 @@
 
         function buildSchedule(list) {
             const ul = document.getElementById('tmrSchedList');
+            if (currentClass && currentClass.blocks) {
+                // Mismo formato agrupado por bloques que la tarjeta previa a
+                // arrancar (badges de camino, intervalos completos) — así el
+                // plan completo se ve igual de rico durante la clase en vivo.
+                ul.innerHTML = renderBlocksList(currentClass);
+                return;
+            }
+            // Fallback (ej. recorridos armados a mano, sin objeto de clase completo)
             ul.innerHTML = list.map((iv, i) => {
-                const dotColor = iv.terrain === 'plano' ? 'var(--plano)' : iv.terrain === 'montana' ? 'var(--montana)' : iv.isWarmup ? 'var(--hibrido)' : 'var(--green)';
+                const dotColor = iv.terrain === 'plano' ? 'var(--plano)' : iv.terrain === 'montana' ? 'var(--montana)' : (iv.isWarmup || iv.isRecovery) ? 'var(--hibrido)' : 'var(--green)';
                 return `<div class="sched-item" id="sched_${i}">
   <div class="sched-dot" style="background:${dotColor}"></div>
   <span class="sched-t">${fmtSec(iv.d)}</span>
@@ -5458,7 +6316,7 @@
             const prog = r / total;
             const circumference = 276.46;
             circ.style.strokeDashoffset = circumference * (1 - prog);
-            const strokeColor = iv.terrain === 'plano' ? 'var(--plano)' : iv.terrain === 'montana' ? 'var(--montana)' : iv.isWarmup ? 'var(--hibrido)' : 'var(--green)';
+            const strokeColor = iv.terrain === 'plano' ? 'var(--plano)' : iv.terrain === 'montana' ? 'var(--montana)' : (iv.isWarmup || iv.isRecovery) ? 'var(--hibrido)' : 'var(--green)';
             circ.style.stroke = strokeColor;
             document.getElementById('tmrDigits').style.color = strokeColor;
 
@@ -5494,7 +6352,7 @@
 
             // posición
             const posEl = document.getElementById('tmrCurrPos');
-            posEl.textContent = iv.pos === 'Sentado' ? '🪑 Sentado' : '🧍 Parado';
+            posEl.textContent = iv.pos === 'Sentado' ? 'Sentado' : 'Parado';
             posEl.className = `tmr-curr-pos ${iv.pos==='Sentado'?'pos-s':'pos-p'}`;
 
             // intensidad
@@ -5503,10 +6361,33 @@
             intEl.className = `tmr-curr-int ${intCls(iv.intensity)}`;
             intEl.style.color = intColor(iv.intensity);
 
+            // ── ZONA DE FRECUENCIA CARDÍACA ──
+            const edadAlumno = getEdadAlumno();
+            const fcBadge = document.getElementById('tmrFcBadge');
+            // Zona del intervalo inmediatamente anterior (para que la hidratación
+            // decaiga gradual y no salte directo al piso — ver getZonaFC).
+            const prevIv = timerState.flatList[timerState.idx - 1];
+            const prevZonaNum = prevIv ? getZonaFC(prevIv.intensity, prevIv.isHydration).num : null;
+            if (fcBadge) {
+                if (edadAlumno) {
+                    const zona = getZonaFC(iv.intensity, iv.isHydration, prevZonaNum);
+                    const rango = getFCRange(edadAlumno, zona);
+                    fcBadge.className = 'fc-zone-badge';
+                    fcBadge.style.background = zona.color + '30';
+                    fcBadge.style.color = zona.color;
+                    fcBadge.innerHTML = `<span class="fc-heart">❤</span> ZONA ${zona.num} · ${rango.min}-${rango.max} BPM`;
+                } else {
+                    fcBadge.className = 'fc-zone-badge fc-empty';
+                    fcBadge.style.background = '';
+                    fcBadge.style.color = '';
+                    fcBadge.innerHTML = '❤ Configurar FC';
+                }
+            }
+
             // ── LO SIGUIENTE ──
             if (next) {
                 document.getElementById('tmrNextWrap').style.display = 'flex';
-                const nextPosIcon = next.pos === 'Sentado' ? '🪑' : '🧍';
+                const nextPosIcon = next.pos === 'Sentado' ? 'SENTADO' : 'PARADO';
                 const nextPosIconEl = document.getElementById('tmrNextPosIcon');
                 if (nextPosIconEl) nextPosIconEl.textContent = nextPosIcon;
                 document.getElementById('tmrNextDesc').textContent = next.shortLabel;
@@ -5514,6 +6395,19 @@
                 const nextBlkEl = document.getElementById('tmrNextBlk');
                 if (nextBlkEl) nextBlkEl.textContent = nextBlkRef ? (nextBlkRef.num === 0 ? nextBlkRef.name : `Bloque ${nextBlkRef.num} · ${nextBlkRef.name}`) : '';
                 document.getElementById('tmrNextTime').textContent = fmtSec(next.d);
+                const nextFcBadge = document.getElementById('tmrNextFcBadge');
+                if (nextFcBadge) {
+                    if (edadAlumno) {
+                        const currZonaNum = getZonaFC(iv.intensity, iv.isHydration, prevZonaNum).num;
+                        const nextZona = getZonaFC(next.intensity, next.isHydration, currZonaNum);
+                        nextFcBadge.style.display = 'inline';
+                        nextFcBadge.style.background = nextZona.color + '30';
+                        nextFcBadge.style.color = nextZona.color;
+                        nextFcBadge.textContent = `Z${nextZona.num}`;
+                    } else {
+                        nextFcBadge.style.display = 'none';
+                    }
+                }
             } else {
                 document.getElementById('tmrNextWrap').style.display = 'flex';
                 const nextPosIconEl = document.getElementById('tmrNextPosIcon');
@@ -5522,6 +6416,8 @@
                 const nextBlkEl = document.getElementById('tmrNextBlk');
                 if (nextBlkEl) nextBlkEl.textContent = '';
                 document.getElementById('tmrNextTime').textContent = '—';
+                const nextFcBadge = document.getElementById('tmrNextFcBadge');
+                if (nextFcBadge) nextFcBadge.style.display = 'none';
             }
 
             // ── Barra de progreso total ──
@@ -5543,13 +6439,13 @@
                 } else {
                     bike.style.left = `${Math.min(Math.max(progPct, 2), 98).toFixed(1)}%`;
                 }
-                let bikeColor = iv.isWarmup || iv.terrain === 'warmup' ? 'var(--hibrido)'
+                let bikeColor = iv.isWarmup || iv.terrain === 'warmup' || iv.isRecovery ? 'var(--hibrido)'
                               : iv.terrain === 'montana' ? '#ff2020'
                               : iv.terrain === 'plano'   ? '#00d4ff'
                               : 'var(--accent)';
                 bike.style.color = bikeColor;
                 bike.classList.remove('terrain-plano','terrain-montana','terrain-warmup');
-                bike.classList.add(iv.terrain === 'montana' ? 'terrain-montana' : (iv.isWarmup || iv.terrain === 'warmup') ? 'terrain-warmup' : 'terrain-plano');
+                bike.classList.add(iv.terrain === 'montana' ? 'terrain-montana' : (iv.isWarmup || iv.terrain === 'warmup' || iv.terrain === 'cooldown') ? 'terrain-warmup' : 'terrain-plano');
                 const bpm = _getBpmForSegment(iv) || 90;
                 const spinDur = (0.9 - ((bpm - 60) / 60) * 0.6).toFixed(2) + 's';
                 bike.querySelectorAll('.bike-wheel').forEach(w => { w.style.animationDuration = spinDur; });
@@ -5563,6 +6459,13 @@
             });
             const cur = document.getElementById(`sched_${timerState.idx}`);
             if (cur) cur.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+
+            // Resaltar el bloque actual en el panel "Plan completo" (formato agrupado)
+            if (iv.blockRef && iv.blockRef.num) {
+                document.querySelectorAll('#tmrSchedList .blk').forEach(el => {
+                    el.classList.toggle('blk-current', Number(el.dataset.blocknum) === iv.blockRef.num);
+                });
+            }
         }
 
         // ── Reloj en vivo ──
@@ -5952,7 +6855,7 @@
                     const modeNum = numEl ? parseInt(numEl.textContent) : NaN;
                     c.classList.toggle('sel', modeNum === saved.modeId);
                 });
-                document.getElementById('btnStart').disabled = false;
+                enableStartButtons();
             }
 
             // Renderizar el recorrido
@@ -6806,6 +7709,30 @@ self.addEventListener('fetch',e=>{
             }
         })();
     </script>
+    <!-- ── MODAL EDAD / ZONA FC ── -->
+    <div class="edad-fc-overlay" id="edadFcModal">
+        <div class="edad-fc-card">
+            <div class="edad-fc-title">❤ Zona de frecuencia cardíaca</div>
+            <div class="edad-fc-sub">Ingresá la edad del alumno para calcular su FC máxima (fórmula de Tanaka: 208 − 0,7 × edad) y mostrar la zona de entrenamiento en cada intervalo.</div>
+            <input type="number" class="edad-fc-input" id="edadFcInput" placeholder="Edad (ej. 35)" min="5" max="100" inputmode="numeric">
+            <div class="edad-fc-actions">
+                <button class="edad-fc-btn-cancel" onclick="closeEdadModal()">Cancelar</button>
+                <button class="edad-fc-btn-save" onclick="guardarEdadFC()">Guardar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ── MODAL EDITAR TÉCNICA DE UN INTERVALO ── -->
+    <div class="ex-picker-overlay" id="exPickerOverlay">
+        <div class="ex-picker-card">
+            <div class="ex-picker-hdr">
+                <span>Cambiar técnica</span>
+                <span class="ex-picker-close" onclick="closeExPicker()">✕</span>
+            </div>
+            <div class="ex-picker-list" id="exPickerList"></div>
+        </div>
+    </div>
+
 </body>
 
 </html>
