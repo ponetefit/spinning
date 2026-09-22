@@ -4343,12 +4343,28 @@
             const newEx = [...PLANO_EX, ...MONT_EX].find(e => e.type === type);
             if (!newEx) return;
 
-            iv.ex = newEx;
-            iv.pos = newEx.pos || iv.pos;
-            iv.intensity = getInt(newEx.type, iv.d); // misma duración, nueva técnica
-            if (blk.isHybrid) {
-                // El intervalo puede haber cambiado de camino dentro del bloque híbrido
-                iv.terrain = PLANO_EX.some(e => e.type === type) ? 'plano' : 'montana';
+            const applyTechnique = (targetIv, targetBlk) => {
+                targetIv.ex = newEx;
+                targetIv.pos = newEx.pos || targetIv.pos;
+                targetIv.intensity = getInt(newEx.type, targetIv.d); // misma duración, nueva técnica
+                if (targetBlk.isHybrid) {
+                    // El intervalo puede haber cambiado de camino dentro del bloque híbrido
+                    targetIv.terrain = PLANO_EX.some(e => e.type === type) ? 'plano' : 'montana';
+                }
+            };
+
+            applyTechnique(iv, blk);
+
+            // ── MODO REPETITIVA: si está activo, el mismo cambio se replica en
+            // el mismo intervalo (misma posición) de los demás bloques del
+            // mismo camino — plano con plano, montaña con montaña, híbrido
+            // con híbrido (bType idéntico) — para que todos queden iguales.
+            if (currentClass.repetitiva && blk.bType) {
+                currentClass.blocks.forEach(otherBlk => {
+                    if (otherBlk === blk || otherBlk.bType !== blk.bType) return;
+                    const otherIv = otherBlk.intervals && otherBlk.intervals[ivIdx];
+                    if (otherIv) applyTechnique(otherIv, otherBlk);
+                });
             }
 
             // No cerramos el modal: así se ve el check ✓ en la técnica elegida
