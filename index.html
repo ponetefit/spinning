@@ -4351,8 +4351,18 @@
                 iv.terrain = PLANO_EX.some(e => e.type === type) ? 'plano' : 'montana';
             }
 
-            closeExPicker();
+            // No cerramos el modal: así se ve el check ✓ en la técnica elegida
+            // y, sobre todo, el picker queda abierto para poder seguir editando
+            // otros intervalos en orden sin que se cierre solo cada vez.
+            refreshExPickerSelection(blkNum, ivIdx);
             refreshAllClassViews();
+        }
+
+        // Vuelve a pintar la lista del picker abierto para reflejar la nueva
+        // selección (el check ✓), sin cerrar el modal.
+        function refreshExPickerSelection(blkNum, ivIdx) {
+            if (!document.getElementById('exPickerOverlay').classList.contains('open')) return;
+            openExPicker(blkNum, ivIdx);
         }
 
         function closeExPicker() {
