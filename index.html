@@ -7746,7 +7746,7 @@
             // ── Service Worker (cache offline) ──
             if ('serviceWorker' in navigator) {
                 const swSrc = `
-const CACHE='spinlab-v1';
+const CACHE='spinlab-v2';
 const RES=[self.location.pathname||'/'];
 self.addEventListener('install',e=>{
   e.waitUntil(caches.open(CACHE).then(c=>c.addAll(RES)));
@@ -7758,15 +7758,19 @@ self.addEventListener('activate',e=>{
   )));
   self.clients.claim();
 });
+// Network-first: siempre intenta traer la versión más nueva del server/disco
+// y sólo usa la caché como respaldo si no hay conexión. Así, cada vez que se
+// reemplaza este archivo, el cambio se ve al recargar — no queda "pegado"
+// a una versión vieja como pasaba antes con cache-first.
 self.addEventListener('fetch',e=>{
   e.respondWith(
-    caches.match(e.request).then(r=>r||fetch(e.request).then(res=>{
+    fetch(e.request).then(res=>{
       if(res&&res.status===200&&e.request.method==='GET'){
         const clone=res.clone();
         caches.open(CACHE).then(c=>c.put(e.request,clone));
       }
       return res;
-    }))
+    }).catch(()=>caches.match(e.request))
   );
 });
 `;
