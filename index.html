@@ -5423,6 +5423,11 @@
         // BUILD CLASS — selecciona perfil, distribuye duraciones con forma de curva
         // ═══════════════════════════════════════════════════════
         let currentClass = null;
+        // Bloques actualmente expandidos (por blk.num). Se usa para que el
+        // estado "abierto" de cada bloque sobreviva a los re-renders que
+        // disparan las ediciones (✏️ técnica), en vez de perderse porque
+        // renderBlocksList se ejecuta desde cero cada vez.
+        let openBlockNums = new Set();
 
         function buildClass(mode) {
             usedRareThisClass = {};
@@ -5591,6 +5596,16 @@
         // Y en el panel de "plan completo" del timer en vivo.
         // currentBlockNum (opcional): resalta ese bloque como "en curso".
         // ═══════════════════════════════════════════════════════
+        // Abre/cierra un bloque y recuerda ese estado en openBlockNums, para
+        // que quede abierto aunque el ✏️ de un intervalo dispare un re-render
+        // completo del listado (refreshAllClassViews → renderBlocksList).
+        function toggleBlkOpen(blkNum, elBlk) {
+            const willOpen = !elBlk.classList.contains('open');
+            elBlk.classList.toggle('open', willOpen);
+            if (willOpen) openBlockNums.add(blkNum);
+            else openBlockNums.delete(blkNum);
+        }
+
         function renderBlocksList(cls, currentBlockNum) {
             const { blocks } = cls;
             let html = `
@@ -5634,11 +5649,14 @@
                 const repBadge = rt > 1 ? `<span class="blk-whole-rep">🔁 ×${rt}</span>` : '';
 
                 const isCurrent = currentBlockNum && blk.num === currentBlockNum;
-                const openCls = (bi === 0 || isCurrent) ? 'open' : '';
+                // Si el bloque está en curso durante el timer, se fuerza abierto
+                // y además se recuerda como abierto para futuros re-renders.
+                if (isCurrent) openBlockNums.add(blk.num);
+                const openCls = (openBlockNums.has(blk.num) || isCurrent) ? 'open' : '';
                 const currentCls = isCurrent ? ' blk-current' : '';
 
                 html += `<div class="blk ${openCls}${currentCls}" data-blocknum="${blk.num}" ${isCurrent ? 'id="planCurrentBlk"' : ''}>
-  <div class="blk-hdr" onclick="this.parentElement.classList.toggle('open')">
+  <div class="blk-hdr" onclick="toggleBlkOpen(${blk.num}, this.parentElement)">
     <span class="blk-num">${String(bi+1).padStart(2,'0')}</span>
     <span class="blk-badge ${bdgCls}">${bdgTxt} (${blk.durMin}')${repBadge}</span>
     <span class="blk-cnt">${ivCountLabel}</span>
@@ -6024,6 +6042,8 @@
             loader.style.display = 'block';
             await new Promise(r => setTimeout(r, 700));
             currentClass = buildClassNoRepeat(selectedMode);
+            // Al generar una clase nueva, solo el primer bloque arranca abierto.
+            openBlockNums = new Set(currentClass.blocks.length ? [currentClass.blocks[0].num] : []);
             output.innerHTML = renderClass(currentClass);
             output.insertAdjacentHTML('beforeend', actionBtnsHtml());
             output.style.display = 'block';
@@ -6929,6 +6949,8 @@
 
             // Reconstruir currentClass desde los datos guardados
             currentClass = saved.classData;
+            // Al cargar un recorrido guardado, solo el primer bloque arranca abierto.
+            openBlockNums = new Set(currentClass.blocks && currentClass.blocks.length ? [currentClass.blocks[0].num] : []);
 
             // Forzar selección visual del modo
             selectedMode = MODES.find(m => m.id === saved.modeId);
