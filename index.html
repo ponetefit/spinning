@@ -3902,11 +3902,6 @@
             label: '110 RPM',
             intScore: 3
         }, {
-            pos: 'Parado',
-            type: '110p',
-            label: '110 RPM Parado',
-            intScore: 3
-        }, {
             pos: 'Sentado',
             type: 'sprint_p',
             label: 'Sprint (Máx. Vel.)',
@@ -3987,13 +3982,6 @@
                 intScore: 2,
                 rare: true
             },
-            // 70 RPM Parado — cadencia intermedia de subida, más variedad real
-            {
-                pos: 'Parado',
-                type: '70rp',
-                label: '70 RPM Parado',
-                intScore: 2
-            },
             // Acelerado Sentado
             {
                 pos: 'Sentado',
@@ -4019,7 +4007,13 @@
                 intScore: 4
             },
             // Sprint libre — aparece a lo largo del bloque (no solo al final)
+            // (bolilla extra en Parado para compensar el retiro de 70 RPM Parado)
             {
+                pos: 'Parado',
+                type: 'sprint_m',
+                label: 'Sprint (Montaña)',
+                intScore: 3
+            }, {
                 pos: 'Parado',
                 type: 'sprint_m',
                 label: 'Sprint (Montaña)',
@@ -4045,7 +4039,13 @@
                 intScore: 4
             },
             // Fuerza Máxima — como intervalo normal de desarrollo Y como pico final
+            // (bolilla extra en Parado para compensar el retiro de 70 RPM Parado)
             {
+                pos: 'Parado',
+                type: 'fm',
+                label: 'Fuerza Máxima (60v)',
+                intScore: 3
+            }, {
                 pos: 'Parado',
                 type: 'fm',
                 label: 'Fuerza Máxima (60v)',
@@ -4102,7 +4102,7 @@
         const GRUPO_100 = new Set(['100p', '100s']);
         const GRUPO_ACEL = new Set(['acel_s', 'acel_p']);
         const GRUPO_90 = new Set(['90p', '90s']);
-        const GRUPO_110 = new Set(['110s', '110p']);
+        const GRUPO_110 = new Set(['110s']);
         // Fuerza Máxima usa resistencia alta y cadencia baja (subida). Acelerado y
         // Sprint necesitan resistencia baja y cadencia alta — bajar la carga de
         // golpe no da tiempo físico a ajustarla bien. Por eso, en Montaña, después
